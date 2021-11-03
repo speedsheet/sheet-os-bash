@@ -1,0 +1,2097 @@
+# <#>Bash Scripting<> SpeedSheet
+<b>What you need, faster.<>
+
+Covers bash scripting syntax and commands.
+
+<m>(Add Extras From End)
+(Fix Formatting)<>
+
+
+# Summary
+
+### Startup / Configuration Files
+
+When Logging in:
+
+<cb>.bash_profile<>
+
+Non Login Starts:
+
+<cb>.bashrc				<#>#1<><>
+
+
+\#1  <s>-<>  Called from <c>.bash_profile<>
+
+
+
+### Bash Script Identifier (Shebang)
+
+Bash, Latest Version:
+
+<cb>#!/usr/bin/env bash<>
+
+Bash:
+
+<cb>#!/bin/bash<>
+
+Sh:
+
+<cb>#!/bin/sh<>
+
+Python:
+
+<cb>#!/usr/bin/env python3<>
+
+
+Enter as first line in script.
+
+
+
+### Comments
+
+<cb><#># Comments - Single Line<><>
+
+
+
+### Separator - Directory
+
+<cb>/<>
+@
+@ File Separators
+
+
+### Separator - Path
+
+<cb>:<>
+@
+@ File Separators
+
+
+
+### Separator - Script Command
+
+<cb>;<>
+@
+@ Terminator
+
+
+
+### Escape
+
+Syntax			<c>\\<v>x<><>
+
+Double Quote		<c>\\"<>
+
+	or			<c>'"'<>
+
+
+Escape with a backslash.
+
+
+
+### Multiline Separator
+
+<cb>/<>
+
+
+Separate with a forward slash.
+
+
+
+### Trusted Ports
+
+Ports <= 1023
+
+
+Accessible by root processes only.
+Non-root processes must listen on ports greater than 1023.
+@
+@ Untrusted
+
+
+
+# Commands
+
+
+
+###Command - Run in Current Dir
+
+<cb>./<v>command<><>
+
+
+
+### Command - Run In Background
+
+<cb><v>command<> &<>
+
+
+Append '<c>&<>' to the end of the command.
+
+
+
+### Command - Run In Current Process
+
+<cb>. <v>command<><>
+
+<cb>source <v>command<><>
+
+
+These two are equivalent.
+These will run the command in the current process.
+Any environment changes will be kept.
+
+
+
+# Parameters
+
+
+### Parameters - Individual
+
+<cb>$1 $2 $3<>
+
+
+
+### Parameters - All Parameters
+
+<cb>$*<>
+
+
+
+### Parameters - All Parameters, Quoted
+
+<cb>$@<>
+
+Send all parameters with quotes.
+
+
+
+### Parameters - All Parameters, With Spaces, Quoted
+
+<cb>"$@"<>
+
+
+
+### Parameters - Return Code
+
+<cb>$?<>
+
+Return or Exit Code from last operation.
+
+
+### Parameters - Parameter Count
+
+<cb>$#<>
+
+
+
+# Naming Convention
+
+There is nothing official but these are often recommended.
+@
+@ Names
+
+
+
+### Convention - Variable Name - OS, Startup Scripts
+
+<cb>$<v>VAR_NAME<><>
+
+Use UPPER_SNAKE_CASE.
+
+
+
+### Convention - Variable Name - Local, Script
+
+<cb>$<v>user_var_name<><>
+
+Use lower_snake_case.
+
+
+
+### Convention - Variable Name - Constant
+
+<cb>$<v>USER_CONSTANT_NAME<><>
+
+Use UPPER_SNAKE_CASE.
+
+
+<!>Warning:<>
+Ensure name does not conflict with OS variable name.
+
+
+
+### Convention - Function Name
+
+<cb><v>function_name<>() {
+	<v>...<>
+}<>
+
+
+Use lower_snake_case.
+
+
+
+# Operators, Expressions
+@
+@ Test, value, item
+
+
+### Evaluate Expression
+
+<cb>[ <v>expression<> ]<>
+
+<cb>test <v>expression<><>
+
+
+These two are equivalent.
+Returns true or false.
+@
+@ test
+
+
+
+### Directory - Exists?
+
+<cb>[ -d "<v>filename<>" ]<>
+
+
+
+### Directory - Does Not Exist?
+
+<cb>[ ! -d "<v>filename<>" ]<>
+
+
+
+### File - Exists?
+
+<cb>[ -f "<v>filename<>" ]<>
+
+
+
+### File - Does Not Exist?
+
+<cb>[ ! -f "<v>filename<>" ]<>
+
+
+
+### Compare - Boolean - As Int - Is True?
+
+<cb>[ "$<v>value<>" -eq "0" ]<>
+
+<cb>if [ "$<v>value<>" -eq "0" ]; then
+	<v>...<><>
+
+Treat as int, True = 0.
+
+See: Compare - Int
+@
+@ Equals, Not Equals, True, False
+
+
+
+### Compare - Boolean - As Int - Is False?
+
+<cb>[ "$<v>value<>" -ne "0" ]<>
+
+<cb>if [ "$<v>value<>" -ne "0" ]; then
+	<v>...<><>
+
+Treat as int, True = 0.
+
+See: Compare - Int
+@
+@ Equals, Not Equals, True, False
+
+
+
+### Compare - Boolean - As String - Is True?
+
+<cb>[ "$<v>value<>" = true ]<>
+
+<cb>if [ "$<v>value<>" = true ]; then
+	<v>...<><>
+
+Treat as a string, True = 'true'.
+
+See: Compare - Int
+
+
+Example:
+
+<cb><v>value<>=true
+
+if ["$<v>value<>" = true ]; then
+	echo "'$<v>value<>' is true."
+else
+	echo "'$<v>value<>' is not true (false)."
+fi<>
+@
+@ Equals, Not Equals, True, False
+
+
+
+### Compare - Boolean - As String - Is False?
+
+<cb>[ "$<v>value<>" != true ]<>
+
+<cb>if [ "$<v>value<>" != true ]; then
+	<v>...<><>
+
+Treat as a string, True = 'true'.
+
+See: Compare - Int
+
+
+Example:
+
+<cb><v>value<>=true
+
+if ["$<v>value<>" != true ]; then
+	echo "'$<v>value<>' is not true (false)."
+else
+	echo "'$<v>value<>' is true."
+fi<>
+@
+@ Equals, Not Equals, True, False
+
+
+
+### Compare - Int - Is Equal?
+
+<cb>[ "$<v>variable_1<>" -eq "<v>int_2<>" ]<>
+
+<cb>if [ "$<v>variable_1<>" -eq "<v>int_2<>" ]; then
+	<v>...<><>
+@
+@ Equals, Boolean
+
+
+
+### Logical Operators
+
+<c>[ $<v>a<> == $<v>b<> ]<>							Equals
+<c>[ $<v>a<> != $<v>b<> ]<>							Not Equals
+
+<c>! [ <v>condition<> ]<>						Not
+
+<c>[ <v>condition_a<> ] && [ <v>condition_b<> ]<>	And
+<c>[ <v>condition_a<> ] || [ <v>condition_b<> ]<>	Or
+@
+@ boolean, ==, !=, && ||, !
+
+
+
+# Shell - Environment Variables
+
+
+
+## Summary
+
+<table><col><c><v>variable_name<>=<v>value<><>	<>	<col>Create / Update<>
+<col><c>unset <v>variable_name<><><>				<col>Delete<>
+<col> <>
+<col><c>$<v>variable_name<><><>						<col>Get Value<>
+<col><c>"$<v>variable_name<>"<><>					<col>Get Value Containing Spaces, Variables<><>
+
+
+
+## Details
+
+
+
+### Variable - Name Rules
+
+First character must be a-z, A-Z, _.
+All others may be a-z, A-Z, _, 0-9,
+
+Names should contain uppercase characters only (but this is not enforced).
+
+NUL and = are not allowed.
+
+
+Rules in Regex Form:
+
+<cb>[a-zA-Z_]+[a-zA-Z0-9_]*<>
+
+
+Examples:
+
+<cb><v>simple<><>
+
+<cb><v>_underscore<><>
+
+<cb><v>with_underscore<><>
+
+<cb><v>with_123<><>
+
+
+### Variable - Create, Update
+
+<cb><v>variable_1<>=<v>value<><>
+
+<cb><v>variable_1<>="<v>value<>"<>
+
+
+No spaces around <c>=<>
+
+
+Creates an environment variable.
+
+
+Examples:
+
+<cb><v>int_1<>=<v>10<><>
+
+<cb><v>string_1<>="<v>Some Text<>"<>
+@
+@ new, set, instantiate, define, assign, =
+
+
+
+### Variable - Create - Local
+
+<cb>local <v>variable_1<>=<v>value<><>
+
+<cb>local <v>variable_1<>="<v>value<>"<>
+
+
+
+
+Creates a local variable (inside a function).
+There are no spaces around <c>=<>.
+
+
+Examples:
+
+<cb>local <v>int_1<>=<v>10<><>
+
+<cb>local <v>string_1<>="<v>Some Text<>"<>
+@
+@ new, create, instantiate, define, assign, =
+
+
+
+### Variable - Delete
+
+<cb>unset <v>variable_1<><>
+@
+@ unset, remove
+
+
+
+### Variable - Get
+
+<cb>=$<v>varibale_1<><>
+
+If Contains Spaces:
+
+<cb>="$<v>variable_1<>"<>
+
+
+Example:
+
+<cb><v>text<>="Print this text."
+
+echo "$<v>text<>"<>
+@
+@ read value, $, access
+
+
+
+# Control Statements
+
+### If
+
+<cb>if [ <v>expression<> ]; then
+	<v>...<>
+elif [ <v>expression<> ]; then
+	<v>...<>
+else
+	<v>...<>
+fi<>
+
+
+
+### Case
+
+<cb>case "$<v>string_1<>" in
+
+	<v>value_1<>)
+
+		<v>...<>
+		;;					<#>#1<>
+
+	<v>value_2<>)
+		<v>...<>
+		;;
+
+	<v>value_3<> | <v>value_4<> )		<#>#2<>
+
+		<v>...<>
+		;;
+
+	*)						<#>#3<>
+
+		<v>...<>
+		;;
+esac<>
+
+
+Case is case sensitive.
+
+
+\#1  -  ;; is required. It is the case item terminator. No fall throughs.
+
+\#2  -  Match multiple values.
+
+\#3  -  All non matches end here.
+
+
+Example:
+
+<cb><v>command<>="start"
+
+case "$<v>command<>":
+
+	"<v>start<>")
+
+		echo "Starting"
+		;;
+
+	"<v>stop<>" | "<v>end<>")
+
+		echo "Stopping"
+		;;
+
+	*)
+		echo "Unknown command: '$<v>command<>'"
+		;;
+esac<>
+@
+@ case-only
+
+
+
+### For
+
+<cb>for ((<v>value<>=0; <v>value<> \< <v>count<>; <v>value<>++));
+do
+	<v>...<>
+	<v>...<> <v><>$<v>value<>	<#>#1<>
+done<>
+
+
+\#1  <s>-<>  Reference value with <c>$<v>value<><>.
+
+
+Example:
+
+<cb><v>count<>=<v>3<>
+
+for ((<v>value<>=0; <v>value<> \< <v>count<>; <v>value<>++));
+do
+	echo "Value $<v>value<>"
+done<>
+@
+@ for loop
+
+
+
+### For In
+
+<cb>for <v>item<> in <v>list_1<>
+do
+	<v>...<>
+	<v>...<> <v><>$<v>item<>	<#>#1<>
+done<>
+
+
+\#1  <s>-<>  Reference item value with <c>$<v>item<><>.
+
+
+Examples:
+
+<cb>for <v>value<> in "<v>value 1<>" "<v>value 2<>" "<v>value 3<>"
+do
+	echo "Value $<v>value<>"
+done<>
+
+<cb>values=("<v>value 1<>" "<v>value 2<>" "<v>value 3<>")
+
+for <v>value<> in "${values[@]}"
+do
+	echo "Value $<v>value<>"
+done<>
+@
+@ for loop
+
+
+
+### While
+
+<cb>while [ <v>expression<> ]
+do
+	<v>...<>
+done<>
+
+
+Example:
+
+<cb><v>count<>=0
+<v>max<>=3
+
+while [ $<v>count<> -lt $<v>max<> ]
+do
+	echo "$<v>count<>"
+	<v>count<>=$[ $<v>count<> + 1 ]
+done<>
+
+
+
+# Shell - Parameters
+
+Parameter - Dash - Single	app -abc 	// Includes 3 options a, b, c.
+Parameter - Dash - Double	app --option1 	// One single option.
+
+Parameter - Entered Command	$0
+
+Parameter - Return Code	$?		// Return / Exit value from function call or program call.
+
+	ex:
+	function1 	// function call
+	echo $? 	// Shows result (value returned by return statement.
+
+Parameters - Count	?#
+
+Parameters - Passed in	$1 $2 $3…
+
+Parameters - Passed In - All	$*
+
+	$@		// All parameters will be quoted ("$1" "$2" "$3"....)
+	"$@"	When passing to another function.
+
+Paramaeters - All But First	"${@:2}"
+
+
+
+# Shell - Redirect Operators
+
+
+
+## Redirect Operators - Summary
+
+<table><col>;	<>	<col><c><v>command_1<> ; <v>command_2<>	<><>	<col>Command Separator<>
+<col>|<>		<col><c><v>command_1<> | <v>command_2<><><>	<col>Pipe Output<>
+<col> <>
+<col>\< <>		<col><c><v>command<> \< <v>file_name<><><>		<col>Redirect Input From File<>
+<col>\<\< <>		<col><c><v>command<> \<\<<v>LABEL<>
+<v>...<>
+<v>LABEL<><><>		<col>Redirect Input From Stream (Stream Literals)<>
+<col> <>
+<col>><>		<col><c><v>command<> > <v>file_name<><><>		<col>Redirect Output, Creates File<>
+<col>>><>		<col><c><v>command<> >> <v>file_name<><><>		<col>Redirect Output, Append To File<>
+<col> <>
+<col>1><>
+<col>2><>	<col><c><v>command<> 2> <v>error_file<><><> <col>Redirect Error Output, Create File<><>
+
+
+File Descriptors
+
+<table><col>0	<>	<col>Standard In<>
+<col>1<>	<col>Standard Out<>
+<col>2<>	<col>Error Out<><>
+
+
+## Details
+
+
+
+### Shell Redirect - Execute Separate Commands  ;
+
+<cb><v>command_1<> ; <v>command_2<><>
+
+<cb><v>command_1<> ; <v>command_2<> ; <v>command_3<> <v>...<><>
+
+
+Executes commands in sequence.
+
+
+Example:
+
+<cb>echo "a"; echo "b"<>
+@
+@ ;, command separator, terminator
+
+
+
+### Shell Redirect - Pipe Output  |
+
+<cb><v>command_1<> | <v>command_2<><>
+
+<cb><v>command_1<> | <v>command_2<> | <v>command_3<> <v>...<><>
+
+
+Redirects the output from one command into the input of another.
+
+
+Example:
+
+<cb>ls | grep ".txt"<>
+@
+@ Redirect input to output
+
+
+
+### Shell Redirect - Redirect Input  \<
+
+<cb><v>command<> < <v>file_name<><>
+
+
+Sends the contents of the file as the input to the command.
+
+
+Example:
+
+<cb>grep "error" \< output.txt<>
+@
+@ ;, command separator, terminator
+
+
+
+### Shell Redirect - Redirect Input - Stream Literals \<\<
+
+<cb>command \<\<<v>TERMINATING_LABEL<>
+<v>input...<>
+<v>input...<>
+<v>TERMINATING_LABEL<><>
+
+
+This will send the input lines to the command as its input.
+Input starts on the line after the command and stops before the terminating label.
+Note: input is processed very like the contents of double quotes.
+
+
+Example:
+
+<cb>cat \<\<<v>END_CONTENT<> > <v>output.txt<>
+Line 1
+Line 2
+Line 3
+<v>END_CONTENT<>
+
+echo "Results:"
+cat <v>output.txt<><>
+@
+@ multiline, returns, newlines, in script, within, inside
+
+
+
+### Shell Redirect - Redirect Output  >
+
+<cb><v>command<> > <v>file_name<><>
+
+
+Writes the output of the command to the file.
+Creates a new file and writes to it.
+Deletes any pre-existing file.
+
+
+Example:
+
+<cb>echo "Save this to a file." > output.txt<>
+@
+@ >>
+
+
+
+### Shell Redirect - Redirect Output - Append  >>
+
+<cb><v>command<> >> <v>file_name<><>
+
+
+Writes the output of the command to the file.
+Appends to an existing file.
+Creates the file if it does not exist.
+
+
+Example:
+
+<cb>echo "Append this to a file." >> output.txt<>
+@
+@ >>
+
+
+
+### Shell Redirect - Redirect Error  2>
+
+<cb><v>command<> 2> <v>error_file<><>
+
+
+Sends the error output of the command to a file.
+
+
+Example:
+
+<cb>cat non-exsistant-file.txt 2> error.txt<>
+@
+@ ;, command separator, terminator
+
+
+
+## Redirect Options
+
+
+
+### Shell Redirect - Redirect Output To New File
+
+<cb><v>command<> > /<v>path<>/<v>file_path<><>
+
+
+Writes to a file.
+@
+@ >, >>
+
+
+
+### Shell Redirect - Redirect Output To Device
+
+<cb><v>command<> > /dev/<v>device_name<><>
+
+
+Writes to a device.
+@
+@ > /dev
+
+
+
+### Shell Redirect - Redirect Output To Null
+
+<cb><v>command<> > /dev/null<>
+
+
+Writes to <c>null<> which effectively writes to nothing.
+
+
+Example:
+
+<cb>echo "Save this to the ether!" > /dev/null<>
+@
+@ > /dev/null, null, nothing
+
+
+
+# Files
+@
+@ file-only, files-only
+
+
+
+### Permission Notation
+
+<cb>drwxrwxrwx+<>
+
+d	Directory
+. rwx … … .	Owner
+. … rwx … .	Group
+. … … rwx .	Everyone
+. … … … +	Additional Permissions
+
+r	Read
+w	Write
+x	Execute
+
+
+
+### File Mode Notation
+
+1	Execute
+2	Write
+4	Read
+
+
+
+# File - Logical Operators
+@
+@ file-only, files-only, files
+
+
+
+### File - Exists?
+
+<cb> [ e <v>file_name<> ]<>
+
+
+Returns true if the file exists.
+
+
+
+### File - Exists?
+
+<cb> [ -e <v>file_name<> ]<>
+
+
+Returns true if the file exists.
+
+
+
+### File - Not Exists?
+
+<cb> ! [ -e <v>file_name<> ]<>
+
+
+Returns true if the file does not exist.
+@
+@ does
+
+
+
+### File - Is A Directory?
+
+<cb> [ -d <v>file_name<> ]<>
+
+
+Returns true if the file exists and is a directory.
+
+
+
+### File - Is A File?
+
+<cb> [ -f <v>file_name<> ]<>
+
+
+Returns true if the file exists and is a regular file (as opposed to a link, etc.).
+
+
+
+# File Operations
+@
+@ file-only, files-only, files
+
+
+
+### File - Create - From Console
+
+<cb>cat > <v>file_name<>
+<v>...content...<>
+Ctrl + D<>
+
+
+
+### File - Create - From Script
+
+<cb>cat > <v>file_name<> << END_LABEL
+<v>...content...<>
+END_LABEL<>
+
+
+Use this in a script to create a file.
+
+
+
+### File - Find
+
+<cb>find . -type f -name <v>file_name<><>
+
+
+
+### Files - Iterate Over
+
+<cb>for <v>file_name<> in *
+do
+	<v>...<>
+done<>
+
+<cb>for <v>file_name<> in <v>path<>/*
+do
+	<v>...<>
+done<>
+
+<cb>for <v>file_name<> in * ; do <v>...<> ; done<>
+@
+@ for loop through
+
+
+
+# Shell
+
+Command - Separator	command1; command2
+
+Command - And	command1 && command2 	// Command 2 runs only if command 2 completes successfully.
+
+Command - Or	command1 || command2 	// Command 2 runs only if command 1 returns a failed error.
+
+Command - Pass Output	use: command2 'command1' 	// Use ''. This will send the return value of command1 to command2.
+	ex:
+	ls -l 'which java'
+
+Command - Run in Current Dir	./command
+Command - Run In Background	command & 	// Append '&' to end of command.
+Command - Run In Current Proc.	.  command	// the . runs in the current process (space after the '.').
+Command - Run and Return Val.	$(command) 	// Runs the command and returns the value. The value can be referenced like a variable.
+Command - Run And	command1 && command2 && ...
+	&&	// Means and. 'And' run next command if the last one ran successfully.
+
+Process - Cancel	Ctrl + C
+Process - Suspend	Ctrl + Z
+
+Maths	= $((expresion))
+
+	ex:
+	kbytes = $(( $bytes / 1024 ))
+
+
+
+### Prompt - Set
+
+<cb>PS1="<v>prompt text<>"<>
+
+Set to <v>host_name<>:<v>path<>> :
+
+<cb>PS1="\\h:\\w>"<>
+
+	\\\\	\\ (backslash)
+
+	\\@		Time HH:MM AM/PM
+	\\A		Time HH:MM
+	\\t		Time H:MM:SS AM/PM
+	\\T		Time HH:MM:SS
+	\\d		Date "Mon Jan 01"
+
+	\\e<v>...<>	ASCII Escape Character
+	\\h		Host Name Up To '.'
+	\\H		Host Name
+	\\j		Number of Shell Jobs
+	\\n		Newline
+	\\s		Shell Name
+	\\u		User Name
+	\\v		Bash Version
+	\\V		Bash Version and Patch Level
+	\\w		Full Current Path
+	\\W		Current Directory Only (Not Full Path)
+@
+@ command, ps1
+
+
+
+# Shell Functions
+@
+@ func-only, function-only
+
+
+
+### Function - Create
+
+Basicr:
+
+<cb><v>function_name<>() {
+	<v>...<>
+}<>
+
+Parameters:
+
+<cb><v>function_name<>() {
+	local <v>var_1<> = "$1"
+	local <v>var_2<> = "$2"
+	<v>...<>
+}<>
+
+Can pass in any number of parameters.
+Parameters are accessed using $1, $2, $3...
+Use shift command to shift parameters (see Parameters - Shift (below))
+
+Example:
+
+<cb><v>...<> <!>to come?<><>
+
+
+
+### Function - Call
+
+Basic Call:
+
+<cb><v>function_name<><>
+
+Call with Parameters:
+
+<cb><v>function_name<> <v>param_1<> <v>param_2<><>
+
+
+The basic call is simply the name.
+Doesn't even need '<c>()<>' after the name.
+
+Parameters will be set to $1, $2 inside the function.
+
+
+
+### Function - Parameters
+
+<cb><v>function_name<>() {
+
+	local <v>param_1<>="$1"
+	local <v>param_2<>="$2"
+	<v>...<>
+}
+
+
+Get function parameters using <c>$1<>, <c>$2<>, <c>$3<>, etc..
+
+
+
+### Function - Return Value
+
+<cb><v>function_1<>() {
+	echo "<v>return_value<>"
+}
+
+<v>return_value<>="$(<v>function_1<>)"<>
+
+
+Returns: String
+
+
+Return values by sending to standard out.
+Capture returned values using <c>"$(<v>function_1<>)"<>.
+@
+@ Return value capture, get response
+
+
+
+### Function - Call With Spaced Parameters, Get Return
+
+<cb><v>result<>="$(<v>function_1<> "$<v>param_1<>")"<>
+
+
+Use when you need to pass parameters with spaces
+and you need the response.
+
+Seriously, embed the quotes. This is some funky shit but it works.
+@
+@ Value, Response, capture
+
+
+
+### Function - Return - Int
+
+<cb>return <v>int_value<><>
+
+
+
+# Data Types <!>!!!!<>
+
+<!>Expand with basic examples
+
+String
+Integer
+
+
+
+# Booleans
+
+True:
+
+<cb>0<>
+
+False:
+
+<cb>1<>
+
+
+No Booleans
+Use integers 0 and 1 instead.
+
+
+
+# Boolean Operations
+
+
+
+### Boolean - From Expression
+
+<cb>[ <v>expression<> ]<>
+
+Converts <c><v>expression<><> to true or false.
+
+
+
+# Integers	
+
+# Integer Operators
+
+	int1 -eq int2 	// Equal
+	int1 -ne int2 	// Not Equal
+	int1 -gt int2 	// Greater Than
+	int1 -lt int2 	// Less Than
+	int1 -ge int2 	// Greater Than or Equal
+	int1 -le int2 	// Less Than or Equal
+
+
+
+# Integer Operations
+@
+@ int, int-only, integer-only, ints-only, integers-only
+
+
+### Integer - Add
+
+<cb><v>total<>=$[ $<v>value_1<> + $<v>value_2<> ]<>
+
+<cb><v>total<>=$[ $<v>value_1<> + <v>value<> ]<>
+
+
+
+# Strings
+
+Literal String:
+
+<cb>'<v>A String<>'<>
+
+Expanded String:
+
+<cb>"<v>A String<>"<>
+
+Expanded String With Variable
+
+<cb>"String with expanded $<v>variables<>"<>
+
+
+Literal strings are assigned as is with no interpolation.
+
+Expanded strings wille evaluate internal values and expressions.
+
+
+Examples:
+
+<cb><v>text_1<>='<v>This is some text.<>'<>
+
+<cb><v>text_1<>="<v>This is some text.<>"<>
+
+<cb><v>your_home_directory<>="<v>Your home directory is $HOME.<>"<>
+@
+@ string-only, strings-only
+
+
+
+### String - Escape Single Quote
+
+<cb>'<v>Escape this<> '"'"' <v>quote<>'<>
+
+
+End first section with '. Then start middle section " ' ". Then resume string ' more text '.
+
+
+
+### String - Escape - Space
+
+<cb>\\ <>
+
+'<c>\\ <>' - allows spaces to be placed in places without quotes.
+
+
+
+# String - Operators
+@
+@ string-only, strings-only
+
+
+
+### Summary
+
+Equals		<c>[ <v>string_1<> == <v>string_2<> ]<>
+Not Equal	<c>[ <v>string_1<> != <v>string_2<> ]<>
+
+Is Null		<c>[ -z <v>string_1<> ]<>			<#>#1<>
+Not Null		<c>[ <v>string_1<> ]<>
+
+Length = 0	<c>[ -z <v>string_1<> ]<>			<#>#1<>
+Length > 0	<c>[ -n <v>string_1<> ]<>
+
+
+\#1  -  Is Null and Length = 0 are the same.
+@
+@ -n, -z
+
+
+
+### String Compare - Is Equal?
+
+<cb>[ "$<v>variable_1<>" == "<v>string_1<>" ]<>
+@
+@ Equals
+
+
+
+### String Compare - Not Equal?
+
+<cb>[ "$<v>variable_1<>" != "<v>string_1<>" ]<>
+@
+@ Equals, is
+
+
+
+### String Compare - Is Empty?
+
+<cb>[ -z "$<v>variable_1<>" ]<>
+
+
+Returns true if the variable is blank or unset.
+
+
+
+### String Compare - Not Empty
+
+<cb>[ ! -z "$<v>variable_1<>" ]<>
+
+
+Returns false if the variable is blank or unset, otherwise true.
+
+
+
+### String Compare - Has Length
+
+<cb>[ -n "$<v>variable_1<>"]<>
+@
+@ not empty
+
+
+
+# String Operations
+
+
+### String - Length
+
+<cb>${#<v>string_1<>}<>
+
+
+Example:
+
+<cb><v>string_1<>="12345"
+
+<v>length<>="${#<v>string_1<>}"
+
+<#># Returns 5<><>
+@
+@ count, size
+
+
+
+### String - To Lower Case
+
+<cb>=${<v>string_1<>,,}<>
+
+Lower Case (bash 4.0+ only)
+
+
+
+### String - To Upper Case
+
+<cb>=${<v>string_1<>,}<>
+
+Upper Case (bash 4.0+ only)
+
+
+
+# Array
+
+<cb><v>array_1<>=("<v>Item 0<>" "<v>Item 1<>" "<v>Item2"<> <v>...<>)<>
+
+Separate by spaces.
+Do not use commas.
+@
+@ collections, create, new, define, instantiate
+@ arrays, array-only, arrays-only, list, list-only
+
+
+
+# Array Operations
+@
+@ arrays, array-only, arrays-only, list, list-only
+
+
+
+### Array - Expand
+
+<cb>"${<v>array_1<>[@]}"<>
+
+
+Example:
+
+<cb><v>array_1<>=("<v>value 1<>" "<v>value 2<>" "<v>value 3<>")
+
+echo "Arrary Items: ${<v>array_1<>[@]}"
+
+<#># Prints "Array Item: value 1 value 2 value 3"<><>
+
+
+
+### Array - Get Value
+
+<cb><v>item_0<>=${<v>array_1<>[<v>0<>]}<>
+
+
+Example:
+
+<cb><v>array_1<>=("<v>value 1<>" "<v>value 2<>" "<v>value 3<>")
+
+echo "${<v>array_1<>[0]}"
+
+<#># Prints "value 1"<><>
+@
+@ retrieve, item, element
+
+
+
+### Array - Slice
+
+From Start Position, To End:
+
+<cb><v>array_2<>=("${<v>array_1<>[@]:<v>start_position<>}")<>
+
+From Start Position, With Count:
+
+<cb><v>array_2<>=("${<v>array_1<>[@]:<v>start_position<>:<v>count<>}")<>
+
+
+Example:
+
+<cb><v>array_1<>=(<v>1 2 3 4 5 6<>)
+
+<v>array_2<>=("${<v>array_1<>[@]:<v>4<>}")
+
+<#># Returns (5 6)<><>
+
+<cb><v>array_1<>=(<v>1 2 3 4 5 6<>)
+
+<v>array_2<>=("${<v>array_1<>[@]:<v>2<>:<v>3<>}")
+
+<#># Returns (3 4 5)<><>
+@
+@ sublist, subarray
+
+
+
+### Array - Iterate
+
+<cb>for <v>item<> in "${<v>array_1<>[@]}"
+do
+	<v>...<>
+done<>
+
+
+Example:
+
+<cb><v>array_1<>=("<v>value 1<>" "<v>value 2<>" "<v>value 3<>")
+
+for <v>item<> in "${array_1[@]}"
+do
+	echo "Item $<v>item<>"
+done<>
+@
+@ for in, items, elements, foreach, for each, iterating, values
+
+
+
+### Array - Pass To Function
+
+Call:
+
+<cb><v>function_1<> "${<v>array_1<>[@]}"<>
+
+Will pass in form $1 $2 $3...
+
+
+
+# Standard Environment Variables
+
+
+
+### Home
+
+<cb>$HOME<>
+
+<cb>echo "$HOME"<>
+
+
+Returns the user's home directory.
+
+
+e.g. <c>/home/user-1<>
+
+
+
+### Path
+
+<cb>$PATH<>
+
+<cb>echo "$PATH"<>
+
+
+This is the list of directories Bash searches when executing a command.
+
+
+# How To
+
+
+
+### Bash
+
+/bin/bash
+
+
+
+### Bash - Version
+
+Long Format:
+
+<cb>bash --version<>
+
+Formatted like '4.2.8(1)-release':
+
+<cb>echo $BASH_VERSION<>
+
+Formatted like '4.2.8':
+
+<cb>echo ${BASH_VERSION%%[^0-9.]*}<>
+
+
+### Colors - See All Ansi Colors
+
+<cb>for((i=16; i<256; i++)); do
+    printf "\e[48;5;${i}m%03d" $i;
+    printf '\e[0m';
+    [ ! $((($i - 15) % 6)) -eq 0 ] && printf ' ' || printf '\n'
+done<>
+
+
+Full Chart:
+<l>https://jonasjacek.github.io/colors/<>
+
+
+Setting Foreground:
+
+<cb>echo "'\e[38;5;<v>ansi_color_code<>m'"<>
+
+Setting Background:
+
+<cb>echo "'\e[48;5;<v>ansi_color_code<>m'"<>
+
+
+
+### Color - Print
+
+<cb>echo "\\e[<v>color_code<>m"<><>
+
+Or
+
+<cb>echo "\\033[<v>color_code<>m"<><>
+
+Or
+
+<cb>echo "\\x1B[<v>color_code<>m"<><>
+
+
+Example:
+
+<cb>echo "\\e[031m Prints In Red"<>
+
+<cb>echo "\\e[031m\\e[100m Prints Red on Dark Gray"<>
+
+
+
+### Color - Print / Enable Escapes
+
+The previous section didn't work?
+Use <c>-e<>.
+
+<cb>echo -e "\\e[<v>color_code<>m"<><>
+
+Or
+
+<cb>echo -e "\\033[<v>color_code<>m"<><>
+
+Or
+
+<cb>echo -e "\\x1B[<v>color_code<>m"<><>
+
+
+Example:
+
+<cb>echo -e "\\e[031m Prints In Red"<>
+
+<cb>echo -e "\\e[031m\\e[100m Prints Red on Dark Gray"<>
+
+
+
+### Color - Color Code Table
+
+<cb>\\e[<v>color_code<>m<>
+
+
+No Color					0
+Underline					4
+
+Foreground:
+
+	Black					30
+	Dark Gray				90
+	Gray, Light				37
+	White					97
+
+	Blue						34
+	Cyan					36
+	Green					32
+	Purple					35
+	Red						31
+	Yellow					33
+
+	Light Blue				94
+	Light Cyan				96
+	Light Green				92
+	Light Purple				95
+	Light Red					91
+	Light Yellow				93
+
+Background:
+
+	Default					49
+
+	Black					40
+	Dark Gray				100
+	Gray, Light				47
+	White					107
+
+	Blue						44
+	Cyan					46
+	Green					42
+	Purple					45
+	Red						41
+	Yellow					43
+
+	Light Blue				104
+	Light Cyan				106
+	Light Green				102
+	Light Purple				105
+	Light Red					101
+	Light Yellow				103
+
+
+
+Foreground:
+
+	30			Black
+	31			Red
+	32			Green
+	33			Yellow
+	33			Yellow
+	34			Blue
+	35			Purple
+	36			Cyan
+	37			Light Gray
+	90			Dark Gray
+	91			Light Red
+	92			Light Green
+	94			Light Blue
+	95			Light Purple
+	96			Light Cyan
+	97			White
+
+Background:
+
+	40			Black
+	41			Red
+	42			Green
+	43			Yellow
+	43			Yellow
+	44			Blue
+	45			Purple
+	46			Cyan
+	47			Light Gray
+	100			Dark Gray
+	101			Light Red
+	102			Light Green
+	104			Light Blue
+	105			Light Purple
+	106			Light Cyan
+	107			White
+
+
+More Here:
+<l>https://askubuntu.com/questions/558280/changing-colour-of-text-and-background-of-terminal<>
+@
+@ print, show, reference, foreground, background
+
+
+
+### Command - Trace / Show Execution
+
+<cb>set -x<>
+
+Or
+
+<cb>set -o xtrace<>
+
+
+These are equivalent.
+@
+@ echo, print, debug
+
+
+
+### Command - Trace / Show Execution - Disable
+
+<cb>set +x<>
+
+Or
+
+<cb>set +o xtrace<>
+@
+@ echo, print, debug
+
+
+
+### IP Address - Get
+
+ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'
+
+
+
+### ls - color - use
+
+ls --color=auto
+
+
+
+### ls - colors - change
+
+cp /etc/DIR_COLORS ~/.dir_colors
+	vi ~/.dir_colors
+
+	Find	- DIR 01;34     # directory
+	Change to	- DIR 01;33     # directory
+
+
+
+### Date - Get
+
+<cb>date1='date +%Y.%m.%d'<>
+
+Note the quotes. Must be this without #! /bin/sh in the script. Otherwise " is fine.
+
+<cb>date "+%Y-%m-%d %H:%M:%S"<>
+
+
+
+### Date - Print
+
+echo $(date)
+	echo $(date "+%F %T") 		// YYYY-MM-DD HH-MM-SS
+
+
+
+### Directory - Parent - Get
+
+PARENT_DIR="$(dirname /parent/currentdir)"
+	PARENT_DIR="$(dirname "$CURRENT_DIRECTORY")"
+
+
+
+### Exit
+
+<cb>exit<>
+
+Exit with Return Value:
+
+<cb>exit <v>exit_value<><>
+
+
+Exits and terminates the bash session.
+
+
+### Exit - Keep Bash Session
+
+<cb>return<>
+
+Return With Return Value:
+
+<cb>return <v>exit_value<><>
+
+Exits and but keeps the bash session.
+
+
+### Exit Code - Capture
+
+<cb>= $?<>
+
+
+
+### Input - From Script Lines
+
+<cb><v>command<> \<\<<v>SECTION_TERMINATOR_NAME<>
+<v>input...<>
+<v>SECTION_TERMINATOR_NAME<><>
+
+
+'<<' = Redirect Input Operator
+
+
+Example:
+
+<cb>echo \<\<<v>ECHO_INPUT_END<>
+Print this to the standard out.
+<v>ECHO_INPUT_END<><>
+@
+@ Redirect Input, output
+
+
+
+### Input - From User	
+
+ead -p "caption: " value1
+
+Input stored in variable named 'value1'.
+
+
+
+### Output - To Variable
+
+command_output_1 = $( command )
+
+
+
+### Parameters - Shift
+
+shift [n] 	// Shifts parameters by 1 or by n if given. $2 -> $1, $3 -> $2, etc.
+
+
+
+### Pause - For Keypress
+
+read -p "Press any key to continue... " -n1 -s
+
+	read -p "Press any key to continue... " -n1 -s; echo "" 	// Clears newline.
+
+
+
+### Pipe - To Variable
+
+<cb><v>command_1<> | <v>...<> | (read $<v>pipe_name<>; <v>...<>)<>
+
+Or
+
+<cb><v>pipe_name<>=$(<v>command_1<> |  <v>...<>)<>
+
+
+Prefer the first form.
+
+
+
+### Sleep
+
+sleep seconds
+
+		eg: sleep 1.5	// Sleeps 1.5 seconds.
+		eg: sleep 2m 	// Sleep 2 minutes
+
+
+
+### Terminal - Set Timeout
+
+Add to .bash_profile...
+
+	TMOUT=numSeconds
+	export TMOUT
+
+### Text - First n Lines
+
+some text output... | head -n n
+
+
+
+### Text - Last n Lines
+
+some text output... | tail -n n
+
+
+
+### Text - Middle Line
+
+some text output... | sed -n 'np'
+
+
+
+### Text - Middle Lines n to m
+
+some text output... | sed -n 'n,mp'
+
+
+
+### Variable - Set From Output
+
+variable_1=$(commands)
+
+
+
+# Index - Config Files
+
+
+### Config File - .profile
+
+<cb>.profile<>
+
+Deprecated
+
+Bourne Shell initialization file.
+Executed at login time. Bash will read this if found.
+
+
+
+### Config File - .bash_profile
+
+<cb>.bash_profile<>
+
+Bash user initialization script file.
+Executed at login time.
+Calls <c>.bashrc<>
+
+
+
+### Config File - .bashrc
+
+<cb>.bashrc<>
+
+Bash user per-interactive-shell startup file.
+Executed by "interactive" and "non-login" shells only.
+
+
+
+### Config File - .bash_logout
+
+<cb>.bash_logout<>
+
+Bash user logout cleanup script.
+
+
+
+### Config File - .inputrc
+
+<cb>.inputrc<>
+
+Bash user readline initialization script file.
+
+
+
+# Keyboard Short Cuts
+
+
+### Shortcut - Start Of Line
+
+<cb>Ctrl + a<>
+
+
+
+# Glossary
+
+
+
+### Input Redirect Operator (<<)
+Redirects a block of text to the standard in.
+
+
+
+### Shebang
+These two characters together: #!
+
+
+
+# Unsorted / Add <!>!!!<>
+
+
+### Pass value from function.
+
+
+### Functions - Get value ,return value Example
+
+callable() {
+	local parameter_1="$1"
+	echo "result"
+}
+
+<cb><v>result<>="$(<v>function_1<> "$<v>param_1<>")"<>
+
+Seriously, embed quotes. This is some funky shit. But it works.
+
+
+
+### Function - Local Variable
+
+local <v>variable_1<>
+
+return <v>value<>
+
+
+
+### Input
+
+<cb>read <v>variable_name<><>
+
+
+
+### All separate
+
+-eq
+-ne
+=
+
+not empty
+
+
+
+## Shell - Variables
+
+
+
+### Create / Set
+
+var1="content" 		// No spaces between variable name, =, value.
+var2='cont tent'	// Single quotes will pass spaces.
+
+
+
+### Create Array
+
+declare var1				// Defines an array
+var1=(["name1"]="value1", ["name2"]="value2"…)		// Assign hash map values.
+echo ${var1["name2"]}
+
+#### Create From Command Output
+
+var1=$(command)
+var1="$(command)"		// For multiline return.
+
+
+
+### Export / Share
+
+export var1	// exports a variable to the environment for use by other scripts.
+// … to all child processes running in the shell.
+
+
+
+### Shell Redirect - Unsorted
+
+Output - From Error - To Std
+
+<cb>2>&1 <>
+
+Output - From - All
+
+<cb>&><>
+
+Or
+
+<cb>> target 2>%1<>
+
+Output - To - Std Out
+
+<cb>>&2 <v>command<><>
+
+
