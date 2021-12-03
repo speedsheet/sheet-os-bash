@@ -1589,11 +1589,19 @@ Or
 <cb>echo "\\x1B[<v>color_code<>m"<><>
 
 
-Example:
+Examples:
+
+Red:
 
 <cb>echo "\\e[031m Prints In Red"<>
 
+Red on Dark Gray:
+
 <cb>echo "\\e[031m\\e[100m Prints Red on Dark Gray"<>
+
+Restore Original:
+
+<cb>echo "\\e[031m Red \\e[0m Normal"<>
 
 
 
@@ -1613,9 +1621,13 @@ Or
 <cb>echo -e "\\x1B[<v>color_code<>m"<><>
 
 
-Example:
+Examples:
+
+Red:
 
 <cb>echo -e "\\e[031m Prints In Red"<>
+
+Red on Dark Grey:
 
 <cb>echo -e "\\e[031m\\e[100m Prints Red on Dark Gray"<>
 
@@ -1626,7 +1638,7 @@ Example:
 <cb>\\e[<v>color_code<>m<>
 
 
-No Color					0
+No Color (Default Color)	0
 Underline					4
 
 Foreground:
