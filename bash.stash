@@ -1,5 +1,5 @@
 # <#>Bash Scripting<> SpeedSheet
-<b>What you need, faster.<>
+<b>Find what you need, faster.<>
 
 Covers bash scripting syntax and commands.
 
@@ -168,6 +168,22 @@ Send all parameters with quotes.
 ### Parameters - All Parameters, With Spaces, Quoted
 
 <cb>"$@"<>
+
+
+
+### Parameters - All Parameters Except 1st
+
+<cb>${*:2}<>
+@
+@ with 2nd, first, second
+
+
+
+### Parameters - All Parameters Except 1st, Quoted
+
+<cb>${@:2}<>
+@
+@ with 2nd, first, second
 
 
 
@@ -974,6 +990,16 @@ Returns true if the file exists and is a regular file (as opposed to a link, etc
 <cb>cat > <v>file_name<>
 <v>...content...<>
 Ctrl + D<>
+@
+@ to file, command line
+
+
+
+### File - Create - From Console / From Command
+
+<cb>echo <v>...content...<> > <v>file_name<><>
+@
+@ to file, command line
 
 
 
@@ -985,6 +1011,8 @@ END_LABEL<>
 
 
 Use this in a script to create a file.
+@
+@ to file
 
 
 
@@ -1760,6 +1788,92 @@ Or
 
 
 
+### File Name - Get From Path
+
+<cb><v>file_name<>=$(basename -- "$<v>full_path<>")<>
+
+
+Returns the file name part of the path.
+
+
+Example:
+
+<cb><v>full_path<>="/tmp/the_file.txt"
+
+<v>file_name<>="$(basename -- <v>full_path<>)"
+
+<#># Returns 'the_file.txt'<><>
+
+<cb><v>full_path<>="the_file.txt"
+
+<v>file_name<>="$(basename -- <v>full_path<>)"
+
+<#># Returns 'the_file.txt'<><>
+@
+@ extract
+
+
+
+### File Name - Get Base Name
+
+<cb><v>base_name<>="${<v>file_name<>%.*}"<>
+
+
+Extracts the base file name from a file name or file path.
+
+
+Examples:
+
+From File Name:
+
+<cb><v>file_name<>="the_file.txt"
+
+<v>base_name<>="${<v>file_name<>%.*}"
+
+<#># Returns 'the_file'<><>
+
+From Path:
+
+<cb><v>file_name<>="/usr/test/the_file.txt"
+
+<v>base_name<>="${<v>file_name<>%.*}"
+
+<#># Returns 'the_file'<><>
+@
+@ extract
+
+
+
+### File Name - Get Extension
+
+<cb><v>extension<>="${<v>file_name<>##*.}"<>
+
+
+Extracts the file extension from a file name or file path.
+
+
+Examples:
+
+From File Name:
+
+<cb><v>file_name<>="the_file.txt"
+
+<v>extension<>="${<v>file_name<>##*.}"
+
+<#># Returns 'txt'<><>
+
+From Path:
+
+<cb><v>file_name<>="/usr/test/the_file.txt"
+
+<v>extension<>="${<v>file_name<>##*.}"
+
+<#># Returns 'txt'<><>
+@
+@ extract
+
+
+
 ### IP Address - Get
 
 ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'
@@ -1818,6 +1932,7 @@ Exit with Return Value:
 Exits and terminates the bash session.
 
 
+
 ### Exit - Keep Bash Session
 
 <cb>return<>
@@ -1832,6 +1947,36 @@ Exits and but keeps the bash session.
 ### Exit Code - Capture
 
 <cb>= $?<>
+
+
+
+### If - Has Parameter
+
+<cb>if [ ! -z "$1" ]; then
+	<v>...<>
+else
+	<v>...<>
+fi<>
+
+
+
+### If - No Parameter
+
+<cb>if [ -z "$1" ]; then
+	<v>...<>
+else
+	<v>...<>
+fi<>
+
+
+
+### If - Parameter Equals
+
+<cb>if [ "$1" == "<v>value<>" ]; then
+	<v>...<>
+else
+	<v>...<>
+fi<>
 
 
 
