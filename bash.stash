@@ -3,9 +3,6 @@
 
 Covers bash scripting syntax and commands.
 
-<m>(Add Extras From End)
-(Fix Formatting)<>
-
 
 # Summary
 
@@ -26,24 +23,36 @@ Non Login Starts:
 
 ### Bash Script Identifier (Shebang)
 
-Bash, Latest Version:
+<cb>#!<v>...<><>
 
 <cb>#!/usr/bin/env bash<>
 
-Bash:
+
+Identifies the command needed to run the current file.
+
+Must be the first line in script.
+@
+@ #!
+
+
+#### Shebang - Bash, Latest Available Version
+
+<cb>#!/usr/bin/env bash<>
+
+
+#### Shebang - Bash
 
 <cb>#!/bin/bash<>
 
-Sh:
+
+#### Shebang - Sh
 
 <cb>#!/bin/sh<>
 
-Python:
+
+#### Shebang - Python 3
 
 <cb>#!/usr/bin/env python3<>
-
-
-Enter as first line in script.
 
 
 
@@ -111,12 +120,35 @@ Non-root processes must listen on ports greater than 1023.
 
 
 # Commands
+@
+@ processes, jobs, command-only, commands-only, job-only, jobs-only, process-only, processes-only
+
+
+## Commands - Basics
+
+<card><table><col>Start				<><col><c><v>command_name<><><>
+<col>Start in Background<><col><c><v>command_name<> &<><>
+<col>Start from Current Directory<><col><c>./<v>command_name<><><>
+<col>Start in the Current Process<><col><c>. <v>command_name<><><>
+<col> <>
+<col>Run Multiple Commands<><col><c><v>command1<>; <v>command2<><><>
+<col>Run Multiple Commands, Piping Output<><col><c><v>command1<> | <v>command2<><><>
+<col>Run Multiple Commands, Capturing Output<><col><c><v>command2<> $(<v>command1<>)<><>
+<col> <>
+<col>Run Command 1 Successfully, Then Command 2<><col><c><v>command1<> && <v>command2<><><>
+<col>Run Command 1 Without Error, Then Command 2<><col><c><v>command1<> || <v>command2<><><>
+<col> <>
+<col>Cancel / End<><col><c>CTRL + C<><>
+<col>Suspend<><col><c>CTRL + Z<><>
+<col> <>
+<col>Run in Background<><col><c>bg % <v>number<><><>
+<col>Run in Foreground<><col><c>fg % <v>number<><><>
+<col> <>
+<col>List All<><col><c>jobs<><><><>
 
 
 
-###Command - Run in Current Dir
-
-<cb>./<v>command<><>
+## Commands - Details
 
 
 
@@ -126,6 +158,19 @@ Non-root processes must listen on ports greater than 1023.
 
 
 Append '<c>&<>' to the end of the command.
+@
+@ starting, &
+
+
+
+### Command - Run From Current Directory
+
+<cb>./<v>command<><>
+
+
+Runs a command that is in the current directory.
+@
+@ starting, ./
 
 
 
@@ -139,6 +184,147 @@ Append '<c>&<>' to the end of the command.
 These two are equivalent.
 These will run the command in the current process.
 Any environment changes will be kept.
+@
+@ starting, .
+
+
+
+### Command - Cancel
+
+<cb>CTRL + C<>
+
+
+Suspends the current process or command.
+@
+@ end, kill
+
+
+
+### Command - Suspend
+
+<cb>CTRL + Z<>
+
+
+Suspends the current process or command.
+
+
+
+### Command, Suspended - Resume In Background
+
+<cb>bg<>
+
+<cb>bg % <v>job_number<><>
+
+Runs the last job or job with given numer in the background.
+@
+@ bg, restart, run
+
+
+
+### Command, Suspended - Resume In Foreground
+
+<cb>fg<>
+
+<cb>fg % <v>job_number<><>
+
+Runs the last job or job with given numer in the foreground.
+@
+@ fg, restart, run
+
+
+
+### Multiple Commands - Run Sequentially
+
+<cb><v>command_1<>; <v>command_2<>; <v>...<><>
+
+
+Runs each command in sequence.
+<c>;<> is the command separator.
+
+
+Example:
+
+<cb>echo "Hello"; echo "There"<>
+@
+@ ;, together
+
+
+
+### Multiple Commands - Run Sequentially, Connecting Standand Out to Standard In
+
+<cb><v>command_1<> | <v>command_2<> | <v>...<><>
+
+
+Runs each command in sequence.
+<c>|<> directs the output of command 1 to the input of command 2.
+
+
+Example:
+
+<cb>ls | grep .log<>
+@
+@ |, together, piping, pipe, stdin, stdout
+
+
+
+### Multiple Commands - Run Sequentially, Capturing Output
+
+<cb><v>command_2<> $(<v>command_1<>)<>
+
+
+Run command 1 and return the output as input to command 2.
+<c>$()<> executes the command and returns the output.
+
+
+Example:
+
+<cb>echo $(echo "Hello") "there."
+
+<#># Prints: Hello there.<><>
+@
+@ $(), call, piping, pipe, stdin, stdout
+
+
+
+### Multiple Commands - Run Sequentially If Successful
+
+<cb><v>command_1<> && <v>command_2<> && <v>...<><>
+
+
+Runs each command in sequence if and only if each completes successfully (exit code = 0).
+
+
+Example:
+
+<cb>echo "Hello" &1 echo "There"<>
+@
+@ &&, together, exit code
+
+
+
+### Multiple Commands - Run Sequentially If No Error
+
+<cb><v>command_1<> || <v>command_2<> || <v>...<><>
+
+
+Runs each command in sequence if and only if each completes without error (exit code not non zero).
+
+
+Example:
+
+<cb>echo "Hello" || echo "There"<>
+@
+@ ||, together, exit code
+
+
+
+### Commands - List All
+
+<cb>jobs<>
+
+Lists all the jobs an their job numbers.
+@
+@ background, view, jobs, job numbers, suspended, running
 
 
 
@@ -1037,35 +1223,6 @@ done<>
 <cb>for <v>file_name<> in * ; do <v>...<> ; done<>
 @
 @ for loop through
-
-
-
-# Shell
-
-Command - Separator	command1; command2
-
-Command - And	command1 && command2 	// Command 2 runs only if command 2 completes successfully.
-
-Command - Or	command1 || command2 	// Command 2 runs only if command 1 returns a failed error.
-
-Command - Pass Output	use: command2 'command1' 	// Use ''. This will send the return value of command1 to command2.
-	ex:
-	ls -l 'which java'
-
-Command - Run in Current Dir	./command
-Command - Run In Background	command & 	// Append '&' to end of command.
-Command - Run In Current Proc.	.  command	// the . runs in the current process (space after the '.').
-Command - Run and Return Val.	$(command) 	// Runs the command and returns the value. The value can be referenced like a variable.
-Command - Run And	command1 && command2 && ...
-	&&	// Means and. 'And' run next command if the last one ran successfully.
-
-Process - Cancel	Ctrl + C
-Process - Suspend	Ctrl + Z
-
-Maths	= $((expresion))
-
-	ex:
-	kbytes = $(( $bytes / 1024 ))
 
 
 
@@ -2145,110 +2302,137 @@ Bash user readline initialization script file.
 
 
 
-# Glossary
+# Symbol Reference
 
 
 
-### Input Redirect Operator (<<)
+### Symbol .
+
+Run In Current Process
+
+<cb>. <v>command<><>
+
+
+
+### Symbol ./
+
+Run From Current directory
+
+<cb>./<v>command<><>
+
+
+
+### Symbol &
+
+Run In Background.
+
+<cb><v>command<> &<>
+
+
+
+### Symbol &&
+
+Run Only After 1st Completes Successfully
+
+<cb><v>command_1<> && <v>command_2<><>
+
+
+
+### Symbol ||
+
+Run Only After 1st Completes Without Error (Status = 0)
+
+<cb><v>command_1<> || <v>command_2<><>
+
+
+
+### Symbol ;
+
+Command Separator.
+
+Used to run separate commands.
+
+<cb><v>command_1<>; <v>command_2<><>
+
+
+
+### Symbol $()
+
+Runs a command and returns it's output as a parameter.
+
+<cb><v>response<>=$(<v>command<>)<>
+
+<cb><v>command_2<> $(<v>command_1<>)<>
+@
+@ $(, )
+
+
+
+### Symbol #!
+
+Bash Script Identifier / Shebang.
+
+Identifies the command needed to run the current file.
+Must be the first line of the file.
+
+<cb>#!/usr/bin/env bash<>
+
+
+
+### Symbol >
+
+Output Redirect Operator
+
+Redirects the standard output to a new file.
+It will delete any pre-eisting file.
+
+<cb><v>command<> > <v>file_name<><>
+
+
+
+### Symbol >>
+
+Output Append Redirect Operator
+
+Redirects the standard output to an existing file.
+It will create it if it doesn't exist.
+
+<cb><v>command<> >> <v>file_name<><>
+
+
+
+### Symbol \<
+
+Input Redirect Operator
+
+Reads the contents of a file or device as the standard in for a command.
+
+<cb><v>command<> \< <v>file_name<><>
+
+
+
+### Symbol \<\<
+
+Input Redirect Operator / Stream Literals
+
 Redirects a block of text to the standard in.
 
-
-
-### Shebang
-These two characters together: #!
-
-
-
-# Unsorted / Add <!>!!!<>
-
-
-### Pass value from function.
-
-
-### Functions - Get value ,return value Example
-
-callable() {
-	local parameter_1="$1"
-	echo "result"
-}
-
-<cb><v>result<>="$(<v>function_1<> "$<v>param_1<>")"<>
-
-Seriously, embed quotes. This is some funky shit. But it works.
+<cb><v>command<> \<\<<v>LABEL
+input
+LABEL<><>
 
 
 
-### Function - Local Variable
-
-local <v>variable_1<>
-
-return <v>value<>
+# Terms
+@
+@ glossary
 
 
 
-### Input
+### Bash Script Identifier / Shebang
+Identifies the command needed to run the current file.
+Must be the first line of the file.
 
-<cb>read <v>variable_name<><>
-
-
-
-### All separate
-
--eq
--ne
-=
-
-not empty
-
-
-
-## Shell - Variables
-
-
-
-### Create / Set
-
-var1="content" 		// No spaces between variable name, =, value.
-var2='cont tent'	// Single quotes will pass spaces.
-
-
-
-### Create Array
-
-declare var1				// Defines an array
-var1=(["name1"]="value1", ["name2"]="value2"…)		// Assign hash map values.
-echo ${var1["name2"]}
-
-#### Create From Command Output
-
-var1=$(command)
-var1="$(command)"		// For multiline return.
-
-
-
-### Export / Share
-
-export var1	// exports a variable to the environment for use by other scripts.
-// … to all child processes running in the shell.
-
-
-
-### Shell Redirect - Unsorted
-
-Output - From Error - To Std
-
-<cb>2>&1 <>
-
-Output - From - All
-
-<cb>&><>
-
-Or
-
-<cb>> target 2>%1<>
-
-Output - To - Std Out
-
-<cb>>&2 <v>command<><>
-
-
+<cb>#!/usr/bin/env bash<>
+@
+@ #!
