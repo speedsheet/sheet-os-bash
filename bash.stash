@@ -329,17 +329,23 @@ Lists all the jobs an their job numbers.
 
 
 # Parameters
+@
+@ arguments
 
 
 ### Parameters - Individual
 
 <cb>$1 $2 $3<>
+@
+@ $1, $2, $3
 
 
 
 ### Parameters - All Parameters
 
 <cb>$*<>
+@
+@ $*
 
 
 
@@ -348,12 +354,16 @@ Lists all the jobs an their job numbers.
 <cb>$@<>
 
 Send all parameters with quotes.
+@
+@ $@
 
 
 
 ### Parameters - All Parameters, With Spaces, Quoted
 
 <cb>"$@"<>
+@
+@ "$@", $@
 
 
 
@@ -361,7 +371,8 @@ Send all parameters with quotes.
 
 <cb>${*:2}<>
 @
-@ with 2nd, first, second
+@ ${*:2}
+@ with 2nd, first, second, to end, remainder, remaining, onward
 
 
 
@@ -369,7 +380,8 @@ Send all parameters with quotes.
 
 <cb>${@:2}<>
 @
-@ with 2nd, first, second
+@ ${@:2}
+@ with 2nd, first, second, to end, remainder, remaining, onward
 
 
 
@@ -378,11 +390,15 @@ Send all parameters with quotes.
 <cb>$?<>
 
 Return or Exit Code from last operation.
+@
+@ $?
 
 
 ### Parameters - Parameter Count
 
 <cb>$#<>
+@
+@ $#
 
 
 
@@ -944,7 +960,7 @@ Example:
 
 
 
-### Shell Redirect - Redirect Input  \<
+### Shell Redirect - Redirect Input - \<
 
 <cb><v>command<> < <v>file_name<><>
 
@@ -960,7 +976,7 @@ Example:
 
 
 
-### Shell Redirect - Redirect Input - Stream Literals \<\<
+### Shell Redirect - Redirect Input - \<\< Stream Literals
 
 <cb>command \<\<<v>TERMINATING_LABEL<>
 <v>input...<>
@@ -985,6 +1001,17 @@ echo "Results:"
 cat <v>output.txt<><>
 @
 @ multiline, returns, newlines, in script, within, inside
+
+
+
+### Shell Redirect - Redirect Input - \<\<\< From Variable
+
+<cb>command \<\<\< $<v>input_variable<><>
+
+
+Send the contents of a variable to the input of the command.
+@
+@ \<\<\<
 
 
 
@@ -1177,7 +1204,7 @@ Returns true if the file exists and is a regular file (as opposed to a link, etc
 <v>...content...<>
 Ctrl + D<>
 @
-@ to file, command line
+@ to file, command line, new, write, cat, >
 
 
 
@@ -1185,7 +1212,7 @@ Ctrl + D<>
 
 <cb>echo <v>...content...<> > <v>file_name<><>
 @
-@ to file, command line
+@ to file, command line, new, write, echo >
 
 
 
@@ -1198,7 +1225,7 @@ END_LABEL<>
 
 Use this in a script to create a file.
 @
-@ to file
+@ to file, new, write, cat, <<, >, label
 
 
 
@@ -1381,12 +1408,16 @@ False:
 <cb>1<>
 
 
-No Booleans
+Bash has no built in booleans.
 Use integers 0 and 1 instead.
+@
+@ booleans, true, false
 
 
 
 # Boolean Operations
+@
+@ booleans, true, false
 
 
 
@@ -1395,6 +1426,26 @@ Use integers 0 and 1 instead.
 <cb>[ <v>expression<> ]<>
 
 Converts <c><v>expression<><> to true or false.
+
+
+# Booleans - An Implementation
+
+Define:
+
+<cb>TRUE=0
+FALSE=1<>
+
+
+Reference:
+
+<cb><v>bool_1<>=TRUE<>
+
+
+Test:
+
+<cb>if [ "$<v>bool_1<>" -eq "$TRUE" ]; then
+	<v>...<>
+fi<>
 
 
 
@@ -1736,32 +1787,12 @@ Formatted like '4.2.8(1)-release':
 Formatted like '4.2.8':
 
 <cb>echo ${BASH_VERSION%%[^0-9.]*}<>
-
-
-### Colors - See All Ansi Colors
-
-<cb>for((i=16; i<256; i++)); do
-    printf "\e[48;5;${i}m%03d" $i;
-    printf '\e[0m';
-    [ ! $((($i - 15) % 6)) -eq 0 ] && printf ' ' || printf '\n'
-done<>
-
-
-Full Chart:
-<l>https://jonasjacek.github.io/colors/<>
-
-
-Setting Foreground:
-
-<cb>echo "'\e[38;5;<v>ansi_color_code<>m'"<>
-
-Setting Background:
-
-<cb>echo "'\e[48;5;<v>ansi_color_code<>m'"<>
+@
+@ --version, $BASH_VERSION
 
 
 
-### Color - Print
+### Color - ANSI Color - Set Color
 
 <cb>echo "\\e[<v>color_code<>m"<><>
 
@@ -1778,22 +1809,23 @@ Examples:
 
 Red:
 
-<cb>echo "\\e[031m Prints In Red"<>
+<cb>echo "\\e[<v>031<>m Prints In Red"<>
 
 Red on Dark Gray:
 
-<cb>echo "\\e[031m\\e[100m Prints Red on Dark Gray"<>
+<cb>echo "\\e[<v>031<>m\\e[<v>100<>m Prints Red on Dark Gray"<>
 
 Restore Original:
 
-<cb>echo "\\e[031m Red \\e[0m Normal"<>
+<cb>echo "\\e[<v>031<>m Red \\e[<v>0<>m Normal"<>
+@
+@ colors, colours
 
 
 
-### Color - Print / Enable Escapes
+### Color - ANSI Color - Set Color / Enable Escape
 
-The previous section didn't work?
-Use <c>-e<>.
+Use <c>-e<> if ANSI color escapes don't work..
 
 <cb>echo -e "\\e[<v>color_code<>m"<><>
 
@@ -1810,111 +1842,162 @@ Examples:
 
 Red:
 
-<cb>echo -e "\\e[031m Prints In Red"<>
+<cb>echo -e "\\e[<v>031<>m Prints In Red"<>
 
 Red on Dark Grey:
 
-<cb>echo -e "\\e[031m\\e[100m Prints Red on Dark Gray"<>
+<cb>echo -e "\\e[<v>031<>m\\e[<v>100<>m Prints Red on Dark Gray"<>
+@
+@ colors, colours, escapes, troubleshoot
 
 
 
-### Color - Color Code Table
+### Color - ANSI Color Code Table - Color To Code
+
+<cb>\\e[<v>color_code<>m<>
+
+Special Codes:
+
+<in-2><table><col>Default Color<><col>0<>
+<col>Default Background<><col>49<>
+<col>Underline<><col>4<><><>
+
+Foreground:
+
+<in-2><table><col>Black			<><col>30<>
+<col>Dark Gray<><col>90<>
+<col>Gray, Light<><col>37<>
+<col>White<><col>97<>
+<col> <>
+<col>Blue<><col>34<>
+<col>Cyan<><col>36<>
+<col>Green<><col>32<>
+<col>Purple<><col>35<>
+<col>Red<><col>31<>
+<col>Yellow<><col>33<>
+<col> <>
+<col>Light Blue<><col>94<>
+<col>Light Cyan<><col>96<>
+<col>Light Green<><col>92<>
+<col>Light Purple<><col>95<>
+<col>Light Red<><col>91<>
+<col>Light Yellow<><col>93<><><>
+
+Background:
+
+<in-2><table><col>Black			<><col>40<>
+<col>Dark Gray<><col>100<>
+<col>Gray, Light<><col>47<>
+<col>White<><col>107<>
+<col> <>
+<col>Blue<><col>44<>
+<col>Cyan<><col>46<>
+<col>Green<><col>42<>
+<col>Purple<><col>45<>
+<col>Red<><col>41<>
+<col>Yellow<><col>43<>
+<col> <>
+<col>Light Blue<><col>104<>
+<col>Light Cyan<><col>106<>
+<col>Light Green<><col>102<>
+<col>Light Yellow<><col>103<>
+<col>Light Purple<><col>105<>
+<col>Light Red<><col>101<>
+<col>Light Yellow<><col>103<><><>
+@
+@ colors, colours, name
+@ print, show, reference, foreground, background
+
+
+
+### Color - ANSI Color Code Table - Code to Color
 
 <cb>\\e[<v>color_code<>m<>
 
 
-No Color (Default Color)	0
-Underline					4
+Special:
+
+<in-2><table><col>0				<><col>Default Foreground<>
+<col>4<><col>Underline<>
+<col>49<><col>Default Background<><><>
 
 Foreground:
 
-	Black					30
-	Dark Gray				90
-	Gray, Light				37
-	White					97
-
-	Blue						34
-	Cyan					36
-	Green					32
-	Purple					35
-	Red						31
-	Yellow					33
-
-	Light Blue				94
-	Light Cyan				96
-	Light Green				92
-	Light Purple				95
-	Light Red					91
-	Light Yellow				93
+<in-2><table><col>30				<><col>Black<>
+<col>31<><col>Red<>
+<col>32<><col>Green<>
+<col>33<><col>Yellow<>
+<col>34<><col>Blue<>
+<col>35<><col>Purple<>
+<col>36<><col>Cyan<>
+<col>37<><col>Light Gray<>
+<col>90<><col>Dark Gray<>
+<col>91<><col>Light Red<>
+<col>92<><col>Light Green<>
+<col>93<><col>Light Yellow<>
+<col>94<><col>Light Blue<>
+<col>95<><col>Light Purple<>
+<col>96<><col>Light Cyan<>
+<col>97<><col>White<><><>
 
 Background:
 
-	Default					49
-
-	Black					40
-	Dark Gray				100
-	Gray, Light				47
-	White					107
-
-	Blue						44
-	Cyan					46
-	Green					42
-	Purple					45
-	Red						41
-	Yellow					43
-
-	Light Blue				104
-	Light Cyan				106
-	Light Green				102
-	Light Purple				105
-	Light Red					101
-	Light Yellow				103
-
-
-
-Foreground:
-
-	30			Black
-	31			Red
-	32			Green
-	33			Yellow
-	33			Yellow
-	34			Blue
-	35			Purple
-	36			Cyan
-	37			Light Gray
-	90			Dark Gray
-	91			Light Red
-	92			Light Green
-	94			Light Blue
-	95			Light Purple
-	96			Light Cyan
-	97			White
-
-Background:
-
-	40			Black
-	41			Red
-	42			Green
-	43			Yellow
-	43			Yellow
-	44			Blue
-	45			Purple
-	46			Cyan
-	47			Light Gray
-	100			Dark Gray
-	101			Light Red
-	102			Light Green
-	104			Light Blue
-	105			Light Purple
-	106			Light Cyan
-	107			White
-
-
-More Here:
-<l>https://askubuntu.com/questions/558280/changing-colour-of-text-and-background-of-terminal<>
+<in-2><table><col>40				<><col>Black<>
+<col>41<><col>Red<>
+<col>42<><col>Green<>
+<col>43<><col>Yellow<>
+<col>44<><col>Blue<>
+<col>45<><col>Purple<>
+<col>46<><col>Cyan<>
+<col>47<><col>Light Gray<>
+<col>100<><col>Dark Gray<>
+<col>101<><col>Light Red<>
+<col>102<><col>Light Green<>
+<col>103<><col>Light Yellow<>
+<col>104<><col>Light Blue<>
+<col>105<><col>Light Purple<>
+<col>106<><col>Light Cyan<>
+<col>107<><col>White<><><>
 @
+@ colors, colours, name
 @ print, show, reference, foreground, background
+
+
+
+### Color - XTerm Color - Set Color
+
+<cb>echo "'\\e[38;5;<v>ansi_color_code<>m'"<>
+@
+@ colors, colours
+
+
+
+
+### Color - XTerm Color - Set Background Color
+
+<cb>echo "'\\e[48;5;<v>ansi_color_code<>m'"<>
+@
+@ colors, colours
+
+
+
+
+### Color - XTerm Colors - See All
+
+<cb>for((i=16; i<256; i++)); do
+    printf "\\e[48;5;${i}m%03d" $i;
+    printf '\\e[0m';
+    [ ! $((($i - 15) % 6)) -eq 0 ] && printf ' ' || printf '\n'
+done<>
+
+
+Displays a chart of all available colors.
+
+
+Full Chart:
+<l>https://www.ditig.com/256-colors-cheat-sheet<>
+@
+@ colors, colours
 
 
 
@@ -2037,19 +2120,21 @@ ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'
 
 
 
-### ls - color - use
+### ls - Color - Use
 
-ls --color=auto
+<cb>ls --color=auto<>
 
 
 
-### ls - colors - change
+### ls - Colors - Change
 
-cp /etc/DIR_COLORS ~/.dir_colors
-	vi ~/.dir_colors
+<cb>cp /etc/DIR_COLORS ~/.dir_colors
+vi ~/.dir_colors<>
 
-	Find	- DIR 01;34     # directory
-	Change to	- DIR 01;33     # directory
+Set Directory Color:
+
+<in-2><table><col>Find<><col><c>DIR 01;34<><>
+<col>Change To	<><col><c>DIR 01;33<><><>
 
 
 
@@ -2104,6 +2189,44 @@ Exits and but keeps the bash session.
 ### Exit Code - Capture
 
 <cb>= $?<>
+
+
+
+### Echo - Clear Line
+
+<cb>echo -ne '\\033[2K'<>
+
+
+Clears the current line.
+@
+@ print, \\033[2K
+
+
+
+### Echo - Print On Same Line
+
+<cb>echo -n <v>text<><>
+
+<cb>echo -ne <v>text<> '\\r'<>
+
+
+Prints the text but does not move to a new line.
+
+\\r Places the cursor back at the start of the line.
+
+
+Example:
+
+<cb>for ((<v>value<>=0; <v>value<> < 15; <v>value<>++));
+do
+	echo -ne $<v>value<> '\\r'
+	sleep 0.5
+done
+
+echo
+echo 'Done.'<>
+@
+@ echo, -n, -r, \\r
 
 
 
@@ -2293,6 +2416,48 @@ Bash user readline initialization script file.
 
 
 
+# Exit Codes
+@ 
+@ status, return
+
+
+### Exit Code - OK / Successful
+
+OK Exit Code:
+
+<cb>0<>
+@
+@ 0, successful
+
+
+### Exit Code - Error
+
+Recommended Error Exit Codes:
+
+<cb>1-127<>
+
+
+### Exit Code - Error / General Error
+
+<cb>1<>
+
+Return 1 for a general exception.
+@
+@ 1
+
+
+### Exit Code - Error / User Error
+
+<cb>2<>
+
+Invalid Command Line Options Error Code
+
+These are guideline more than rule.
+@
+@ 2
+
+
+
 # Keyboard Short Cuts
 
 
@@ -2420,6 +2585,16 @@ Redirects a block of text to the standard in.
 <cb><v>command<> \<\<<v>LABEL
 input
 LABEL<><>
+
+
+
+### Symbol \<\<\<
+
+Input Redirect Operator / From Variable
+
+Redirects a the value of a variable to the standard in.
+
+<cb><v>command<> \<\<\< $<v>variable<><>
 
 
 
