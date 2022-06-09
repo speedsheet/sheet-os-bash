@@ -1,10 +1,58 @@
 # <#>Bash Scripting<> SpeedSheet
-<b>Find what you need, faster.<>
+<b>Find it faster.<>
 
-Covers bash scripting syntax and commands.
+This is an interactive <b>Bash<> cheat sheet. Covers the core Bash scripting language. Use the search to instantly get answers.
+
+Bash is an <c>sh<> compatible command language used to run and manage processes on Linux and Unix systems.
 
 
-# Summary
+<table><col><b>Basics<>
+
+<*><link "?q=fundamentals-only">Bash Fundamentals<>
+<link "?q=naming-conventions-only">Naming Conventions<><>
+
+<*><link "?q=command-execution-only">Command Execution<>
+<link "?q=parameters-only">Command Parameters<>
+<link "?q=config-only">Configuration Files<>
+<link "?q=control-only">Control Structures<>
+<link "?q=debug-only">Debugging<>
+<link "?q=variables-only">Environment Variables<>
+<link "?q=exit-only">Exit<>
+<link "?q=files-only">File IO<>
+<link "?q=functions-only">Functions<>
+<link "?q=operators-only">Operators<>
+<link "?q=redirect-only">Redirecting IO<><>
+
+<*><link "?q=how-to-only">How To<><>
+
+<b>Reference<>
+
+<*><link "?q=acronyms-only">Acronyms<>
+<link "?q=color+table">Colors<>
+<link "?q=exit-codes-only">Exit Codes<>
+<link "?q=symbols-only">Symbols<>
+<link "?q=terms-only">Terms<><><><col>	<><col><b>Data Types<>
+
+<*><link "?q=variables-only">Variables<><>
+
+<*><link "?q=boolean-only">Boolean<>
+<link "?q=integer-only">Integer<>
+<link "?q=string-only">String<>
+<link "?q=array-only">Array<><>
+
+<b>Control Structures<>
+
+<*><link "?q=if-only">If<>
+<link "?q=case-only">Case<>
+<link "?q=for-only">For<>
+<link "?q=until-only">Until<>
+<link "?q=while-only">While<><><><>
+
+
+# Bash Fundamentals
+@
+@ language-fundamentals-only, fundamentals-only, bash-fundamentals-only
+
 
 ### Startup / Configuration Files
 
@@ -59,6 +107,34 @@ Must be the first line in script.
 ### Comments
 
 <cb><#># Comments - Single Line<><>
+
+
+
+### Identifiers
+
+<cb>( <v>letter<> | _ )( <v>letter<> | <v>digit<> | _ )*<>
+
+Regex Form:
+
+<cb>[_a-zA-Z][_0-9a-zA-Z]*<>
+
+Case sensitive.
+The first character must be an alphabet letter or underscore, not a digit.
+All other characters can be alphabet letters, underscores or digits.
+
+
+Examples:
+
+<cb><v>simple<><>
+
+<cb><v>_underscore<><>
+
+<cb><v>with_underscore<><>
+
+<cb><v>with_123<><>
+@
+@ names, variable names, function names
+@ Rules, Valid, allowable, allowed, Correct
 
 
 
@@ -119,24 +195,72 @@ Non-root processes must listen on ports greater than 1023.
 
 
 
-# Commands
+# Naming Convention
+
+There is nothing official but these are often recommended.
 @
-@ processes, jobs, command-only, commands-only, job-only, jobs-only, process-only, processes-only
+@ Names, naming-conventions-only, conventions-only
 
 
-## Commands - Basics
+
+### Convention - Variable Name - OS, Startup Scripts
+
+<cb>$<v>VAR_NAME<><>
+
+Use UPPER_SNAKE_CASE.
+
+
+
+### Convention - Variable Name - Local, Script
+
+<cb>$<v>user_var_name<><>
+
+Use lower_snake_case.
+
+
+
+### Convention - Variable Name - Constant
+
+<cb>$<v>USER_CONSTANT_NAME<><>
+
+Use UPPER_SNAKE_CASE.
+
+
+<!>Warning:<>
+Ensure name does not conflict with OS variable name.
+
+
+
+### Convention - Function Name
+
+<cb><v>function_name<>() {
+	<v>...<>
+}<>
+
+
+Use lower_snake_case.
+
+
+
+# Executing Commands
+@
+@ execute, processes, jobs
+@ command-only, commands-only, execute-commands-only, command-execution-only, job-only, jobs-only, process-only, processes-only
+
+
+### Commands - Basics
 
 <card><table><col>Start				<><col><c><v>command_name<><><>
 <col>Start in Background<><col><c><v>command_name<> &<><>
 <col>Start from Current Directory<><col><c>./<v>command_name<><><>
 <col>Start in the Current Process<><col><c>. <v>command_name<><><>
 <col> <>
-<col>Run Multiple Commands<><col><c><v>command1<>; <v>command2<><><>
-<col>Run Multiple Commands, Piping Output<><col><c><v>command1<> | <v>command2<><><>
-<col>Run Multiple Commands, Capturing Output<><col><c><v>command2<> $(<v>command1<>)<><>
+<col>Chain Commands<><col><c><v>command1<>; <v>command2<><><>
+<col>Chain Commands, Pipe Output<><col><c><v>command1<> | <v>command2<><><>
+<col>Chain Commands, Capture Output<><col><c><v>command2<> $(<v>command1<>)<><>
 <col> <>
-<col>Run Command 1 Successfully, Then Command 2<><col><c><v>command1<> && <v>command2<><><>
-<col>Run Command 1 Without Error, Then Command 2<><col><c><v>command1<> || <v>command2<><><>
+<col>Run Commands, While Successful<><col><c><v>command1<> && <v>command2<><><>
+<col>Run Commands, While No Error<><col><c><v>command1<> || <v>command2<><><>
 <col> <>
 <col>Cancel / End<><col><c>CTRL + C<><>
 <col>Suspend<><col><c>CTRL + Z<><>
@@ -145,10 +269,6 @@ Non-root processes must listen on ports greater than 1023.
 <col>Run in Foreground<><col><c>fg % <v>number<><><>
 <col> <>
 <col>List All<><col><c>jobs<><><><>
-
-
-
-## Commands - Details
 
 
 
@@ -246,7 +366,7 @@ Example:
 
 <cb>echo "Hello"; echo "There"<>
 @
-@ ;, together
+@ ;, together, chain
 
 
 
@@ -263,7 +383,7 @@ Example:
 
 <cb>ls | grep .log<>
 @
-@ |, together, piping, pipe, stdin, stdout
+@ |, together, piping, pipe, stdin, stdout, chain
 
 
 
@@ -298,7 +418,7 @@ Example:
 
 <cb>echo "Hello" &1 echo "There"<>
 @
-@ &&, together, exit code
+@ &&, together, exit code, chain
 
 
 
@@ -314,7 +434,7 @@ Example:
 
 <cb>echo "Hello" || echo "There"<>
 @
-@ ||, together, exit code
+@ ||, together, exit code, chain
 
 
 
@@ -331,19 +451,43 @@ Lists all the jobs an their job numbers.
 # Parameters
 @
 @ arguments
+@ params-only, parameter-only, parameters-only
+@ args-only, argument-only, arguments-only
+
+
+### Parameter - Command / Script Name
+
+<cb>$0<>
+
+Returns the name of the command or script that was called.
+@
+@ $0
+
 
 
 ### Parameters - Individual
 
-<cb>$1 $2 $3<>
+<cb>$1 $2 $3 ...<>
+
+References the parameters passed into the script
 @
-@ $1, $2, $3
+@ $1, $2, $3, $4, $5, $6, $7, $8, $9
 
 
 
 ### Parameters - All Parameters
 
 <cb>$*<>
+
+References all parameters.
+
+Prefer: <c>$@<>
+
+Use this to pass the parameters to a function or another script.
+
+This will NOT pass values with spaces correctly.
+The space will be read as a parameter separator.
+Use <c>$@<> to correctly pass parameters with spaces.
 @
 @ $*
 
@@ -353,7 +497,10 @@ Lists all the jobs an their job numbers.
 
 <cb>$@<>
 
-Send all parameters with quotes.
+References all parameters. Individual paramters are wrapped in quotes.
+
+Use this to pass the parameters to a function or another script.
+This will pass values with spaces correctly as the individual parameters are quoted.
 @
 @ $@
 
@@ -362,6 +509,8 @@ Send all parameters with quotes.
 ### Parameters - All Parameters, With Spaces, Quoted
 
 <cb>"$@"<>
+
+References all parameters. Individual paramters are wrapped in quotes.
 @
 @ "$@", $@
 
@@ -370,6 +519,10 @@ Send all parameters with quotes.
 ### Parameters - All Parameters Except 1st
 
 <cb>${*:2}<>
+
+References / passes all parameters starting with the second parameter.
+
+Prefer: <c>${@:2}<>
 @
 @ ${*:2}
 @ with 2nd, first, second, to end, remainder, remaining, onward
@@ -379,9 +532,25 @@ Send all parameters with quotes.
 ### Parameters - All Parameters Except 1st, Quoted
 
 <cb>${@:2}<>
+
+References / passes all parameters starting with the second parameter.
+
+Parameters are wrapped in quotes and will pass spaces correctly.
 @
 @ ${@:2}
 @ with 2nd, first, second, to end, remainder, remaining, onward
+
+
+
+### Parameters - Shift Parameters
+
+<cb>shift<>
+
+<cb>shift <v>count<><>
+
+Shifts parameters one position to the left, or by <v>count<> positions if given.
+
+Moves: $2 -> $1, $3 -> $2, etc.
 
 
 
@@ -394,67 +563,895 @@ Return or Exit Code from last operation.
 @ $?
 
 
+
 ### Parameters - Parameter Count
 
 <cb>$#<>
+
+Returns the number of parameters passed to the script.
 @
 @ $#
 
 
 
-# Naming Convention
-
-There is nothing official but these are often recommended.
+# Control Structures
 @
-@ Names
+@ statements, flow
+@ control-only, control-structure-only, control-structures-only
+@ control-statements-only
 
 
-
-### Convention - Variable Name - OS, Startup Scripts
-
-<cb>$<v>VAR_NAME<><>
-
-Use UPPER_SNAKE_CASE.
+## Control Structures - Basics
 
 
-
-### Convention - Variable Name - Local, Script
-
-<cb>$<v>user_var_name<><>
-
-Use lower_snake_case.
-
-
-
-### Convention - Variable Name - Constant
-
-<cb>$<v>USER_CONSTANT_NAME<><>
-
-Use UPPER_SNAKE_CASE.
-
-
-<!>Warning:<>
-Ensure name does not conflict with OS variable name.
-
-
-
-### Convention - Function Name
-
-<cb><v>function_name<>() {
+<table><col>if		<><col><c>if [ <v>expression<> ]
+then
 	<v>...<>
-}<>
+elif [ <v>expression<> ]
+then
+	<v>...<>
+else
+	<v>...<>
+fi<><>
+<col> <>
+<col> <>
+<col><><col><c>if [ <v>expression<> ]; then
+	<v>...<>
+elif [ <v>expression<> ]; then
+	<v>...<>
+else
+	<v>...<>
+fi<><>
+<col> <>
+<col> <>
+<col>Case<><col><c>case "$<v>string_1<>" in
+
+	<v>value_1<>)
+		<v>...<>
+		;;
+
+	<v>value_2<> | <v>value_3<> | <v>value_4<>)
+		<v>...<>
+		;;
+
+	*)
+		<#># Default:<>
+		<v>...<>
+		;;
+esac<><>
+<col> <>
+<col> <>
+<col>for<><col><c>for ((<v>value<>=0; <v>value<> \< <v>count<>; <v>value<>++))
+do
+	<v>...<>
+	<v>...<> <v><>$<v>value<>
+	<v>...<>
+	continue
+	<v>...<>
+	break
+	<v>...<>
+done<><>
+<col> <>
+<col> <>
+<col><><col><c>for <v>value<> in {<v>start<>..<v>stop<>}
+do
+	<v>...<>
+done<><>
+<col> <>
+<col> <>
+<col><><col><c>for <v>item<> in "<v>value 1<>" "<v>value 2<>" "<v>value 3<>" <v>...<>
+do
+	<v>...<>
+done<><>
+<col> <>
+<col> <>
+<col><><col><c>for <v>item<> in "${<v>array_1<>[@]}"
+do
+	<v>...<>
+done<><>
+<col> <>
+<col> <>
+<col>Until<><col><c>until [ <v>expression<> ]
+do
+	<v>...<>
+	continue
+	<v>...<>
+	break
+	<v>...<>
+done<><>
+<col> <>
+<col> <>
+<col>While<><col><c>while [ <v>expression<> ]
+do
+	<v>...<>
+	continue
+	<v>...<>
+	break
+	<v>...<>
+done<><><>
 
 
-Use lower_snake_case.
 
-
-
-# Operators, Expressions
+## If
 @
-@ Test, value, item
+@ if, elif, else, fi
+@ if-only, if-else-only, if-elif-only
 
 
-### Evaluate Expression
+### If - Basics
+
+<cb>if test <v>expression<>
+then
+	<v>...<>
+fi<>
+
+<cb>if [ <v>expression<> ]
+then
+	<v>...<>
+fi<>
+
+<cb>if [ <v>expression<> ]; then
+	<v>...<>
+fi<>
+
+<cb>if [ <v>expression<> ]
+then
+	<v>...<>
+elif [ <v>expression<> ]
+then
+	<v>...<>
+else
+	<v>...<>
+fi<>
+
+<cb>if [ <v>expression<> ]; then
+	<v>...<>
+elif [ <v>expression<> ]; then
+	<v>...<>
+else
+	<v>...<>
+fi<>
+
+
+### If - Else
+
+<cb>if [ <v>expression<> ]
+then
+	<v>...<>
+fi<>
+
+<cb>if [ <v>expression<> ]
+then
+	<v>...<>
+elif [ <v>expression<> ]
+then
+	<v>...<>
+else
+	<v>...<>
+fi<>
+
+
+### If - Single Line If-Then
+
+<cb>if [ <v>expression<> ]; then
+	<v>...<>
+fi<>
+
+<cb>if [ <v>expression<> ]; then
+	<v>...<>
+elif [ <v>expression<> ]; then
+	<v>...<>
+else
+	<v>...<>
+fi<>
+
+
+Separate <c>if then<> and <c>elif then<> with the command separator (<c>;<>) t.
+
+
+
+## Case
+@
+@ case in, esac, ;;
+@ case-only, case-in-only, match, switch
+
+
+### Case - Basics
+
+<cb>case "$<v>string_1<>" in
+
+	<v>value_1<>)
+		<v>...<>
+		;;
+
+	<v>value_2<>)
+		<v>...<>
+		;;
+
+	<v>value_3<> | <v>value_4<> | <v>value_5<>)
+		<v>...<>
+		;;
+
+	*)
+		<#># Default:<>
+		<v>...<>
+		;;
+esac<>
+@
+@ |, *)
+
+
+
+### Case
+
+<cb>case "$<v>string_1<>" in
+
+	<v>value_1<>)
+		<v>...<>
+		;;
+
+	<v>value_2<>)
+		<v>...<>
+		;;<>
+
+
+Executes one of the following clauses depending on the value in the <c>case in<> statement.
+
+
+Case is case sensitive.
+
+;; is required to terminate each case clause.
+There are no fall throughs.
+
+
+Example:
+
+<cb><v>command<>="start"
+
+case "$<v>command<>":
+
+	"<v>start<>")
+
+		echo "Starting"
+		;;
+
+	"<v>stop<>")
+
+		echo "Stopping"
+		;;
+esac<>
+
+
+
+### Case - Default
+
+<cb>case "$<v>string_1<>" in
+
+	<v>value_1<>)
+		<v>...<>
+		;;
+
+	<v>value_2<>)
+		<v>...<>
+		;;
+
+	*)
+		<#># Default:<>
+		<v>...<>
+		;;<>
+
+
+Executes the default clause (after '<c>*)<>') when no matching value is found.
+
+
+Example:
+
+<cb><v>command<>="start"
+
+case "$<v>command<>":
+
+	"<v>start<>")
+
+		echo "Starting"
+		;;
+
+	"<v>stop<>")
+
+		echo "Stopping"
+		;;
+
+	*)
+		echo "Unknown command: '$<v>command<>'"
+		;;
+esac<>
+@
+@ *)
+
+
+
+### Case - Multiple Value Clause
+
+<cb>case "$<v>string_1<>" in
+
+	<v>value_1<> | <v>value_2<>)
+		<v>...<>
+		;;
+
+	<v>value_3<> | <v>value_4<> | <v>value_5<>)
+
+		<v>...<>
+		;;<>
+
+
+You can match multiple values in a single line.
+Separate values with a pipe ('|').
+
+
+Example:
+
+<cb><v>command<>="begin"
+
+case "$<v>command<>":
+
+	"<v>start<>" | "<v>begin<>")
+
+		echo "Starting"
+		;;
+
+	"<v>stop<>" | "<v>end<>")
+
+		echo "Stopping"
+		;;
+esac<>
+@
+@ case in, ;;, |
+@ case-only, case-in-only
+
+
+
+## For
+@
+@ for loop, do, done
+@ for-only, for-loop-only, for-do-only
+
+
+### For - Basics
+
+<cb>for <v>value<> in {<v>start<>..<v>stop<>}
+do
+	<v>...<>
+	<v>...<> $<v>value<>
+done<>
+
+<cb>for ((<v>value<>=0; <v>value<> \< <v>count<>; <v>value<>++))
+do
+	<v>...<>
+	<v>...<> <v><>$<v>value<>
+done<>
+
+<cb>for <v>item<> in "<v>value 1<>" "<v>value 2<>" "<v>value 3<>" <v>...<>
+do
+	<v>...<>
+done<>
+
+<cb>for <v>item<> in "${<v>array_1<>[@]}"
+do
+	<v>...<>
+done<>
+
+<cb>for <v>item<> in {<v>start<>..<v>stop<>}; do
+	<v>...<>
+done<>
+
+<cb>for <v>item<> in {<v>start<>..<v>stop<>}
+do
+	<v>...<>
+	continue
+	<v>...<>
+	break
+	<v>...<>
+done<>
+
+
+### For
+
+<cb>for ((<v>value<>=<v>starting_value<>; <v>stop_when<>; <v>next_value<>))<>
+
+Usage:
+
+<cb>for ((<v>value<>=0; <v>value<> \< <v>count<>; <v>value<>++))
+do
+	<v>...<>
+	<v>...<> $<v>value<>	<#>#1<>
+done<>
+
+
+\#1  <s>-<>  Reference value with <c>$<v>value<><>.
+
+
+Example:
+
+<cb><v>count<>=<v>3<>
+
+for ((<v>value<>=0; <v>value<> \< <v>count<>; <v>value<>++))
+do
+	echo "Value $<v>value<>"
+done<>
+
+
+
+### For - In Range
+
+<cb>for <v>value<> in {<v>start<>..<v>stop<>}<>
+
+<cb>for <v>value<> in {<v>start<>..<v>stop<>..<v>increment<>}<>
+
+Usage:
+
+<cb>for <v>value<> in {<v>start<>..<v>stop<>..<v>increment<>}
+do
+	<v>...<>
+	<v>...<> $<v>value<>	<#>#1<>
+done<>
+
+
+\#1  <s>-<>  Reference value with <c>$<v>value<><>.
+
+
+Examples:
+
+Print 1 to 5:
+
+<cb>for <v>value<> in {1..5}
+do
+	echo "$<v>value<>"
+done<>
+
+
+Print 1, 3, 5:
+
+<cb>for <v>value<> in {1..5..2}
+do
+	echo "$<v>value<>"
+done<>
+
+
+
+### For - In Array
+
+<cb>for <v>value<> in "${<v>array_1<>[@]}"<>
+
+Usage:
+
+<cb>for <v>item<> in "${<v>array_1<>[@]}"
+do
+	<v>...<>
+	<v>...<> <v><>$<v>item<>
+done<>
+
+
+Loop through all items in the array.
+
+
+Example:
+
+<cb><v>array_1<>=("<v>value 1<>" "<v>value 2<>" "<v>value 3<>")
+
+for <v>value<> in "${<v>array_1<>[@]}"
+do
+	echo "$<v>value<>"
+done<>
+@
+@ list, items, foreach, for-each
+
+
+
+### For - In Item List
+
+<cb>for <v>value<> in <v>value_1<> <v>value_2<> <v>value_3<><>
+
+Usage:
+
+<cb>for <v>item<> in <v>value_1<> <v>value_2<> <v>value_3<>
+do
+	<v>...<>
+	<v>...<> <v><>$<v>item<>
+done<>
+
+
+Loop through all the items listed after <c>in<>
+
+
+Examples:
+
+<cb>for <v>value<> in "<v>value 1<>" "<v>value 2<>" "<v>value 3<>"
+do
+	echo "$<v>value<>"
+done<>
+@
+@ list, items, foreach, for-each
+
+
+
+### For - Break, Continue
+
+<cb>for <v>item<> in <v>list_1<>
+do
+	<v>...<>
+	continue
+	<v>...<>
+	break
+	<v>...<>
+done<>
+
+
+
+## Until
+@
+@ do, done, until-only, until-do-only
+
+
+### Until - Basics
+
+<cb>until [ <v>expression<> ]
+do
+	<v>...<>
+done<>
+
+<cb>until [ <v>expression<> ]; do
+	<v>...<>
+done<>
+
+<cb>until [ <v>expression<> ]
+do
+	<v>...<>
+	continue
+	<v>...<>
+	break
+	<v>...<>
+done<>
+@
+@ continue, break
+
+
+
+### Until
+
+<cb>until [ <v>expression<> ]
+do
+	<v>...<>
+done<>
+
+
+Executes until an expression is true.
+
+
+Example:
+
+<cb><v>count<>=0
+<v>max<>=3
+
+until [ $<v>count<> -eq $<v>max<> ]
+do
+	echo "$<v>count<>"
+	<v>count<>=$[ $<v>count<> + 1 ]
+done<>
+
+
+
+### Until - Break, Continue
+
+<cb>until [ <v>expression<> ]
+do
+	<v>...<>
+	continue
+	<v>...<>
+	break
+	<v>...<>
+done<>
+
+
+
+### Until - Single Line Until Do
+
+<cb>until [ <v>expression<> ]; do
+	<v>...<>
+done<>
+
+
+Example:
+
+<cb><v>count<>=0
+<v>max<>=3
+
+until [ $<v>count<> -eq $<v>max<> ]; do
+	echo "$<v>count<>"
+	<v>count<>=$[ $<v>count<> + 1 ]
+done<>
+
+
+
+## While
+@
+@ do, done, while-only, while-do-only
+
+
+### While - Basics
+
+<cb>while [ <v>expression<> ]
+do
+	<v>...<>
+done<>
+
+<cb>while [ <v>expression<> ]; do
+	<v>...<>
+done<>
+
+<cb>while [ <v>expression<> ]
+do
+	<v>...<>
+	continue
+	<v>...<>
+	break
+	<v>...<>
+done<>
+@
+@ continue, break
+
+
+
+### While
+
+<cb>while [ <v>expression<> ]
+do
+	<v>...<>
+done<>
+
+
+Executes while an expression is true.
+
+
+Example:
+
+<cb><v>count<>=0
+<v>max<>=3
+
+while [ $<v>count<> -lt $<v>max<> ]
+do
+	echo "$<v>count<>"
+	<v>count<>=$[ $<v>count<> + 1 ]
+done<>
+
+
+
+### While - Break, Continue
+
+<cb>while [ <v>expression<> ]
+do
+	<v>...<>
+	continue
+	<v>...<>
+	break
+	<v>...<>
+done<>
+
+
+
+### While - Single Line While Do
+
+<cb>while [ <v>expression<> ]; do
+	<v>...<>
+done<>
+
+
+Example:
+
+<cb><v>count<>=0
+<v>max<>=3
+
+while [ $<v>count<> -lt $<v>max<> ]; do
+	echo "$<v>count<>"
+	<v>count<>=$[ $<v>count<> + 1 ]
+done<>
+
+
+
+# Operators
+@
+@ Operators, Operations, Expressions, ops
+@ operators-only, ops-only
+
+
+
+### Arithmetic Operators
+
+Evaluate:
+
+<in-2><c><v>result<>=$(( <v>a<> + <v>b<> ))<>
+
+<c>((<v>result<>=<v>a<>+<v>b<>))<><>
+
+Operators:
+
+<in-2><table><col><c><v>a<> + <v>b<>		<><>
+<col><c><v>a<> - <v>b<><><>
+<col><c><v>a<> * <v>b<><><>
+<col><c><v>a<> / <v>b<><><><col>Always Returns a Float<>
+<col> <>
+<col><c><v>a<> % <v>b<><><><col>Modulo ( 7 % 3 = 1)<>
+<col><c><v>a<> ** <v>b<><><><col>To The Power of<><><>
+
+Note:
+
+<in-2>All values must be integers.
+All returned values will be integers.<>
+@
+@ %, **, +, -, /, //
+@ modulo, modulus, plus, minus, divide, multiply, power of
+
+
+
+### Comparison Operators - Integers
+
+Evaluate:
+
+<in-2><c>if [ <v>a<> -gt <v>b<> ] <v>...<><><>
+
+Operators:
+
+<in-2><table><col><c><v>a<> -eq <v>b<><><><col>Equal<>
+<col><c><v>a<> -ne <v>b<><><><col>Not Equal<>
+<col><c><v>a<> -lt <v>b<><><><col>Less Than<>
+<col><c><v>a<> -le <v>b<><><><col>Less Than or Equal<>
+<col><c><v>a<> -gt <v>b<><><><col>Greater Than<>
+<col><c><v>a<> -ge <v>b<><><><col>Greater Thann or Equal<><><>
+@
+@ Boolean, ==, !=, \<>, \<, \<=, >, >/, is, not
+@ -eq, -ne, -lt, -le, -gt, -ge
+@ less than, greater than, less that or equal, greater than or equal
+@ compare, camparator, numbers, ints
+
+
+
+### Comparison Operators - Strings
+
+Evaluate:
+
+<in-2><c><v>result<>=$((<v>a<> > <v>b<>))<><>
+
+Operators:
+
+<in-2><table><col><c><v>a<> == <v>b<><><>
+<col><c><v>a<> != <v>b<><><>
+<col><c><v>a<> > <v>b<><><>
+<col><c><v>a<> \< <v>b<><><>
+<col><c><v>a<> >= <v>b<><><>
+<col><c><v>a<> \<= <v>b<><><><>
+@
+@ Boolean, ==, !=, \<>, \<, \<=, >, >/, is, not
+@ less than, greater than, less that or equal, greater than or equal
+@ compare, camparator, strings
+
+
+
+### Logical Operators
+
+Operators:
+
+<in-2><table><col><c>! <v>b<>								<><><col>Not<>
+<col><c><v>a<> && <v>b<><><><col>And<>
+<col><c><v>a<> || <v>b<><><><col>Or<><><>
+
+Between Expressions:
+
+<in-2><table><col><c>! [ <v>condition<> ]	<><><col>Not<>
+<col> <>
+<col><c>[ <v>condition_a<> ] && [ <v>condition_b<> ]<><><col>And<>
+<col><c>[ <v>condition_a<> ] || [ <v>condition_b<> ]<><><col>Or<><><>
+@
+@ Boolean, and, or, not, &&, ||, !
+
+
+
+### File Operators
+@
+@ files-only
+
+
+#### Directory - Exists?
+
+<cb>[ -d "<v>filename<>" ]<>
+@
+@ -d
+
+
+
+#### File - Exists?
+
+<cb> [ -e <v>file_name<> ]<>
+
+
+Returns true if the file exists (any kind of file or directory).
+@
+@ -e
+
+
+
+#### File - Exists and is Normal File?
+
+<cb> [ -f <v>file_name<> ]<>
+
+
+Returns true if the file exists and is a normal file (not a directory, link or other file type).
+@
+@ -f
+
+
+
+#### File - Does Not Exist?
+
+<cb>[ ! -e "<v>filename<>" ]<>
+
+
+Returns true if the file does not exist (no file of any kind).
+@
+@ -e, !
+
+
+
+#### File - Is Executable?
+
+<cb> [ -x <v>file_name<> ]<>
+
+
+Returns true if the file is executable.
+@
+@ -x
+
+
+
+#### File - Is Readable?
+
+<cb> [ -r <v>file_name<> ]<>
+
+
+Returns true if the file exists and is readable.
+@
+@ -r
+
+
+
+### String Operators
+
+<in-2><table><col><c><v>a<> == <v>b<>		<><><col>Equals<>
+<col><c><v>a<> != <v>b<><><><col>Not Equal<>
+<col> <>
+<col><c>-z <v>a<><><><col>Unset or Length 0<super><#>1<><><>
+<col> <>
+<col><c>-z <v>a<><><><col>Length 0<>
+<col><c>-n <v>a<><><><col>Length > 0<><><>
+
+
+1 - Unset or Length = 0 are the same.
+@
+@ -n, -z, !, ==, !=
+
+
+
+# Expression Evaluation
+@
+@ expression-only, expressions-only
+
+
+### Evaluate - Integer Expression
+
+<cb>(( <v>expression<> ))<>
+@
+@ integers, ints
+
+
+
+### Evaluate - Logical Expression
 
 <cb>[ <v>expression<> ]<>
 
@@ -468,152 +1465,19 @@ Returns true or false.
 
 
 
-### Directory - Exists?
-
-<cb>[ -d "<v>filename<>" ]<>
-
-
-
-### Directory - Does Not Exist?
-
-<cb>[ ! -d "<v>filename<>" ]<>
-
-
-
-### File - Exists?
-
-<cb>[ -f "<v>filename<>" ]<>
-
-
-
-### File - Does Not Exist?
-
-<cb>[ ! -f "<v>filename<>" ]<>
-
-
-
-### Compare - Boolean - As Int - Is True?
-
-<cb>[ "$<v>value<>" -eq "0" ]<>
-
-<cb>if [ "$<v>value<>" -eq "0" ]; then
-	<v>...<><>
-
-Treat as int, True = 0.
-
-See: Compare - Int
-@
-@ Equals, Not Equals, True, False
-
-
-
-### Compare - Boolean - As Int - Is False?
-
-<cb>[ "$<v>value<>" -ne "0" ]<>
-
-<cb>if [ "$<v>value<>" -ne "0" ]; then
-	<v>...<><>
-
-Treat as int, True = 0.
-
-See: Compare - Int
-@
-@ Equals, Not Equals, True, False
-
-
-
-### Compare - Boolean - As String - Is True?
-
-<cb>[ "$<v>value<>" = true ]<>
-
-<cb>if [ "$<v>value<>" = true ]; then
-	<v>...<><>
-
-Treat as a string, True = 'true'.
-
-See: Compare - Int
-
-
-Example:
-
-<cb><v>value<>=true
-
-if ["$<v>value<>" = true ]; then
-	echo "'$<v>value<>' is true."
-else
-	echo "'$<v>value<>' is not true (false)."
-fi<>
-@
-@ Equals, Not Equals, True, False
-
-
-
-### Compare - Boolean - As String - Is False?
-
-<cb>[ "$<v>value<>" != true ]<>
-
-<cb>if [ "$<v>value<>" != true ]; then
-	<v>...<><>
-
-Treat as a string, True = 'true'.
-
-See: Compare - Int
-
-
-Example:
-
-<cb><v>value<>=true
-
-if ["$<v>value<>" != true ]; then
-	echo "'$<v>value<>' is not true (false)."
-else
-	echo "'$<v>value<>' is true."
-fi<>
-@
-@ Equals, Not Equals, True, False
-
-
-
-### Compare - Int - Is Equal?
-
-<cb>[ "$<v>variable_1<>" -eq "<v>int_2<>" ]<>
-
-<cb>if [ "$<v>variable_1<>" -eq "<v>int_2<>" ]; then
-	<v>...<><>
-@
-@ Equals, Boolean
-
-
-
-### Logical Operators
-
-<c>[ $<v>a<> == $<v>b<> ]<>							Equals
-<c>[ $<v>a<> != $<v>b<> ]<>							Not Equals
-
-<c>! [ <v>condition<> ]<>						Not
-
-<c>[ <v>condition_a<> ] && [ <v>condition_b<> ]<>	And
-<c>[ <v>condition_a<> ] || [ <v>condition_b<> ]<>	Or
-@
-@ boolean, ==, !=, && ||, !
-
-
-
 # Shell - Environment Variables
+@
+@ vars-only, variable-only, variables-only
 
 
 
-## Summary
+### Variable - Basics
 
 <table><col><c><v>variable_name<>=<v>value<><>	<>	<col>Create / Update<>
 <col><c>unset <v>variable_name<><><>				<col>Delete<>
 <col> <>
 <col><c>$<v>variable_name<><><>						<col>Get Value<>
 <col><c>"$<v>variable_name<>"<><>					<col>Get Value Containing Spaces, Variables<><>
-
-
-
-## Details
 
 
 
@@ -699,7 +1563,7 @@ Examples:
 
 ### Variable - Get
 
-<cb>=$<v>varibale_1<><>
+<cb>=$<v>variable_1<><>
 
 If Contains Spaces:
 
@@ -716,189 +1580,14 @@ echo "$<v>text<>"<>
 
 
 
-# Control Statements
-
-### If
-
-<cb>if [ <v>expression<> ]; then
-	<v>...<>
-elif [ <v>expression<> ]; then
-	<v>...<>
-else
-	<v>...<>
-fi<>
-
-
-
-### Case
-
-<cb>case "$<v>string_1<>" in
-
-	<v>value_1<>)
-
-		<v>...<>
-		;;					<#>#1<>
-
-	<v>value_2<>)
-		<v>...<>
-		;;
-
-	<v>value_3<> | <v>value_4<> )		<#>#2<>
-
-		<v>...<>
-		;;
-
-	*)						<#>#3<>
-
-		<v>...<>
-		;;
-esac<>
-
-
-Case is case sensitive.
-
-
-\#1  -  ;; is required. It is the case item terminator. No fall throughs.
-
-\#2  -  Match multiple values.
-
-\#3  -  All non matches end here.
-
-
-Example:
-
-<cb><v>command<>="start"
-
-case "$<v>command<>":
-
-	"<v>start<>")
-
-		echo "Starting"
-		;;
-
-	"<v>stop<>" | "<v>end<>")
-
-		echo "Stopping"
-		;;
-
-	*)
-		echo "Unknown command: '$<v>command<>'"
-		;;
-esac<>
-@
-@ case-only
-
-
-
-### For
-
-<cb>for ((<v>value<>=0; <v>value<> \< <v>count<>; <v>value<>++));
-do
-	<v>...<>
-	<v>...<> <v><>$<v>value<>	<#>#1<>
-done<>
-
-
-\#1  <s>-<>  Reference value with <c>$<v>value<><>.
-
-
-Example:
-
-<cb><v>count<>=<v>3<>
-
-for ((<v>value<>=0; <v>value<> \< <v>count<>; <v>value<>++));
-do
-	echo "Value $<v>value<>"
-done<>
-@
-@ for loop
-
-
-
-### For In
-
-<cb>for <v>item<> in <v>list_1<>
-do
-	<v>...<>
-	<v>...<> <v><>$<v>item<>	<#>#1<>
-done<>
-
-
-\#1  <s>-<>  Reference item value with <c>$<v>item<><>.
-
-
-Examples:
-
-<cb>for <v>value<> in "<v>value 1<>" "<v>value 2<>" "<v>value 3<>"
-do
-	echo "Value $<v>value<>"
-done<>
-
-<cb>values=("<v>value 1<>" "<v>value 2<>" "<v>value 3<>")
-
-for <v>value<> in "${values[@]}"
-do
-	echo "Value $<v>value<>"
-done<>
-@
-@ for loop
-
-
-
-### While
-
-<cb>while [ <v>expression<> ]
-do
-	<v>...<>
-done<>
-
-
-Example:
-
-<cb><v>count<>=0
-<v>max<>=3
-
-while [ $<v>count<> -lt $<v>max<> ]
-do
-	echo "$<v>count<>"
-	<v>count<>=$[ $<v>count<> + 1 ]
-done<>
-
-
-
-# Shell - Parameters
-
-Parameter - Dash - Single	app -abc 	// Includes 3 options a, b, c.
-Parameter - Dash - Double	app --option1 	// One single option.
-
-Parameter - Entered Command	$0
-
-Parameter - Return Code	$?		// Return / Exit value from function call or program call.
-
-	ex:
-	function1 	// function call
-	echo $? 	// Shows result (value returned by return statement.
-
-Parameters - Count	?#
-
-Parameters - Passed in	$1 $2 $3…
-
-Parameters - Passed In - All	$*
-
-	$@		// All parameters will be quoted ("$1" "$2" "$3"....)
-	"$@"	When passing to another function.
-
-Paramaeters - All But First	"${@:2}"
-
-
-
 # Shell - Redirect Operators
+@
+@ redirect-only, redirections-only, redirecting-only
 
 
+### Redirect Operators - Basics
 
-## Redirect Operators - Summary
-
-<table><col>;	<>	<col><c><v>command_1<> ; <v>command_2<>	<><>	<col>Command Separator<>
+<in-2><table><col>;	<>	<col><c><v>command_1<> ; <v>command_2<>	<><>	<col>Command Separator<>
 <col>|<>		<col><c><v>command_1<> | <v>command_2<><><>	<col>Pipe Output<>
 <col> <>
 <col>\< <>		<col><c><v>command<> \< <v>file_name<><><>		<col>Redirect Input From File<>
@@ -910,7 +1599,7 @@ Paramaeters - All But First	"${@:2}"
 <col>>><>		<col><c><v>command<> >> <v>file_name<><><>		<col>Redirect Output, Append To File<>
 <col> <>
 <col>1><>
-<col>2><>	<col><c><v>command<> 2> <v>error_file<><><> <col>Redirect Error Output, Create File<><>
+<col>2><>	<col><c><v>command<> 2> <v>error_file<><><> <col>Redirect Error Output, Create File<><><>
 
 
 File Descriptors
@@ -918,9 +1607,6 @@ File Descriptors
 <table><col>0	<>	<col>Standard In<>
 <col>1<>	<col>Standard Out<>
 <col>2<>	<col>Error Out<><>
-
-
-## Details
 
 
 
@@ -1139,59 +1825,6 @@ x	Execute
 
 
 
-# File - Logical Operators
-@
-@ file-only, files-only, files
-
-
-
-### File - Exists?
-
-<cb> [ e <v>file_name<> ]<>
-
-
-Returns true if the file exists.
-
-
-
-### File - Exists?
-
-<cb> [ -e <v>file_name<> ]<>
-
-
-Returns true if the file exists.
-
-
-
-### File - Not Exists?
-
-<cb> ! [ -e <v>file_name<> ]<>
-
-
-Returns true if the file does not exist.
-@
-@ does
-
-
-
-### File - Is A Directory?
-
-<cb> [ -d <v>file_name<> ]<>
-
-
-Returns true if the file exists and is a directory.
-
-
-
-### File - Is A File?
-
-<cb> [ -f <v>file_name<> ]<>
-
-
-Returns true if the file exists and is a regular file (as opposed to a link, etc.).
-
-
-
 # File Operations
 @
 @ file-only, files-only, files
@@ -1235,6 +1868,92 @@ Use this in a script to create a file.
 
 
 
+### File Name - Get From Path
+
+<cb><v>file_name<>=$(basename -- "$<v>full_path<>")<>
+
+
+Returns the file name part of the path.
+
+
+Example:
+
+<cb><v>full_path<>="/tmp/the_file.txt"
+
+<v>file_name<>="$(basename -- <v>full_path<>)"
+
+<#># Returns 'the_file.txt'<><>
+
+<cb><v>full_path<>="the_file.txt"
+
+<v>file_name<>="$(basename -- <v>full_path<>)"
+
+<#># Returns 'the_file.txt'<><>
+@
+@ extract
+
+
+
+### File Name - Get Base Name
+
+<cb><v>base_name<>="${<v>file_name<>%.*}"<>
+
+
+Extracts the base file name from a file name or file path.
+
+
+Examples:
+
+From File Name:
+
+<cb><v>file_name<>="the_file.txt"
+
+<v>base_name<>="${<v>file_name<>%.*}"
+
+<#># Returns 'the_file'<><>
+
+From Path:
+
+<cb><v>file_name<>="/usr/test/the_file.txt"
+
+<v>base_name<>="${<v>file_name<>%.*}"
+
+<#># Returns 'the_file'<><>
+@
+@ extract
+
+
+
+### File Name - Get Extension
+
+<cb><v>extension<>="${<v>file_name<>##*.}"<>
+
+
+Extracts the file extension from a file name or file path.
+
+
+Examples:
+
+From File Name:
+
+<cb><v>file_name<>="the_file.txt"
+
+<v>extension<>="${<v>file_name<>##*.}"
+
+<#># Returns 'txt'<><>
+
+From Path:
+
+<cb><v>file_name<>="/usr/test/the_file.txt"
+
+<v>extension<>="${<v>file_name<>##*.}"
+
+<#># Returns 'txt'<><>
+@
+@ extract
+
+
+
 ### Files - Iterate Over
 
 <cb>for <v>file_name<> in *
@@ -1249,51 +1968,57 @@ done<>
 
 <cb>for <v>file_name<> in * ; do <v>...<> ; done<>
 @
-@ for loop through
-
-
-
-### Prompt - Set
-
-<cb>PS1="<v>prompt text<>"<>
-
-Set to <v>host_name<>:<v>path<>> :
-
-<cb>PS1="\\h:\\w>"<>
-
-	\\\\	\\ (backslash)
-
-	\\@		Time HH:MM AM/PM
-	\\A		Time HH:MM
-	\\t		Time H:MM:SS AM/PM
-	\\T		Time HH:MM:SS
-	\\d		Date "Mon Jan 01"
-
-	\\e<v>...<>	ASCII Escape Character
-	\\h		Host Name Up To '.'
-	\\H		Host Name
-	\\j		Number of Shell Jobs
-	\\n		Newline
-	\\s		Shell Name
-	\\u		User Name
-	\\v		Bash Version
-	\\V		Bash Version and Patch Level
-	\\w		Full Current Path
-	\\W		Current Directory Only (Not Full Path)
-@
-@ command, ps1
+@ for loop through, file names
 
 
 
 # Shell Functions
 @
-@ func-only, function-only
+@ func-only, function-only, functions-only
+
+
+### Function - Basics
+
+Define:
+
+<cb><v>function_1<>() {
+	<v>...<>
+}<>
+
+Parameters:
+
+<cb><v>function_1<>() {
+	local <v>var_1<> = "$1"
+	local <v>var_2<> = "$2"
+	<v>...<>
+}<>
+
+Return a Value:
+
+<cb><v>function_1<>() {
+	echo "<v>return value<>"
+}<>
+
+
+Call:
+
+<cb><v>function_1<><>
+
+Call With Parameters:
+
+<cb><v>function_1<> $<v>param_1<> $<v>param_2<><>
+
+Call, Get Return Value:
+
+<cb><v>return<>="$(<v>function_1<>)"<>
+
+Call With Parameters and Return Value:
+
+<cb><v>return<>="$(<v>function_1<> "$<v>param_1<>" "$<v>param_2<>")"<>
 
 
 
 ### Function - Create
-
-Basicr:
 
 <cb><v>function_name<>() {
 	<v>...<>
@@ -1311,9 +2036,16 @@ Can pass in any number of parameters.
 Parameters are accessed using $1, $2, $3...
 Use shift command to shift parameters (see Parameters - Shift (below))
 
+
 Example:
 
-<cb><v>...<> <!>to come?<><>
+<cb><v>print_value<>() {
+
+	local <v>value<>="$1"
+	echo "Value = $<v>value<>"
+}
+
+<v>print_value<> "<v>value one<>"<>
 
 
 
@@ -1333,6 +2065,30 @@ Doesn't even need '<c>()<>' after the name.
 
 Parameters will be set to $1, $2 inside the function.
 
+Example:
+
+<cb><v>print_value<>() {
+
+	local <v>value<>="$1"
+	echo "Value = $<v>value<>"
+}
+
+<v>print_value<> "<v>value one<>"<>
+
+
+
+### Function - Call With Spaced Parameters, Get Return
+
+<cb><v>result<>="$(<v>function_1<> "$<v>param_1<>")"<>
+
+
+Use when you need to pass parameters with spaces
+and you need the response.
+
+Seriously, embed the quotes. This is some funky shit but it works.
+@
+@ Value, Response, capture
+
 
 
 ### Function - Parameters
@@ -1342,10 +2098,21 @@ Parameters will be set to $1, $2 inside the function.
 	local <v>param_1<>="$1"
 	local <v>param_2<>="$2"
 	<v>...<>
-}
+}<>
 
 
 Get function parameters using <c>$1<>, <c>$2<>, <c>$3<>, etc..
+
+Example:
+
+<cb><v>print_value<>() {
+
+	local <v>first<>="$1"
+	local <v>second<>="$2"
+	echo "First '$<v>first<>', Second '$<v>second<>'"
+}
+
+<v>print_value<> "<v>the first<>" "<v>the second<>"<>
 
 
 
@@ -1368,21 +2135,7 @@ Capture returned values using <c>"$(<v>function_1<>)"<>.
 
 
 
-### Function - Call With Spaced Parameters, Get Return
-
-<cb><v>result<>="$(<v>function_1<> "$<v>param_1<>")"<>
-
-
-Use when you need to pass parameters with spaces
-and you need the response.
-
-Seriously, embed the quotes. This is some funky shit but it works.
-@
-@ Value, Response, capture
-
-
-
-### Function - Return - Int
+### Function - Return Int Value
 
 <cb>return <v>int_value<><>
 
@@ -1399,79 +2152,174 @@ Integer
 
 # Booleans
 
-True:
-
-<cb>0<>
-
-False:
-
-<cb>1<>
+<cb>=1			<#># True<>
+=0			<#># False<><>
 
 
 Bash has no built in booleans.
 Use integers 0 and 1 instead.
+
+False:
+
+<*>0
+Any Non Integer / Text<>
+
+True:
+
+<*>1
+Any Non 0 Integer<>
 @
 @ booleans, true, false
+@ bool-only, boolean-only, booleans-only
+
+
+### Boolean - Define Constants
+
+<cb>FALSE=0
+TRUE=1<>
+
+
+Define these constants to clearly mark true/false values.
+
+
+Example:
+
+<cb>FALSE=0
+TRUE=1
+
+<v>DEBUG<>=$TRUE
+
+if (( $<v>DEBUG<> )); then
+	echo "Debug On"
+else
+	echo "Debug Off"
+fi<>
 
 
 
 # Boolean Operations
 @
 @ booleans, true, false
+@ bool-only, boolean-only, booleans-only
+
+
+### Boolean - Is Equal?
+
+<cb>if [ $<v>bool1<> -eq $<v>bool2<> ]; then
+	<v>...<>
+fi<>
+@
+@ equals, same, value
 
 
 
-### Boolean - From Expression
+### Boolean - Is False?
 
-<cb>[ <v>expression<> ]<>
+<cb>if (( ! $<v>item<> )); then
+	<v>...<>
+fi<>
 
-Converts <c><v>expression<><> to true or false.
-
-
-# Booleans - An Implementation
-
-Define:
-
-<cb>TRUE=0
-FALSE=1<>
-
-
-Reference:
-
-<cb><v>bool_1<>=TRUE<>
-
-
-Test:
-
-<cb>if [ "$<v>bool_1<>" -eq "$TRUE" ]; then
+<cb>if [ $<v>item<> -eq '0' ]; then
 	<v>...<>
 fi<>
 
 
 
-# Integers	
+### Boolean - Is True?
 
-# Integer Operators
+<cb>if (( $<v>item<> )); then
+	<v>...<>
+fi<>
 
-	int1 -eq int2 	// Equal
-	int1 -ne int2 	// Not Equal
-	int1 -gt int2 	// Greater Than
-	int1 -lt int2 	// Less Than
-	int1 -ge int2 	// Greater Than or Equal
-	int1 -le int2 	// Less Than or Equal
+<cb>if [ $<v>item<> -ne '0' ]; then
+	<v>...<>
+fi<>
+
+
+
+# Integers
+
+<cb>=<v>42<>
+='<v>42<>'<>
+
+Usage:
+
+<cb><v>int_1<>=<v>42<>
+<v>int_1<>='<v>42<>'<>
+
+
+Integers are stored as string values.
+@
+@ int, int-only, integer-only, ints-only, integers-only
 
 
 
 # Integer Operations
 @
+@ integers
 @ int, int-only, integer-only, ints-only, integers-only
+
+
+
+### Integer - Evaluate Expression
+
+<cb>$[ <v>expression<> ]<>
+
+<cb>$(( <v>expression<> ))<>
+
+Usage:
+
+<cb><v>result<>=$[ <v>expression<> ]<>
+
+<cb><v>result<>=$(( <v>expression<> ))<>
+
+
+These are equivalent ways to evaluate an integer expression.
+
+The result is returned as an integer.
+
+
+Examples:
+
+<cb><v>a<>=40
+<v>b<>=2
+
+<v>result<>=$[ $<v>a<> + $<v>b<> ]
+
+echo "$<v>result<>"
+
+<#>Prints: 42<><>
+
+<cb><v>a<>=40
+<v>b<>=2
+
+<v>result<>=$(( $<v>a<> + $<v>b<> ))
+
+echo "$<v>result<>"
+
+<#>Prints: 42<><>
+@
+@ calculate
+
 
 
 ### Integer - Add
 
-<cb><v>total<>=$[ $<v>value_1<> + $<v>value_2<> ]<>
+<cb>$<v>value_1<> + $<v>value_2<><>
 
-<cb><v>total<>=$[ $<v>value_1<> + <v>value<> ]<>
+Usage:
+
+<cb><v>result<>=$[ $<v>value_1<> + $<v>value_2<> ]<>
+
+
+
+### Integer - Subtract
+
+<cb>$<v>value_1<> - $<v>value_2<><>
+
+Usage:
+
+<cb><v>result<>=$[ $<v>value_1<> - $<v>value_2<> ]<>
 
 
 
@@ -1524,78 +2372,70 @@ End first section with '. Then start middle section " ' ". Then resume string ' 
 
 
 
-# String - Operators
+# String - Operations
 @
+@ ops, string-operations-only, operations-only
 @ string-only, strings-only
 
 
 
-### Summary
-
-Equals		<c>[ <v>string_1<> == <v>string_2<> ]<>
-Not Equal	<c>[ <v>string_1<> != <v>string_2<> ]<>
-
-Is Null		<c>[ -z <v>string_1<> ]<>			<#>#1<>
-Not Null		<c>[ <v>string_1<> ]<>
-
-Length = 0	<c>[ -z <v>string_1<> ]<>			<#>#1<>
-Length > 0	<c>[ -n <v>string_1<> ]<>
-
-
-\#1  -  Is Null and Length = 0 are the same.
-@
-@ -n, -z
-
-
-
-### String Compare - Is Equal?
+### String - Is Equal?
 
 <cb>[ "$<v>variable_1<>" == "<v>string_1<>" ]<>
 @
-@ Equals
+@ Equals, ==
 
 
 
-### String Compare - Not Equal?
+### String - Not Equal?
 
 <cb>[ "$<v>variable_1<>" != "<v>string_1<>" ]<>
 @
-@ Equals, is
+@ Equals, is, !=
 
 
 
-### String Compare - Is Empty?
+### String - Is Empty or Unset?
 
 <cb>[ -z "$<v>variable_1<>" ]<>
 
 
-Returns true if the variable is blank or unset.
+Returns true if the variable is an empty string or unset.
+
+Unset and Length 0 are the same.
+@
+@ null, -z
 
 
 
-### String Compare - Not Empty
+### String - Not Empty?
 
 <cb>[ ! -z "$<v>variable_1<>" ]<>
 
 
-Returns false if the variable is blank or unset, otherwise true.
+True if has a value (is set and has a non zero length).
+@
+@ null, ! -z, is set
 
 
 
-### String Compare - Has Length
+### String - Has Non Zero Length?
 
 <cb>[ -n "$<v>variable_1<>"]<>
+
+
+Returns true when length is greater than zero.
 @
-@ not empty
+@ not empty, -n
 
 
 
-# String Operations
-
-
-### String - Length
+### String - Get Length
 
 <cb>${#<v>string_1<>}<>
+
+
+Returns the length of a string.
 
 
 Example:
@@ -1606,7 +2446,7 @@ Example:
 
 <#># Returns 5<><>
 @
-@ count, size
+@ count, size, ${#}
 
 
 
@@ -1614,7 +2454,12 @@ Example:
 
 <cb>=${<v>string_1<>,,}<>
 
-Lower Case (bash 4.0+ only)
+Converts to lower case.
+
+
+(bash 4.0+ only)
+@
+@ ${,,}
 
 
 
@@ -1622,7 +2467,12 @@ Lower Case (bash 4.0+ only)
 
 <cb>=${<v>string_1<>,}<>
 
-Upper Case (bash 4.0+ only)
+Converts to upper case.
+
+
+(bash 4.0+ only)
+@
+@ ${,}
 
 
 
@@ -1736,8 +2586,93 @@ Will pass in form $1 $2 $3...
 
 
 
-# Standard Environment Variables
+# Scripts - Exiting
+@
+@ exit-only, exiting-only
 
+
+## Exiting
+
+
+### Exit
+
+<cb>exit<>
+
+Exit with Return Value:
+
+<cb>exit <v>exit_value<><>
+
+
+Exits and terminates the bash session.
+@
+@ end
+
+
+
+### Exit - Keep Bash Session
+
+<cb>return<>
+
+Return With Return Value:
+
+<cb>return <v>exit_value<><>
+
+Exits and but keeps the bash session.
+@
+@ end
+
+
+
+### Exit Code - Capture
+
+<cb>= $?<>
+
+
+
+## Exit Codes
+@ 
+@ status, return
+@ exit-codes-only
+
+
+### Exit Code - OK / Successful
+
+OK Exit Code:
+
+<cb>0<>
+@
+@ 0, successful
+
+
+### Exit Code - Error
+
+Recommended Error Exit Codes:
+
+<cb>1-127<>
+
+
+### Exit Code - Error / General Error
+
+<cb>1<>
+
+Return 1 for a general exception.
+@
+@ 1
+
+
+### Exit Code - Error / User Error
+
+<cb>2<>
+
+Invalid Command Line Options Error Code
+
+These are guideline more than rule.
+@
+@ 2
+
+
+
+# Standard Environment Variables
 
 
 ### Home
@@ -1764,32 +2699,50 @@ e.g. <c>/home/user-1<>
 This is the list of directories Bash searches when executing a command.
 
 
-# How To
+# Printing
 
 
+### Echo - Clear Line
 
-### Bash
-
-/bin/bash
-
+<cb>echo -ne '\\033[2K'<>
 
 
-### Bash - Version
-
-Long Format:
-
-<cb>bash --version<>
-
-Formatted like '4.2.8(1)-release':
-
-<cb>echo $BASH_VERSION<>
-
-Formatted like '4.2.8':
-
-<cb>echo ${BASH_VERSION%%[^0-9.]*}<>
+Clears the current line.
 @
-@ --version, $BASH_VERSION
+@ print, \\033[2K
 
+
+
+### Echo - Print On Same Line
+
+<cb>echo -n <v>text<><>
+
+<cb>echo -ne <v>text<> '\\r'<>
+
+
+Prints the text but does not move to a new line.
+
+\\r Places the cursor back at the start of the line.
+
+
+Example:
+
+<cb>for ((<v>value<>=0; <v>value<> < 15; <v>value<>++));
+do
+	echo -ne $<v>value<> '\\r'
+	sleep 0.5
+done
+
+echo
+echo 'Done.'<>
+@
+@ echo, -n, -r, \\r
+
+
+
+# Printing In Color
+@
+@ color-only, colors-only, colour-only, colours-only
 
 
 ### Color - ANSI Color - Set Color
@@ -1905,7 +2858,7 @@ Background:
 <col>Light Red<><col>101<>
 <col>Light Yellow<><col>103<><><>
 @
-@ colors, colours, name
+@ colors, colours, name, chart
 @ print, show, reference, foreground, background
 
 
@@ -1959,7 +2912,7 @@ Background:
 <col>106<><col>Light Cyan<>
 <col>107<><col>White<><><>
 @
-@ colors, colours, name
+@ colors, colours, name, chart
 @ print, show, reference, foreground, background
 
 
@@ -2001,6 +2954,38 @@ Full Chart:
 
 
 
+# How To
+@
+@ how-to, how-only, how-to-only
+
+
+### Bash
+
+<cb>/bin/bash<>
+
+
+Execute Bash directly.
+
+
+
+### Bash - Version
+
+Long Format:
+
+<cb>bash --version<>
+
+Formatted like '4.2.8(1)-release':
+
+<cb>echo $BASH_VERSION<>
+
+Formatted like '4.2.8':
+
+<cb>echo ${BASH_VERSION%%[^0-9.]*}<>
+@
+@ --version, $BASH_VERSION
+
+
+
 ### Command - Trace / Show Execution
 
 <cb>set -x<>
@@ -2012,7 +2997,8 @@ Or
 
 These are equivalent.
 @
-@ echo, print, debug
+@ echo, print, debug, log, display, commands
+@ debug-only, debugger, debugger-only
 
 
 
@@ -2024,93 +3010,8 @@ Or
 
 <cb>set +o xtrace<>
 @
-@ echo, print, debug
-
-
-
-### File Name - Get From Path
-
-<cb><v>file_name<>=$(basename -- "$<v>full_path<>")<>
-
-
-Returns the file name part of the path.
-
-
-Example:
-
-<cb><v>full_path<>="/tmp/the_file.txt"
-
-<v>file_name<>="$(basename -- <v>full_path<>)"
-
-<#># Returns 'the_file.txt'<><>
-
-<cb><v>full_path<>="the_file.txt"
-
-<v>file_name<>="$(basename -- <v>full_path<>)"
-
-<#># Returns 'the_file.txt'<><>
-@
-@ extract
-
-
-
-### File Name - Get Base Name
-
-<cb><v>base_name<>="${<v>file_name<>%.*}"<>
-
-
-Extracts the base file name from a file name or file path.
-
-
-Examples:
-
-From File Name:
-
-<cb><v>file_name<>="the_file.txt"
-
-<v>base_name<>="${<v>file_name<>%.*}"
-
-<#># Returns 'the_file'<><>
-
-From Path:
-
-<cb><v>file_name<>="/usr/test/the_file.txt"
-
-<v>base_name<>="${<v>file_name<>%.*}"
-
-<#># Returns 'the_file'<><>
-@
-@ extract
-
-
-
-### File Name - Get Extension
-
-<cb><v>extension<>="${<v>file_name<>##*.}"<>
-
-
-Extracts the file extension from a file name or file path.
-
-
-Examples:
-
-From File Name:
-
-<cb><v>file_name<>="the_file.txt"
-
-<v>extension<>="${<v>file_name<>##*.}"
-
-<#># Returns 'txt'<><>
-
-From Path:
-
-<cb><v>file_name<>="/usr/test/the_file.txt"
-
-<v>extension<>="${<v>file_name<>##*.}"
-
-<#># Returns 'txt'<><>
-@
-@ extract
+@ echo, print, debug, log, display, commands
+@ debug-only, debugger, debugger-only
 
 
 
@@ -2150,83 +3051,19 @@ Note the quotes. Must be this without #! /bin/sh in the script. Otherwise " is f
 
 ### Date - Print
 
-echo $(date)
-	echo $(date "+%F %T") 		// YYYY-MM-DD HH-MM-SS
+<cb>echo $(date)<>
+
+Print Formatted (YYYY-MM-DD HH-MM-SS):
+
+<cb>echo $(date "+%F %T")<>
 
 
 
 ### Directory - Parent - Get
 
-PARENT_DIR="$(dirname /parent/currentdir)"
-	PARENT_DIR="$(dirname "$CURRENT_DIRECTORY")"
+<cb><v>PARENT_DIR<>="$(dirname /<v>parent<>/<v>currentdir<>)"<>
 
-
-
-### Exit
-
-<cb>exit<>
-
-Exit with Return Value:
-
-<cb>exit <v>exit_value<><>
-
-
-Exits and terminates the bash session.
-
-
-
-### Exit - Keep Bash Session
-
-<cb>return<>
-
-Return With Return Value:
-
-<cb>return <v>exit_value<><>
-
-Exits and but keeps the bash session.
-
-
-### Exit Code - Capture
-
-<cb>= $?<>
-
-
-
-### Echo - Clear Line
-
-<cb>echo -ne '\\033[2K'<>
-
-
-Clears the current line.
-@
-@ print, \\033[2K
-
-
-
-### Echo - Print On Same Line
-
-<cb>echo -n <v>text<><>
-
-<cb>echo -ne <v>text<> '\\r'<>
-
-
-Prints the text but does not move to a new line.
-
-\\r Places the cursor back at the start of the line.
-
-
-Example:
-
-<cb>for ((<v>value<>=0; <v>value<> < 15; <v>value<>++));
-do
-	echo -ne $<v>value<> '\\r'
-	sleep 0.5
-done
-
-echo
-echo 'Done.'<>
-@
-@ echo, -n, -r, \\r
+<cb><v>PARENT_DIR<>="$(dirname "$<v>CURRENT_DIRECTORY<>")"<>
 
 
 
@@ -2260,6 +3097,36 @@ fi<>
 
 
 
+### If - Has Variable
+
+<cb>if [ ! -z "$<v>variable1<>" ]; then
+	<v>...<>
+else
+	<v>...<>
+fi<>
+
+
+
+### If - No Variable
+
+<cb>if [ -z "$<v>variable1<>" ]; then
+	<v>...<>
+else
+	<v>...<>
+fi<>
+
+
+
+### If - Variable Equals
+
+<cb>if [ "$<v>variable1<>" == "<v>value<>" ]; then
+	<v>...<>
+else
+	<v>...<>
+fi<>
+
+
+
 ### Input - From Script Lines
 
 <cb><v>command<> \<\<<v>SECTION_TERMINATOR_NAME<>
@@ -2267,7 +3134,7 @@ fi<>
 <v>SECTION_TERMINATOR_NAME<><>
 
 
-'<<' = Redirect Input Operator
+'<c>\<\<<>' = Redirect Input Operator
 
 
 Example:
@@ -2282,29 +3149,25 @@ Print this to the standard out.
 
 ### Input - From User	
 
-ead -p "caption: " value1
+<cb>read -p "<v>caption:<> " <v>value1<>
 
-Input stored in variable named 'value1'.
+Input stored in variable named '<c><v>value1<><>'.
 
 
 
 ### Output - To Variable
 
-command_output_1 = $( command )
-
-
-
-### Parameters - Shift
-
-shift [n] 	// Shifts parameters by 1 or by n if given. $2 -> $1, $3 -> $2, etc.
+<cb><v>command_output_1<> = $( <v>command<> )<>
 
 
 
 ### Pause - For Keypress
 
-read -p "Press any key to continue... " -n1 -s
+<cb>read -p "<v>Press any key to continue...<> " -n1 -s<>
 
-	read -p "Press any key to continue... " -n1 -s; echo "" 	// Clears newline.
+Pause with Newline on Press:
+
+<cb>read -p "<v>Press any key to continue... <>" -n1 -s; echo ""<>
 
 
 
@@ -2321,12 +3184,58 @@ Prefer the first form.
 
 
 
+### Prompt - Set
+
+<cb>PS1="<v>prompt text<>"<>
+
+Set to <v>host_name<>:<v>path<>> :
+
+<cb>PS1="\\h:\\w>"<>
+
+	\\\\	\\ (backslash)
+
+	\\@		Time HH:MM AM/PM
+	\\A		Time HH:MM
+	\\t		Time H:MM:SS AM/PM
+	\\T		Time HH:MM:SS
+	\\d		Date "Mon Jan 01"
+
+	\\e<v>...<>	ASCII Escape Character
+	\\h		Host Name Up To '.'
+	\\H		Host Name
+	\\j		Number of Shell Jobs
+	\\n		Newline
+	\\s		Shell Name
+	\\u		User Name
+	\\v		Bash Version
+	\\V		Bash Version and Patch Level
+	\\w		Full Current Path
+	\\W		Current Directory Only (Not Full Path)
+@
+@ command, ps1, prompt-only
+
+
+
 ### Sleep
 
-sleep seconds
+<cb>sleep <v>seconds<><>
 
-		eg: sleep 1.5	// Sleeps 1.5 seconds.
-		eg: sleep 2m 	// Sleep 2 minutes
+<cb>sleep <v>length<><v>unit<><>
+
+Pauses execution for the given time.
+
+
+Examples:
+
+Sleep 1.5 Seconds:
+
+<cb>sleep 1.5<>
+
+Sleep 2 Minutes:
+
+<cb>sleep 2m<>
+@
+@ pause
 
 
 
@@ -2334,40 +3243,50 @@ sleep seconds
 
 Add to .bash_profile...
 
-	TMOUT=numSeconds
-	export TMOUT
+<cb>TMOUT=<v>seconds<>
+export TMOUT<>
+
+
 
 ### Text - First n Lines
 
-some text output... | head -n n
+<cb><v>some text output...<> | head -n <v>count<><>
 
 
 
 ### Text - Last n Lines
 
-some text output... | tail -n n
+<cb><v>some text output...<> | tail -n <v>count<><>
 
 
 
 ### Text - Middle Line
 
-some text output... | sed -n 'np'
+<cb><v>some text output...<> | sed -n '<v>line_number<>p'<>
+
+
+Enter the line number followed by 'p'.
 
 
 
 ### Text - Middle Lines n to m
 
-some text output... | sed -n 'n,mp'
+<cb><v>some text output...<> | sed -n '<v>n<>,<v>m<>p'<>
+
+
+Print the lines from line number <c><v>n<><> to line number <c><v>m<><>.
 
 
 
 ### Variable - Set From Output
 
-variable_1=$(commands)
+<cb><v>variable_1<>="$(<v>commands<>)"<>
 
 
 
-# Index - Config Files
+# Reference - Config Files
+@
+@ config-only, configuration-only
 
 
 ### Config File - .profile
@@ -2416,48 +3335,6 @@ Bash user readline initialization script file.
 
 
 
-# Exit Codes
-@ 
-@ status, return
-
-
-### Exit Code - OK / Successful
-
-OK Exit Code:
-
-<cb>0<>
-@
-@ 0, successful
-
-
-### Exit Code - Error
-
-Recommended Error Exit Codes:
-
-<cb>1-127<>
-
-
-### Exit Code - Error / General Error
-
-<cb>1<>
-
-Return 1 for a general exception.
-@
-@ 1
-
-
-### Exit Code - Error / User Error
-
-<cb>2<>
-
-Invalid Command Line Options Error Code
-
-These are guideline more than rule.
-@
-@ 2
-
-
-
 # Keyboard Short Cuts
 
 
@@ -2468,7 +3345,8 @@ These are guideline more than rule.
 
 
 # Symbol Reference
-
+@
+@ symbol-only, symbols-only
 
 
 ### Symbol .
@@ -2521,6 +3399,90 @@ Used to run separate commands.
 
 
 
+### Symbol ;;
+
+Case clause terminator.
+
+
+
+### Symbol []
+
+Evaluate an expression to true false.
+
+<cb>if [ <v>expression<> ]
+then
+	<v>...<>
+fi<>
+@
+@ [, ]
+
+
+
+### Symbol [];
+
+Logical expression evaluation (<c>[<v>...<>]<>) followed by the command terminator (<c>;<>).
+
+Used to create single line <c>if<> <c>then<> statements.
+
+<cb>if [ <v>expression<> ] ; then
+	<v>...<>
+fi<>
+@
+@ [, ];
+
+
+
+### Symbol []
+
+Evaluates a logical expression.
+
+<cb>if [ <v>expression<> ]; then
+	<v>...<>
+fi<>
+@
+@ [, ]
+
+
+
+### Symbol $[]
+
+Evaluates a mathematical expression.
+
+<cb><v>result<>=$[ <v>expression<> ]<>
+
+Same As:
+
+<cb><v>result<>=$(( <v>expression<> ))<>
+@
+@ $[, ]
+
+
+
+### Symbol ()
+
+Defines a function.
+
+<cb><v>function1<> () {
+	<v>...<>
+}<>
+@
+@ (, )
+
+
+
+### Symbol (())
+
+Evaluates a conditional expression.
+Returns true (1) or false (0).
+
+<cb>if (( $<v>a<> < $<v>b<> )) {
+	<v>...<>
+}<>
+@
+@ ((, ))
+
+
+
 ### Symbol $()
 
 Runs a command and returns it's output as a parameter.
@@ -2533,6 +3495,20 @@ Runs a command and returns it's output as a parameter.
 
 
 
+### Symbol $(())
+
+Evaluates a mathematical expression.
+
+<cb><v>result<>=$(( <v>expression<> ))<>
+
+Same As:
+
+<cb><v>result<>=$[ <v>expression<> ]<>
+@
+@ $((, ))
+
+
+
 ### Symbol #!
 
 Bash Script Identifier / Shebang.
@@ -2541,6 +3517,12 @@ Identifies the command needed to run the current file.
 Must be the first line of the file.
 
 <cb>#!/usr/bin/env bash<>
+
+
+
+### Symbol *)
+
+The default clause in a case statement.
 
 
 
@@ -2597,10 +3579,21 @@ Redirects a the value of a variable to the standard in.
 <cb><v>command<> \<\<\< $<v>variable<><>
 
 
+# Acronyms
+@
+@ Glossary, glossary-only
+@ acronym-only, acronyms-only
+
+
+### Bash
+Bourne Again SHell.
+
+
 
 # Terms
 @
-@ glossary
+@ Glossary, glossary-only
+@ terms-only, term-only
 
 
 
@@ -2611,3 +3604,10 @@ Must be the first line of the file.
 <cb>#!/usr/bin/env bash<>
 @
 @ #!
+
+
+
+### Turing Complete
+Bash is a Turing complete scripting language.
+
+

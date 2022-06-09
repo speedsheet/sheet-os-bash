@@ -1,2 +1,4 @@
 .DS_Store
-bash-next.stash
+*next.stash
+backups/
+wip/
