@@ -525,7 +525,7 @@ References / passes all parameters starting with the second parameter.
 Prefer: <c>${@:2}<>
 @
 @ ${*:2}
-@ with 2nd, first, second, to end, remainder, remaining, onward
+@ with 2nd, first, second, to end, remainder, remaining, onward, but
 
 
 
@@ -538,7 +538,7 @@ References / passes all parameters starting with the second parameter.
 Parameters are wrapped in quotes and will pass spaces correctly.
 @
 @ ${@:2}
-@ with 2nd, first, second, to end, remainder, remaining, onward
+@ with 2nd, first, second, to end, remainder, remaining, onward, but
 
 
 
@@ -2118,6 +2118,10 @@ Example:
 
 ### Function - Return Value
 
+<cb>echo "<v>value<>"<>
+
+Usage:
+
 <cb><v>function_1<>() {
 	echo "<v>return_value<>"
 }
@@ -2131,13 +2135,24 @@ Returns: String
 Return values by sending to standard out.
 Capture returned values using <c>"$(<v>function_1<>)"<>.
 @
-@ Return value capture, get response
+@ Return value capture, get response, result, string, text
 
 
 
 ### Function - Return Int Value
 
 <cb>return <v>int_value<><>
+
+Usage:
+
+<cb><v>function_1<>() {
+	return <v>int_value<>
+}
+
+<v>function_1<>
+<v>return_value<>=$?<>
+@
+@ Return value capture, get response, result
 
 
 
@@ -2175,8 +2190,8 @@ Any Non 0 Integer<>
 
 ### Boolean - Define Constants
 
-<cb>FALSE=0
-TRUE=1<>
+<cb>TRUE=1
+FALSE=0<>
 
 
 Define these constants to clearly mark true/false values.
@@ -2184,8 +2199,8 @@ Define these constants to clearly mark true/false values.
 
 Example:
 
-<cb>FALSE=0
-TRUE=1
+<cb>TRUE=1
+FALSE=0
 
 <v>DEBUG<>=$TRUE
 
@@ -2205,7 +2220,7 @@ fi<>
 
 ### Boolean - Is Equal?
 
-<cb>if [ $<v>bool1<> -eq $<v>bool2<> ]; then
+<cb>if [[ $<v>bool1<> -eq $<v>bool2<> ]]; then
 	<v>...<>
 fi<>
 @
@@ -2219,7 +2234,11 @@ fi<>
 	<v>...<>
 fi<>
 
-<cb>if [ $<v>item<> -eq '0' ]; then
+<cb>if [[ $<v>item<> -eq $TRUE ]]; then
+	<v>...<>
+fi<>
+
+<cb>if [[ $<v>item<> -eq '0' ]]; then
 	<v>...<>
 fi<>
 
@@ -2231,9 +2250,49 @@ fi<>
 	<v>...<>
 fi<>
 
-<cb>if [ $<v>item<> -ne '0' ]; then
+<cb>if [[ $<v>item<> -ne $FALSE ]]; then
 	<v>...<>
 fi<>
+
+<cb>if [[ $<v>item<> -ne '0' ]]; then
+	<v>...<>
+fi<>
+
+
+
+### Boolean - Return True
+
+<cb>return $TRUE<>
+
+<cb>return 1<>
+
+
+
+### Boolean - Return False
+
+<cb>return $FALSE<>
+
+<cb>return 0<>
+
+
+
+### Boolean - Return - Is Return True?
+
+<cb>(( $? ))<>
+
+<cb>[[ $? -ne $FALSE ]]<>
+
+<cb>[[ $? -ne 0 ]]<>
+
+
+
+### Boolean - Return - Is Return True?
+
+<cb>(( ! $? ))<>
+
+<cb>[[ $? -eq $FALSE ]]<>
+
+<cb>[[ $? -eq 0 ]]<>
 
 
 
@@ -2372,62 +2431,10 @@ End first section with '. Then start middle section " ' ". Then resume string ' 
 
 
 
-# String - Operations
+# String - Properties
 @
-@ ops, string-operations-only, operations-only
+@ props-only, string-properties-only, properties-only
 @ string-only, strings-only
-
-
-
-### String - Is Equal?
-
-<cb>[ "$<v>variable_1<>" == "<v>string_1<>" ]<>
-@
-@ Equals, ==
-
-
-
-### String - Not Equal?
-
-<cb>[ "$<v>variable_1<>" != "<v>string_1<>" ]<>
-@
-@ Equals, is, !=
-
-
-
-### String - Is Empty or Unset?
-
-<cb>[ -z "$<v>variable_1<>" ]<>
-
-
-Returns true if the variable is an empty string or unset.
-
-Unset and Length 0 are the same.
-@
-@ null, -z
-
-
-
-### String - Not Empty?
-
-<cb>[ ! -z "$<v>variable_1<>" ]<>
-
-
-True if has a value (is set and has a non zero length).
-@
-@ null, ! -z, is set
-
-
-
-### String - Has Non Zero Length?
-
-<cb>[ -n "$<v>variable_1<>"]<>
-
-
-Returns true when length is greater than zero.
-@
-@ not empty, -n
-
 
 
 ### String - Get Length
@@ -2448,6 +2455,83 @@ Example:
 @
 @ count, size, ${#}
 
+
+
+# String - Operators
+@
+@ ops-only, string-operators-only, operators-only
+@ string-only, strings-only
+
+
+### String - Contains Substring
+
+<cb>"$<v>string_1<>" == *"$<v>string_2<>"*<>
+
+Use wild cards
+@
+@ *, ==
+
+
+
+### String - Is Equal?
+
+<cb>[[ "$<v>string_1<>" == "$<v>string_2<>" ]]<>
+
+<cb>[[ "$<v>string_1<>" == "<v>Compare Text<>" ]]<>
+@
+@ Equals, ==
+
+
+
+### String - Not Equal?
+
+<cb>"$<v>string_1<>" != "$<v>string_2<>"<>
+
+<cb>"$<v>string_1<>" != "<v>Compare Text<>"<>
+@
+@ Equals, is, !=
+
+
+
+### String - Is Empty or Unset?
+
+<cb>-z "$<v>variable_1<>"<>
+
+
+Returns true if the variable is an empty string or unset.
+
+Unset and Length 0 are the same.
+@
+@ null, -z, not present, no value
+
+
+
+### String - Not Empty?
+
+<cb>! -z "$<v>variable_1<>"<>
+
+
+True if has a value (is set and has a non zero length).
+@
+@ null, ! -z, is set
+
+
+
+### String - Has Non Zero Length?
+
+<cb>-n "$<v>variable_1<><>
+
+
+Returns true when length is greater than zero.
+@
+@ not empty, -n
+
+
+
+# String - Operations
+@
+@ ops-only, string-operations-only, operations-only
+@ string-only, strings-only
 
 
 ### String - To Lower Case
@@ -2530,11 +2614,11 @@ echo "${<v>array_1<>[0]}"
 
 From Start Position, To End:
 
-<cb><v>array_2<>=("${<v>array_1<>[@]:<v>start_position<>}")<>
+<cb><v>array_2<>=("${<v>array_1<>[@]:<v>start<>}")<>
 
 From Start Position, With Count:
 
-<cb><v>array_2<>=("${<v>array_1<>[@]:<v>start_position<>:<v>count<>}")<>
+<cb><v>array_2<>=("${<v>array_1<>[@]:<v>start<>:<v>count<>}")<>
 
 
 Example:
@@ -2812,14 +2896,13 @@ Red on Dark Grey:
 Special Codes:
 
 <in-2><table><col>Default Color<><col>0<>
-<col>Default Background<><col>49<>
-<col>Underline<><col>4<><><>
+<col>Default Background<><col>49<><><>
 
 Foreground:
 
 <in-2><table><col>Black			<><col>30<>
 <col>Dark Gray<><col>90<>
-<col>Gray, Light<><col>37<>
+<col>Light Gray<><col>37<>
 <col>White<><col>97<>
 <col> <>
 <col>Blue<><col>34<>
@@ -2840,7 +2923,7 @@ Background:
 
 <in-2><table><col>Black			<><col>40<>
 <col>Dark Gray<><col>100<>
-<col>Gray, Light<><col>47<>
+<col>Light Gray<><col>47<>
 <col>White<><col>107<>
 <col> <>
 <col>Blue<><col>44<>
@@ -2857,9 +2940,20 @@ Background:
 <col>Light Purple<><col>105<>
 <col>Light Red<><col>101<>
 <col>Light Yellow<><col>103<><><>
+
+Style:
+
+<in-2><table><col>Bold				<><col>1<>
+<col>Blink<><col>5<>
+<col>Dimmed<><col>2<>
+<col>Italic<><col>3<>
+<col>Reversed<><col>7<>
+<col>Strikethrough<><col>9<>
+<col>Underline<><col>4<><><>
 @
 @ colors, colours, name, chart
 @ print, show, reference, foreground, background
+@ Bold, Blink, Dimmed, Italic, Reversed, Strikethrough, Underline
 
 
 
@@ -3069,7 +3163,7 @@ Print Formatted (YYYY-MM-DD HH-MM-SS):
 
 ### If - Has Parameter
 
-<cb>if [ ! -z "$1" ]; then
+<cb>if [[ ! -z "$1" ]]; then
 	<v>...<>
 else
 	<v>...<>
@@ -3079,17 +3173,19 @@ fi<>
 
 ### If - No Parameter
 
-<cb>if [ -z "$1" ]; then
+<cb>if [[ -z "$1" ]]; then
 	<v>...<>
 else
 	<v>...<>
 fi<>
+@
+@ empty, not present, no value, not set
 
 
 
 ### If - Parameter Equals
 
-<cb>if [ "$1" == "<v>value<>" ]; then
+<cb>if [[ "$1" == "<v>value<>" ]]; then
 	<v>...<>
 else
 	<v>...<>
@@ -3099,7 +3195,7 @@ fi<>
 
 ### If - Has Variable
 
-<cb>if [ ! -z "$<v>variable1<>" ]; then
+<cb>if [[ ! -z "$<v>variable1<>" ]]; then
 	<v>...<>
 else
 	<v>...<>
@@ -3109,7 +3205,7 @@ fi<>
 
 ### If - No Variable
 
-<cb>if [ -z "$<v>variable1<>" ]; then
+<cb>if [[ -z "$<v>variable1<>" ]]; then
 	<v>...<>
 else
 	<v>...<>
@@ -3119,7 +3215,7 @@ fi<>
 
 ### If - Variable Equals
 
-<cb>if [ "$<v>variable1<>" == "<v>value<>" ]; then
+<cb>if [[ "$<v>variable1<>" == "<v>value<>" ]]; then
 	<v>...<>
 else
 	<v>...<>
@@ -3149,9 +3245,11 @@ Print this to the standard out.
 
 ### Input - From User	
 
-<cb>read -p "<v>caption:<> " <v>value1<>
+<cb>read -p "<v>caption:<> " <v>value1<><>
 
 Input stored in variable named '<c><v>value1<><>'.
+@
+@ command line, console
 
 
 
@@ -3335,12 +3433,46 @@ Bash user readline initialization script file.
 
 
 
-# Keyboard Short Cuts
+# Keyboard Shortcuts
+@
+@ short cut, shortcuts-only
 
 
-### Shortcut - Start Of Line
+### Shortcut - Line - Start Of Line
 
 <cb>Ctrl + a<>
+@
+@ Ctrl, a, left
+
+
+### Shortcut - Line - End Of Line
+
+<cb>Ctrl + e<>
+@
+@ Ctrl, e, right
+
+
+
+### Shortcut - Word - Left (Back) 1 Word
+
+<cb>Alt + b<>
+@
+@ Alt, b
+
+
+### Shortcut - Word - Right (Forward) 1 Word
+
+<cb>Alt + f<>
+@
+@ Alt, f
+
+
+
+### Shortcut - Screen - Clear Screen
+
+<cb>Ctrl + l<>
+@
+@ Ctrl, l
 
 
 
@@ -3405,19 +3537,6 @@ Case clause terminator.
 
 
 
-### Symbol []
-
-Evaluate an expression to true false.
-
-<cb>if [ <v>expression<> ]
-then
-	<v>...<>
-fi<>
-@
-@ [, ]
-
-
-
 ### Symbol [];
 
 Logical expression evaluation (<c>[<v>...<>]<>) followed by the command terminator (<c>;<>).
@@ -3434,9 +3553,37 @@ fi<>
 
 ### Symbol []
 
-Evaluates a logical expression.
+Evaluate an expression to true false.
+
+<cb>if [ <v>expression<> ]
+then
+	<v>...<>
+fi<>
+@
+@ [, ]
+
+
+
+### Symbol [];
+
+Evaluates a logical expression followed by a command.
+
+The ';' is a command separator.
 
 <cb>if [ <v>expression<> ]; then
+	<v>...<>
+fi<>
+@
+@ [, ];
+
+
+
+### Symbol [[]]
+
+Evaluate an expression to true false.
+
+<cb>if [[ <v>expression<> ]]
+then
 	<v>...<>
 fi<>
 @
