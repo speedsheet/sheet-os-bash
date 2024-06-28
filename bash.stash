@@ -1,10 +1,9 @@
-# <#>Bash Scripting<> SpeedSheet
-<b>Find it faster.<>
+<meta>index: tags<>
+# <#>Bash<> Sheet
+<meta>index: none<>
+<b>Find It Faster<>
 
-This is an interactive <b>Bash<> cheat sheet. Covers the core Bash scripting language. Use the search to instantly get answers.
-
-Bash is an <c>sh<> compatible command language used to run and manage processes on Linux and Unix systems.
-
+This is an interactive <b>Bash<> cheat sheet. Covers the core Bash scripting language. Use the search to instantly get answers. Bash is an <c>sh<> compatible command language used to run and manage processes on Linux and Unix systems.
 
 <table><col><b>Basics<>
 
@@ -13,15 +12,16 @@ Bash is an <c>sh<> compatible command language used to run and manage processes 
 
 <*><link "?q=command-execution-only">Command Execution<>
 <link "?q=parameters-only">Command Parameters<>
-<link "?q=config-only">Configuration Files<>
+<link "?q=config-files-only">Configuration Files<>
 <link "?q=control-only">Control Structures<>
 <link "?q=debug-only">Debugging<>
-<link "?q=variables-only">Environment Variables<>
 <link "?q=exit-only">Exit<>
-<link "?q=files-only">File IO<>
+<link "?q=files-only">Files<>
 <link "?q=functions-only">Functions<>
 <link "?q=operators-only">Operators<>
-<link "?q=redirect-only">Redirecting IO<><>
+<link "?q=processes-only">Processes<>
+<link "?q=redirect-only">Redirecting IO<>
+<link "?q=user-only">Users<><>
 
 <*><link "?q=how-to-only">How To<><>
 
@@ -39,7 +39,8 @@ Bash is an <c>sh<> compatible command language used to run and manage processes 
 <*><link "?q=boolean-only">Boolean<>
 <link "?q=integer-only">Integer<>
 <link "?q=string-only">String<>
-<link "?q=array-only">Array<><>
+<link "?q=array-only">Array<>
+<link "?q=associative-array-only">Associative Array<><>
 
 <b>Control Structures<>
 
@@ -50,12 +51,13 @@ Bash is an <c>sh<> compatible command language used to run and manage processes 
 <link "?q=while-only">While<><><><>
 
 
-
 # Online Docs
 
+##### GNU Bash Manual
+<l>https://www.gnu.org/software/bash/manual/bash.html<>
 
-### Linux Man Pages
 
+##### Linux Man Pages
 <l>https://man7.org/linux/man-pages/index.html<>
 
 
@@ -241,6 +243,29 @@ Tells the shell to run this script using zsh.
 
 
 
+### Document Comments
+
+<cb><#># This is a doc comment.<>
+<v>function_1<>() {
+	<v>...<>
+}<>
+
+<cb><#># This is a doc comment.
+\# Add context to the
+\# following function.<>
+<v>function_1<>() {
+	<v>...<>
+}<>
+
+
+Place doc comments before functions.
+
+Use regular comment syntax, a single hash <#><c>#<><> before the text.
+@
+@ code, documentation, docstring-only, docstr-only, doc-string-only, doc-str-only
+
+
+
 ### Escape
 
 <c>\\<v>x<><>
@@ -334,7 +359,7 @@ Example:
 
 ### Trusted Ports
 
-Ports <= 1023
+Ports \<= 1023
 
 
 Port numbers 1023 and below and trusted ports
@@ -350,6 +375,27 @@ Non-root processes must listen on ports greater than 1023.
 There is no official convention but the following guidelines are often recommended.
 @
 @ Names, naming-conventions-only, conventions-only
+
+
+
+### Convention - Script Name
+
+<cb><v>script_name<><>
+
+Prefer lower_snake_case.
+
+Don't use an extension (no .sh, no .bash)
+
+
+
+### Convention - Script Name (Alternative)
+
+<cb><v>script-name<><>
+
+Use lower-hyphen-case.
+
+Hyphen-case is an alternative to snake_case but pick one and be consistent.
+Don't use an extension.
 
 
 
@@ -394,32 +440,37 @@ Use lower_snake_case.
 
 # Executing Commands
 @
-@ execute, jobs
+@ execute, jobs, scripts, bash
 @ command-only, commands-only, execute-commands-only, command-execution-only, job-only, jobs-only
 
 
 ### Commands - Basics
 
-<card><table><col>Start				<><col><c><v>command_name<><><>
-<col>Start in Background<><col><c><v>command_name<> &<><>
-<col>Start from Current Directory<><col><c>./<v>command_name<><><>
-<col>Start in the Current Process<><col><c>. <v>command_name<><><>
-<col> <>
-<col>Chain Commands<><col><c><v>command1<>; <v>command2<><><>
-<col>Chain Commands, Pipe Output<><col><c><v>command1<> | <v>command2<><><>
-<col>Chain Commands, Capture Output<><col><c><v>command2<> $(<v>command1<>)<><>
-<col> <>
-<col>Run Commands, While Successful<><col><c><v>command1<> && <v>command2<><><>
-<col>Run Commands, While No Error<><col><c><v>command1<> || <v>command2<><><>
-<col> <>
-<col>Cancel / End<><col><c>CTRL + C<><>
-<col>End of File<><col><c>CTRL + D<><>
-<col>Suspend<><col><c>CTRL + Z<><>
-<col> <>
-<col>Run in Background<><col><c>bg % <v>number<><><>
-<col>Run in Foreground<><col><c>fg % <v>number<><><>
-<col> <>
-<col>List All<><col><c>jobs<><><><>
+<card><t>
+Start				<|><c><v>command_name<><>
+Start in Background<|><c><v>command_name<> &<>
+Start from Current Directory<|><c>./<v>command_name<><>
+Start in the Current Process<|><c>. <v>command_name<><>
+
+Chain Commands<|><c><v>command1<>; <v>command2<><>
+Chain Commands, Pipe Output<|><c><v>command1<> | <v>command2<><>
+Chain Commands, Capture Output<|><c><v>command2<> $(<v>command1<>)<>
+
+Run Commands, While Successful<|><c><v>command1<> && <v>command2<><>
+Run Commands, While No Error<|><c><v>command1<> || <v>command2<><>
+
+Evaluate, Then Execute<|><c>$(<v>evaluate_command<>)<>
+
+Cancel / End<|><c>CTRL + C<>
+End of File<|><c>CTRL + D<>
+Suspend<|><c>CTRL + Z<>
+
+Run in Background<|><c>bg % <v>number<><>
+Run in Foreground<|><c>fg % <v>number<><>
+
+List All<|><c>jobs<><><>
+@
+@ summary
 
 
 
@@ -447,6 +498,22 @@ Any environment changes made by the script will be lost when it returns.
 
 
 
+### Command - Run In Current Shell / Process
+
+<cb>. <v>command<><>
+
+<cb>source <v>command<><>
+
+
+Runs the command inside the current process.
+
+These two are equivalent.
+Any environment changes will be kept.
+@
+@ starting, .
+
+
+
 ### Command - Run From Current Directory
 
 <cb>./<v>command<><>
@@ -461,19 +528,39 @@ This is for security reasons.
 
 
 
-### Command - Run In Current Process
+### Command - Run Repeatedly
 
-<cb>. <v>command<><>
-
-<cb>source <v>command<><>
+<cb>repeat <v>count<> <v>command<><>
 
 
-Runs the command inside the current process.
+Runs a command a specific number of times.
 
-These two are equivalent.
-Any environment changes will be kept.
+
+Example:
+
+<cb>repeat 5 echo "Play it again Sam."<>
 @
-@ starting, .
+@ repeat, count, times
+
+
+
+### Command - Evaluate, The Execute
+
+<cb>$(<v>evaluate_command<>)<>
+
+
+Evaluates the inner command and then executes the output.
+
+Also Called: Command Substitution
+
+
+Example:
+
+<cb>$(echo "echo hello")
+
+<#># Prints: hello<><>
+@
+@ $(), command substitution
 
 
 
@@ -526,6 +613,27 @@ Runs the last job or job with given number in the foreground.
 
 
 
+### Multiple Commands - Run With Command Substitution
+
+<cb><v>command_2<> $(<v>command_1<>)<>
+
+
+Run command 1 and return the output as arguments for command 2.
+
+<c>$()<> executes the command and returns the output.
+
+
+Example:
+
+<cb>echo $(echo "Hello") "there."
+
+<#># Prints: Hello there.<><>
+@
+@ Capture, run, output as argument, command in a command.
+@ $(), call, piping, pipe, stdin, stdout
+
+
+
 ### Multiple Commands - Run Sequentially
 
 <cb><v>command_1<>; <v>command_2<>; <v>...<><>
@@ -562,23 +670,21 @@ Example:
 
 
 
-### Multiple Commands - Run, Capturing Output as Arguments
+### Multiple Commands - Run Sequentially, Connecting Standard Out and Error to Standard In
 
-<cb><v>command_2<> $(<v>command_1<>)<>
+<cb><v>command_1<> |& <v>command_2<> |& <v>...<><>
 
 
-Run command 1 and return the output as arguments for command 2.
+Runs a sequence of commands, passing the output of one command to the input of the next.
 
-<c>$()<> executes the command and returns the output.
+<c>|&<> (pipe) redirects the standard out and error out.
 
 
 Example:
 
-<cb>echo $(echo "Hello") "there."
-
-<#># Prints: Hello there.<><>
+<cb>ls |& grep .log<>
 @
-@ $(), call, piping, pipe, stdin, stdout
+@ |&, together, piping, pipe, stdin, stdout, chain, sequentially
 
 
 
@@ -592,38 +698,41 @@ Runs each command in sequence if and only if each completes successfully (exit c
 
 Example:
 
-<cb>echo "Hello" &1 echo "There"<>
+<cb>echo "Hello" && echo "There"<>
 @
-@ &&, together, exit code, chain
+@ &&, together, exit code, chain, and
 
 
 
-### Multiple Commands - Run Sequentially If No Error
+### Multiple Commands - Run Sequentially If Error
+
+<cb><v>command_1<> || <v>command_2<><>
 
 <cb><v>command_1<> || <v>command_2<> || <v>...<><>
 
 
-Runs each command in sequence if and only if each completes without error.
+Runs the next command only if the previous command returned an error.
 
-The commands terminate on error (exit code > 0)
+A command returns an error when the exit code > 0.
 
 
 Example:
 
 <cb>echo "Hello" || echo "There"<>
 @
-@ ||, together, exit code, chain, terminate on error.
+@ ||, together, exit code, chain, or, on error
 
 
 
 # Redirect Operators
 @
+@ from, to
 @ redirect-only, redirections-only, redirecting-only
 
 
 ## Redirect Operators - Basics
 
-<in-2><table><col>Pipe Output<><col>|<><col><c><v>command_1<> | <v>command_2<><><>
+<in 2><table><col>Pipe Output<><col>|<><col><c><v>command_1<> | <v>command_2<><><>
 <col> <>
 <col>Redirect Input From File<><col>\< <><col><c><v>command<> \< <v>file_name<><><>
 <col>Redirect Input From Stream<><col>\<\< <><col><c><v>command<> \<\<<v>LABEL<>
@@ -639,9 +748,11 @@ Example:
 
 File Descriptors:
 
-<in-2><table><col>Standard In<><col>0<>
+<in 2><table><col>Standard In<><col>0<>
 <col>Standard Out<><col>1<>
 <col>Error Out<><col>2<><><>
+@
+@ summary
 
 
 
@@ -679,7 +790,7 @@ Example:
 
 <cb>grep "error" \< output.txt<>
 @
-@ ;, command separator, terminator
+@ ;, command separator, terminator, from file
 @ standard input, stdin
 
 
@@ -700,7 +811,7 @@ Note: input is processed very like the contents of double quotes.
 
 Example:
 
-<cb>cat \<\<<v>END_CONTENT<> > <v>output.txt<>
+<cb>cat > <v>output.txt<> \<\<<v>END_CONTENT<>
 Line 1
 Line 2
 Line 3
@@ -795,7 +906,20 @@ Example:
 
 Writes to a file.
 @
-@ >, >>
+@ write
+@ >
+
+
+
+### Redirect - Redirect Output To Existing File
+
+<cb><v>command<> >> /<v>path<>/<v>file_path<><>
+
+
+Appends to an existing file or creates one if it does not exist.
+@
+@ append, write
+@ >>
 
 
 
@@ -837,11 +961,11 @@ Example:
 
 Evaluate:
 
-<in-2><c><v>result<>=$((<v>a<> + <v>b<>))<><>
+<in 2><c><v>result<>=$((<v>a<> + <v>b<>))<><>
 
 Operators:
 
-<in-2><table><col><v>a<>++<>
+<in 2><table><col><v>a<>++<>
 <col>++<v>a<><>
 <col><v>a<>--<>
 <col>--<v>a<><>
@@ -856,7 +980,7 @@ Operators:
 
 Note:
 
-<in-2>All values must be integers or integer variables.
+<in 2>All values must be integers or integer variables.
 Always returns an integer value.<>
 @
 @ %, **, +, -, /, //, (()), $(())
@@ -866,15 +990,22 @@ Always returns an integer value.<>
 
 
 
-## Comparison Operators
+## Number Comparison Operators
 
 Evaluate:
 
-<in-2><c><v>result<>=$((<v>a<> < <v>b<>))<><>
+<in 2><c><v>result<>=$((<v>a<> < <v>b<>))<><>
 
 Operators:
 
-<in-2><table><col><c><v>a<> = <v>b<>	<><><col>Is Equal / Prefer over ==<>
+<in 2><table><col><c><v>a<> -eq <v>b<><><><col>Is Equal<>
+<col><c><v>a<> -ne <v>b<><><><col>Not Equal<>
+<col><c><v>a<> -lt <v>b<><><><col>Less Than<>
+<col><c><v>a<> -le <v>b<><><><col>Less Than or Equal<>
+<col><c><v>a<> -gt <v>b<><><><col>Greater Than<>
+<col><c><v>a<> -ge <v>b<><><><col>Greater Than or Equal<><><>
+
+<in 2><table><col><c><v>a<> = <v>b<>	<><><col>Is Equal / Prefer over ==<>
 <col><c><v>a<> == <v>b<>	<><><col>Is Equal / Supports Pattern Matching<>
 <col><c><v>a<> != <v>b<><><>
 <col><c><v>a<> > <v>b<><><>
@@ -882,16 +1013,9 @@ Operators:
 <col><c><v>a<> >= <v>b<><><>
 <col><c><v>a<> \<= <v>b<><><><><>
 
-<in-2><table><col><c><v>a<> -eq <v>b<><><><col>Is Equal<>
-<col><c><v>a<> -ne <v>b<><><><col>Not Equal<>
-<col><c><v>a<> -lt <v>b<><><><col>Less Than<>
-<col><c><v>a<> -le <v>b<><><><col>Less Than or Equal<>
-<col><c><v>a<> -gt <v>b<><><><col>Greater Than<>
-<col><c><v>a<> -ge <v>b<><><><col>Greater Than or Equal<><><>
-
 Values:
 
-<in-2><table><col><c>0	<><><col>False<>
+<in 2><table><col><c>0	<><><col>False<>
 <col><c>1	<><><col>True<><><>
 
 Notes:
@@ -907,7 +1031,7 @@ Will always return either 0 (false) or 1 (true).
 Prefer <c>((<v>expression<>))<>
 @
 @ ==, !=, >, >=, \<, \<=, (()), $(())
-@ less than, greater than, less that or equal, greater than or equal, integer
+@ less than, greater than, less that or equal, greater than or equal, integer, equals
 @ compare, camparator, numbers, ints, integers
 @ int-only, integer-only, integers-only
 @ -eq, -ne, -lt, -le, -gt, -ge
@@ -916,7 +1040,7 @@ Prefer <c>((<v>expression<>))<>
 
 ## String Operators
 
-<in-2><table><col><c><v>a<> == <v>b<>		<><><col>Equals<>
+<in 2><table><col><c><v>a<> == <v>b<><>		<><col>Equals<>
 <col><c><v>a<> != <v>b<><><><col>Not Equal<>
 <col> <>
 <col><c>-z <v>a<><><><col>Unset or Length 0<super><#>1<><><>
@@ -930,17 +1054,17 @@ Prefer <c>((<v>expression<>))<>
 
 
 
-## String Operators - Comparison
+## String Comparison Operators
 
 Evaluate:
 
-<in-2><c>if [ "$<v>a<>" >= "$<v>b<>" ] <v>...<>
+<in 2><c>if [[ $<v>a<> >= $<v>b<> ]] <v>...<>
 
-if [[ <v>a<> >= <v>b<> ]] <v>...<><><>
+if [ "$<v>a<>" >= "$<v>b<>" ] <v>...<><><>
 
 Operators:
 
-<in-2><table><col><c><v>a<> = <v>b<>	<><><col>Prefer Over ==<>
+<in 2><table><col><c><v>a<> = <v>b<><>	<><col>Prefer Over ==<>
 <col><c><v>a<> == <v>b<>	<><>
 <col><c><v>a<> != <v>b<><><>
 <col><c><v>a<> > <v>b<><><>
@@ -954,17 +1078,34 @@ Operators:
 
 
 
+## String Operators -n vs ! -z
+
+Generally -n is equivalent to ! -z:
+
+<cb>[[ -n $<v>value<> ]]  same as  [[ ! -z $<v>value<>]]<>
+
+But...
+
+<c>[ -n ]<> behaves differently than <c>[[ -n ]]<> (single square brackets).
+<c>[ -n ]<> will return true for empty variable.
+
+<cb>[ -n $<v>value<> ]  is DIFFERENT to  [ ! -z $<v>value<>]<>
+
+
+Prefer <c>! -z<> if using <c>[]<> (single square brackets).
+
+
 ## Logical Operators
 
 Operators:
 
-<in-2><table><col><c>! <v>b<>								<><><col>Not<>
+<in 2><table><col><c>! <v>b<><>								<><col>Not<>
 <col><c><v>a<> && <v>b<><><><col>And<>
 <col><c><v>a<> || <v>b<><><><col>Or<><><>
 
 Between Expressions:
 
-<in-2><table><col><c>! [ <v>condition<> ]	<><><col>Not<>
+<in 2><table><col><c>! [ <v>condition<> ]	<><><col>Not<>
 <col> <>
 <col><c>[ <v>condition_a<> ] && [ <v>condition_b<> ]<><><col>And<>
 <col><c>[ <v>condition_a<> ] || [ <v>condition_b<> ]<><><col>Or<><><>
@@ -1059,6 +1200,8 @@ do
 	break
 	<v>...<>
 done<><><>
+@
+@ summary
 
 
 
@@ -1069,25 +1212,6 @@ done<><><>
 
 
 ### If Else
-
-<cb>if [[ <v>expression<> ]]
-then
-	<v>...<>
-fi<>
-
-<cb>if [[ <v>expression<> ]]
-then
-	<v>...<>
-elif [[ <v>expression<> ]]
-then
-	<v>...<>
-else
-	<v>...<>
-fi<>
-
-
-
-### If Else - Condensed
 
 <cb>if [[ <v>expression<> ]]; then
 	<v>...<>
@@ -1103,6 +1227,24 @@ fi<>
 
 
 Separate <c>if<> and <c>elif<> from <c>then<> with a command separator (<c>;<>).
+
+
+### If Else - Expanded Form
+
+<cb>if [[ <v>expression<> ]]
+then
+	<v>...<>
+fi<>
+
+<cb>if [[ <v>expression<> ]]
+then
+	<v>...<>
+elif [[ <v>expression<> ]]
+then
+	<v>...<>
+else
+	<v>...<>
+fi<>
 
 
 
@@ -1143,7 +1285,7 @@ Example:
 ## Case
 @
 @ case in, esac, ;;
-@ case-only, case-in-only, match, switch
+@ case-only, case-in-only
 
 
 ### Case - Basics
@@ -1312,10 +1454,8 @@ esac<>
 
 ### For - Basics
 
-<cb>for ((<v>value<>=0; <v>value<> \<= <v>max<>; <v>value<>++))
-do
+<cb>for <v>item<> in {<v>first<>..<v>last<>}; do
 	<v>...<>
-	<v>...<> <v><>$<v>value<>
 done<>
 
 <cb>for <v>value<> in {<v>first<>..<v>last<>}
@@ -1324,22 +1464,20 @@ do
 	<v>...<> $<v>value<>
 done<>
 
-<cb>for <v>item<> in "${<v>array_1<>[@]}"
-do
+<cb>for ((<v>value<>=0; <v>value<> \<= <v>max<>; <v>value<>++)) ; do
+	<v>...<>
+	<v>...<> <v><>$<v>value<>
+done<>
+
+<cb>for <v>item<> in "${<v>array_1<>[@]}" ; do
 	<v>...<>
 done<>
 
-<cb>for <v>item<> in "<v>value 1<>" "<v>value 2<>" "<v>value 3<>" <v>...<>
-do
+<cb>for <v>item<> in "<v>value 1<>" "<v>value 2<>" "<v>value 3<>" <v>...<> ; do
 	<v>...<>
 done<>
 
-<cb>for <v>item<> in {<v>first<>..<v>last<>}; do
-	<v>...<>
-done<>
-
-<cb>for <v>item<> in {<v>first<>..<v>last<>}
-do
+<cb>for <v>item<> in {<v>first<>..<v>last<>} ; do
 	<v>...<>
 	continue
 	<v>...<>
@@ -1355,11 +1493,13 @@ done<>
 
 Usage:
 
-<cb>for ((<v>value<>=0; <v>value<> \<= <v>max<>; <v>value<>++))
-do
+<cb>for ((<v>value<>=<v>starting_value<>; <v>continue_while<>; <v>next_value<>)); do
 	<v>...<>
 	<v>...<> $<v>value<>	<#>#1<>
 done<>
+
+
+Iterates through a series of values.
 
 
 \#1  <s>-<>  Reference the current value with <c>$<v>value<><>.
@@ -1369,8 +1509,7 @@ Example:
 
 <cb><v>count<>=<v>3<>
 
-for ((<v>value<>=0; <v>value<> \< <v>count<>; <v>value<>++))
-do
+for ((<v>value<>=0; <v>value<> \< <v>count<>; <v>value<>++)); do
 	echo "Value $<v>value<>"
 done<>
 
@@ -1384,8 +1523,7 @@ done<>
 
 Usage:
 
-<cb>for <v>value<> in {<v>first<>..<v>last<>..<v>increment<>}
-do
+<cb>for <v>value<> in {<v>first<>..<v>last<>..<v>increment<>}; do
 	<v>...<>
 	<v>...<> $<v>value<>	<#>#1<>
 done<>
@@ -1394,6 +1532,7 @@ done<>
 Iterates over a range of numbers.
 
 Numbers range in value from first to last inclusively.
+{..} does NOT support variable parameters. Values must be explicit numbers.
 
 
 \#1  <s>-<>  Reference the current value with <c>$<v>value<><>.
@@ -1401,18 +1540,47 @@ Numbers range in value from first to last inclusively.
 
 Print 1 to 5:
 
-<cb>for <v>value<> in {1..5}
-do
+<cb>for <v>value<> in {1..5}; do
 	echo "$<v>value<>"
 done<>
 
 
 Print 1, 3, 5:
 
-<cb>for <v>value<> in {1..5..2}
-do
+<cb>for <v>value<> in {1..5..2}; do
 	echo "$<v>value<>"
 done<>
+
+
+
+### For - In Range - Using Variables
+
+<cb>for <v>value<> in $(seq $<v>count<>)<>
+
+<cb>for <v>value<> in $(seq $<v>first<> $<v>last<>)<>
+
+Usage:
+
+<cb>for <v>value<> in $(seq $<v>count<>); do
+	<v>...<>
+done<>
+
+
+Iterates over a range of numbers.
+
+Use when your number range uses variables for values.
+
+
+Print 3, 4, 5:
+
+<cb><v>first<>=3
+<v>last<>=5
+
+for <v>value<> in $(seq $<v>first<> $<v>last<>); do
+	echo "$<v>value<>"
+done<>
+@
+@ range, sequence
 
 
 
@@ -1422,8 +1590,7 @@ done<>
 
 Usage:
 
-<cb>for <v>item<> in "${<v>array_1<>[@]}"
-do
+<cb>for <v>item<> in "${<v>array_1<>[@]}"; do
 	<v>...<>
 	<v>...<> <v><>$<v>item<>
 done<>
@@ -1436,8 +1603,7 @@ Example:
 
 <cb><v>array_1<>=("<v>value 1<>" "<v>value 2<>" "<v>value 3<>")
 
-for <v>value<> in "${<v>array_1<>[@]}"
-do
+for <v>value<> in "${<v>array_1<>[@]}"; do
 	echo "$<v>value<>"
 done<>
 @
@@ -1451,8 +1617,7 @@ done<>
 
 Usage:
 
-<cb>for <v>item<> in <v>value_1<> <v>value_2<> <v>value_3<>
-do
+<cb>for <v>item<> in <v>value_1<> <v>value_2<> <v>value_3<>; do
 	<v>...<>
 	<v>...<> <v><>$<v>item<>
 done<>
@@ -1463,8 +1628,7 @@ Loop through all the items listed after <c>in<>
 
 Examples:
 
-<cb>for <v>value<> in "<v>value 1<>" "<v>value 2<>" "<v>value 3<>"
-do
+<cb>for <v>value<> in "<v>value 1<>" "<v>value 2<>" "<v>value 3<>"; do
 	echo "$<v>value<>"
 done<>
 @
@@ -1474,8 +1638,7 @@ done<>
 
 ### For - Break, Continue
 
-<cb>for <v>item<> in <v>list_1<>
-do
+<cb>for <v>...<>; do
 	<v>...<>
 	continue
 	<v>...<>
@@ -1498,12 +1661,12 @@ continue - skip to the next iteration.
 
 ### Until - Basics
 
-<cb>until [ <v>expression<> ]
-do
+<cb>until [ <v>expression<> ]; do
 	<v>...<>
 done<>
 
-<cb>until [ <v>expression<> ]; do
+<cb>until [ <v>expression<> ]
+do
 	<v>...<>
 done<>
 
@@ -1521,6 +1684,10 @@ done<>
 
 
 ### Until
+
+<cb>until [ <v>expression<> ] ; do
+	<v>...<>
+done<>
 
 <cb>until [ <v>expression<> ]
 do
@@ -1589,12 +1756,12 @@ done<>
 
 ### While - Basics
 
-<cb>while [ <v>expression<> ]
-do
+<cb>while [ <v>expression<> ]; do
 	<v>...<>
 done<>
 
-<cb>while [ <v>expression<> ]; do
+<cb>while [ <v>expression<> ]
+do
 	<v>...<>
 done<>
 
@@ -1612,6 +1779,10 @@ done<>
 
 
 ### While
+
+<cb>while [ <v>expression<> ] ; do
+	<v>...<>
+done<>
 
 <cb>while [ <v>expression<> ]
 do
@@ -1675,7 +1846,45 @@ done<>
 
 # Literals
 @
-@ literals-only
+@ literals-only, lit-only, literal-only
+
+
+## Literals - Basics
+
+<t>Integer<|><c><v>123<><>
+<|><c>-<v>123<><>
+<|><c><v>123_456<><>
+
+Binary<|><c>2#<v>1100<><>
+<|><c>2#-<v>1100<><>
+<|><c>2#<v>1111_0000<><>
+
+Hex<|><c>0x<v>1100<><>
+<|><c>0x-<v>1100<><>
+<|><c>0x<v>1111_0000<><>
+
+Octal<|><c>=8#<v>7777<><>
+<|><c>=8#-<v>7777<><>
+<|><c>=8#<v>777_000<><>
+
+Base N<|><c><v>n<>#<v>1234<><>
+<|><c><v>n<>#-<v>1234<><>
+<|><c><v>n<>#<v>123_456<><>
+
+String<|><c><v>a_string<><>
+<|><c>'<v>a string<>'<>
+<|><c>"<v>a string<>"<>
+
+String Escape<|><c>\\c<v>x<><>
+
+Hex Char<|><c>\\x<v>FF<><>
+Octal Char<|><c>\\0<v>777<><>
+Unicode Char<|><c>\\u<v>FFFF<><><|>1-4 Digits Only
+Unicode Char<|><c>\\U<v>FFFFFFFF<><><|>1-8 Digits Only<><>
+@
+@ summary
+
+## Literals - Details
 
 
 ### Integer Literal
@@ -1811,24 +2020,17 @@ echo $<v>a<>
 
 
 
-### String Literals - Control Character
-
-<cb>\\c<v>x<><>
-
-
-Defines a control character.
-@
-@ escapes, escaping
-@ \\c
-
-
-
 ### String Literal - Hex Character
 
 <cb>\\x<v>FF<><>
 
 
 Defines an 8 bit character in hex.
+
+
+Example:
+
+<cb>echo "a = \\x61"<>
 @
 @ escapes, escaping
 @ \\x
@@ -1837,13 +2039,18 @@ Defines an 8 bit character in hex.
 
 ### String Literal - Octal Character
 
-<cb>\\<v>777<><>
+<cb>\\0<v>777<><>
 
 
 Defines an 8 bit character in octal.
+
+
+Example:
+
+<cb>echo "a = \\0141"<>
 @
 @ escapes, escaping
-@ \\
+@ \\0
 
 
 
@@ -1859,6 +2066,11 @@ Defines an 8 bit character in hex.
 
 \\u		1-4 digits only
 \\U		1-8 digits
+
+
+Example:
+
+<cb>echo "🍌 = \\U1F34C"<>
 @
 @ escapes, escaping
 @ \\u
@@ -2006,13 +2218,13 @@ Expression Variables Do Not Require Quotes ""<>
 
 <c><v>command<><> :
 
-<in-2><cb><v>command<>
+<in 2><cb><v>command<>
 
 if <v>command<>; <v>...<><><>
 
 <c>(<v>command<>)<> :
 
-<in-2><cb>(<v>command<>)
+<in 2><cb>(<v>command<>)
 
 if (<v>command<>); <v>...<>
 
@@ -2020,13 +2232,13 @@ if (<v>command<>); <v>...<>
 
 <c>(( <v>arithmetic<> ))<> :
 
-<in-2><cb><v>result<>=$(( <v>arithmetic<> ))
+<in 2><cb><v>result<>=$(( <v>arithmetic<> ))
 
 if (( <v>arithmetic<> )); <v>...<><><>
 
 <c>test <v>condition<><> :
 
-<in-2><cb>test <v>conditional<>
+<in 2><cb>test <v>conditional<>
 
 test <v>conditional<> && <v>command<>
 
@@ -2034,13 +2246,13 @@ if test <v>conditional<>; <v>...<><><>
 
 <c>[ <v>condition<> ]<> :
 
-<in-2><cb>[ <v>conditional<> ] && <v>command<>
+<in 2><cb>[ <v>conditional<> ] && <v>command<>
 
 if [ <v>conditional<> ]; <v>...<><><>
 
 <c>[[ <v>condition<> ]]<> :
 
-<in-2><cb>[[ <v>conditional<> ]] && <v>command<>
+<in 2><cb>[[ <v>conditional<> ]] && <v>command<>
 
 if [[ <v>conditional<> ]]; <v>...<><><>
 
@@ -2056,19 +2268,21 @@ if [[ <v>conditional<> ]]; <v>...<><><>
 
 <table><col>Create / Update<><col><c><v>variable_name<>=<v>value<><><>
 <col>Delete<><col><c>unset <v>variable_name<><><>
-<col><col> <><>
+<col> <>
 <col>Get / Use Value<><col><c>$<v>variable_name<><><>
 <col><><col><c>${<v>variable_name<>}<><>
 <col> <>
 <col>Pass Containing Spaces<><col><c>"$<v>variable_name<>"<><>
 <col><><col><c>"${<v>variable_name<>}"<><><>
+@
+@ summary
 
 
 
 ## Variable - Details
 
 
-### Variable - Create
+### Variable - Create - Global / Environment
 
 <cb><v>variable_1<>=<v>value<><>
 
@@ -2116,31 +2330,12 @@ Examples:
 
 ### Variable - Create - From Command Output
 
-<cb><v>variable<> = $( <v>command<> )<>
+<cb><v>variable<>="$(<v>command<>)"<>
 
 Saves the standard output from a command in the variable.
 @
+@ to, capture
 @ "$()", $()
-
-
-
-### Variable - Append
-
-<cb><v>variable_1<>+=<v>appended_value<><>
-
-Appends a value to a variable.
-
-
-Example
-
-<cb><v>value<>="1"
-<v>value<>+="-2"
-
-echo "$<v>value<>"
-
-<#># Prints: 1-2<><>
-@
-@ set, =+
 
 
 
@@ -2183,14 +2378,21 @@ echo "$<v>text<>"<>
 
 <cb>! -z "$<v>variable_1<>"<>
 
-<cb>if [ ! -z "$<v>variable_1<>" ]; then<>
+Usage:
+
+<cb>if [[ ! -z "$<v>variable_1<>" ]]; then
+	<v>...<>
+fi<>
 
 
-Returns true if the variable is an empty string or unset.
+Returns true if the variable has a value.
+
+False for empty strings.
+False for non set variables.
 
 Bash treats unset variables and length 0 values as the same.
 @
-@ null, -z, not present, no value
+@ null, -n, not present, no value, has value, exists
 
 
 
@@ -2198,14 +2400,19 @@ Bash treats unset variables and length 0 values as the same.
 
 <cb>-z "$<v>variable_1<>"<>
 
-<cb>if [ -z "$<v>variable_1<>" ]; then<>
+Usage:
+
+<cb>if [[ -z "$<v>variable_1<>" ]]; then
+	<v>...<>
+fi<>
 
 
-Returns true if the variable is an empty string or unset.
+Returns true if the variable is an empty string or is unset.
 
 Unset and Length 0 are the same.
 @
-@ null, -z, not present, not set, no value
+@ null, not present, not set, no value, is missing
+@ -z
 
 
 
@@ -2270,14 +2477,14 @@ or
 
 Displays a sorted list of environment variables.
 @
-@ show, display
+@ show, display, alphabetically
 @ set, printenv
 
 
 
 # Parameters
 @
-@ arguments
+@ arguments, params, variables
 @ params-only, parameter-only, parameters-only
 @ args-only, argument-only, arguments-only
 
@@ -2287,6 +2494,8 @@ Displays a sorted list of environment variables.
 <cb>$0<>
 
 Returns the name of the command or script that was called.
+
+Includes the path used to call the command (if any).
 @
 @ $0
 
@@ -2369,6 +2578,37 @@ Parameters are wrapped in quotes and will pass spaces correctly.
 
 
 
+### Parameters - Parameter Count
+
+<cb>$#<>
+
+Return or Exit Code from last operation.
+
+Excludes parameter $0
+@
+@ size, length, number
+@ $#
+
+
+
+### Parameters - To String
+
+<cb>="$*"<>
+
+Usage:
+
+<cb><v>parameters<>="$*"<>
+
+
+Converts the parameters into a string.
+
+Each parameter is separated by a space.
+@
+@ from, convert, conversion, converting
+@ param-to, parameter-to, parameters-to, to-string, 
+
+
+
 ### Parameters - Shift Parameters
 
 <cb>shift<>
@@ -2389,7 +2629,7 @@ Moves: $2 -> $1, $3 -> $2, etc.
 
 Return or Exit Code from last operation.
 @
-@ value, integer
+@ value, integer, exit, variable, result
 @ $?
 
 
@@ -2401,8 +2641,6 @@ Return or Exit Code from last operation.
 Returns the number of parameters passed to the script.
 @
 @ $
-
-
 
 
 
@@ -2465,11 +2703,11 @@ Generally:
 
 ### Boolean - Is False?
 
-<cb>if ! (exit $<v>value<>); then <v>...<><>
-
 <cb>if ! <v>function<>; then<v>...<><>
 
 <cb>If [[ $? -ne 0 ]]; then <v>...<><>
+
+<cb>if ! (exit $<v>value<>); then <v>...<><>
 
 
 Tests if the exit code is false (!= 0).
@@ -2480,11 +2718,11 @@ Tests if the exit code is false (!= 0).
 
 ### Boolean - Is True?
 
-<cb>if (exit $<v>value<>); then<v>...<><>
-
 <cb>if <v>function<>; then<v>...<><>
 
 <cb>if [[ $? -eq 0 ]]; then <v>...<><>
+
+<cb>if (exit $<v>value<>); then<v>...<><>
 
 
 Tests if the exit code is true (= 0).
@@ -2852,7 +3090,7 @@ Returns the number of words in a string.
 
 
 
-# String - Operators
+# String - Comparison Operators
 @
 @ ops-only, string-operators-only, operators-only
 @ string-only, strings-only, str-only, text-only
@@ -2939,7 +3177,7 @@ Returns true if the variable is an empty string or unset.
 
 Bash treats unset variables and length zero values as the same.
 @
-@ null, not present, no value
+@ null, not present, no value, blank, is missing, op-only
 @ -z
 
 
@@ -2955,9 +3193,11 @@ Usage:
 fi<>
 
 
-True if has a value (is set and has a non zero length).
+True if has a value (has length greater than 0.).
+
+False if unset or empty string.
 @
-@ not null, is set, has value
+@ not null, is set, has value, blank, op-only
 @ -n
 
 
@@ -2988,15 +3228,48 @@ Matches positive and negative integers.
 
 Usage:
 
-<cb>if [[ $<v>value_1<> =~ <v>match_expression<> ; then
+<cb>if [[ $<v>value_1<> =~ <v>match_expression<> ]] ; then
 	<v>...<>
 fi<>
 
 
 Returns true if a string matches the expression.
+
+
+Sheets: <l "regular_expressions">Regular Expressions SpeedSheet<>
 @
-@ regex, check
+@ regex, check, equals, compare
 @ =~
+
+
+
+### String - Ends With?
+
+<cb>"$<v>string_1<>" == *"$<v>end<>"<>
+
+Usage:
+
+<cb>if [[ $<v>string_1<> == *"$<v>end<>" ]] ; then
+	<v>...<>
+fi<>
+
+
+Returns true if a string ends with the given suffix.
+
+
+
+### String - Starts With?
+
+<cb>"$<v>string_1<>" == "$<v>start<>"*<>
+
+Usage:
+
+<cb>if [[ $<v>string_1<> == "$<v>start<>"* ]] ; then
+	<v>...<>
+fi<>
+
+
+Returns true if a string starts with the given start string.
 
 
 
@@ -3004,6 +3277,58 @@ Returns true if a string matches the expression.
 @
 @ ops-only, string-operations-only, operations-only
 @ string-only, strings-only, str-only, text-only
+
+
+
+### String - Append
+
+<cb><v>string_1<>+="<v>appended_value<>"<>
+
+<cb><v>string_1<>+="$<v>string_2<>"<>
+
+
+Appends a value to a variable.
+
+
+Example:
+
+<cb><v>string_1<>="abc"
+<v>string_2<>="123"
+
+<v>string_1<>+="$<v>string_2<>"
+
+echo "$<v>string_1<>"
+
+<#># Prints: abc123<><>
+@
+@ =+
+
+
+
+### String - Concatenate
+
+<cb>"$<v>string_1<>$<v>string_2<>"<>
+
+Usage:
+
+<cb><v>concatenated<>="$<v>string_1<>$<v>string_2<>"<>
+
+
+Concatenates two strings together.
+
+
+Example:
+
+<cb><v>string_1<>="abc"
+<v>string_2<>="123"
+
+<v>concatenated<>="$<v>string_1<>$<v>string_2<>"
+
+echo "$<v>concatenated<>"
+
+<#># Prints: abc123<><>
+@
+@ join, combine
 
 
 
@@ -3072,6 +3397,248 @@ done \<\<\< "$<v>lines<>"
 @
 @ while done, loop over, for each
 @ read, -r
+
+
+
+### String - Pad Left
+
+<cb>printf "%*s" <v>length<> "$<v>string_1<>"<>
+
+Usage:
+
+<cb><v>padded<>="$(printf "%*s" <v>length<> "$<v>string_1<>")"<>
+
+
+Pads a string to the left with spaces.
+
+
+Example:
+
+<cb><v>string_1<>='abcd'
+
+<v>padded<>="$(printf "%*s" 10 "$<v>string_1<>")"
+
+echo "'$<v>padded<>'"
+
+<#># Prints: '      abcd'<><>
+@
+@ pad-left, align-left, right-justify, right justify, start
+@ printf
+
+
+
+### String - Pad Left With Character
+
+Use This Function:
+
+<cb>pad_left() {
+	local <v>content<>="$1"
+	local <v>padding<>="$2"
+	local <v>length<>="$3"
+
+	padded=""
+	for i in $(seq ${#<v>content<>} $<v>length<>); do
+		<v>padded<>+="$<v>padding<>"
+	done
+	echo "$<v>padded<>$<v>content<>"
+}<>
+
+Usage:
+
+<cb>pad_left "$<v>string_1<>" "$<v>pad_char<>" <v>length<><>
+
+<cb><v>padded<>="$(pad_left "$<v>string_1<>" "$<v>pad_char<>" <v>length<>)"<>
+
+
+Pads a string on the left with whatever characte you want.
+
+There is no easy way to do this in Bash but this function will work fine.
+This only works with single characters.
+
+
+Example:
+
+<cb>pad_left() {
+	local <v>content<>="$1"
+	local <v>padding<>="$2"
+	local <v>length<>="$3"
+
+	padded=""
+	for i in $(seq ${#<v>content<>} $<v>length<>); do
+		<v>padded<>+="$<v>padding<>"
+	done
+	echo "$<v>padded<>$<v>content<>"
+}
+
+<v>string_1<>='abcd'
+
+<v>padded<>="$(pad_left "$<v>string_1<>" "-" 10)"
+
+echo "$<v>padded<>"
+
+<#># Prints: -------abcd<><>
+@
+@ pad-left, align-left, right-justify, right justify, start
+
+
+
+### String - Pad Right
+
+<cb>printf "%s%*s" "$<v>string_1<>" <v>length<><>
+
+Usage:
+
+<cb><v>padded<>="$(printf "%s%*s" "$<v>string_1<>" <v>length<>)"<>
+
+
+Pads a string with spaces.
+
+
+Example:
+
+<cb><v>string_1<>='abcd'
+
+<v>padded<>="$(printf "%s%*s" "$<v>string_1<>" 10)"
+
+echo "'$<v>padded<>'"
+
+<#># Prints: 'abcd          '<><>
+@
+@ pad-right, align-right, left-justify, left jutify, end
+@ printf
+
+
+
+### String - Pad Right With Character
+
+Use This Function:
+
+<cb>pad() {
+	local <v>content<>="$1"
+	local <v>padding<>="$2"
+	local <v>length<>="$3"
+
+	padded="$<v>content<>"
+	for i in $(seq ${#<v>content<>} $<v>length<>); do
+		<v>padded<>+="$<v>padding<>"
+	done
+	echo "$<v>padded<>"
+}<>
+
+Usage:
+
+<cb>pad "$<v>string_1<>" "$<v>pad_char<>" <v>length<><>
+
+<cb><v>padded<>="$(pad "$<v>string_1<>" "$<v>pad_char<>" <v>length<>)"<>
+
+
+Pads a string with whatever character you want.
+This only works with single characters.
+
+
+Example:
+
+<cb>pad() {
+	local <v>content<>="$1"
+	local <v>padding<>="$2"
+	local <v>length<>="$3"
+
+	padded="$<v>content<>"
+	for i in $(seq ${#<v>content<>} $<v>length<>); do
+		<v>padded<>+="$<v>padding<>"
+	done
+	echo "$<v>padded<>"
+}
+
+<v>string_1<>='abcd'
+
+<v>padded<>="$(pad "$<v>string_1<>" "-" 10)"
+
+echo "$<v>padded<>"
+
+<#># Prints: abcd-------<><>
+@
+@ pad-right, align-right, left-justify, left jutify, end
+
+
+
+### String - Repeat
+
+<cb>printf "%.0s$<v>string_1<>" {1..<v>count<>}<>
+
+Usage:
+
+<cb><v>repeated<>="$(printf "%.0s$<v>string_1<>" {1..<v>count<>})"<>
+
+
+Repeats a string a specific number of times.
+
+<c>{..}<> does not support variables. You must explicitly type a number.
+
+
+Example:
+
+<cb><v>string_1<>='#'
+
+<v>repeated<>="$(printf "%.0s$<v>string_1<>" {1..<v>10<>})"
+
+echo "$<v>repeated<>"
+
+<#># Prints: ##########<><>
+
+
+@
+@ multiply, expand, multiple
+@ printf
+
+
+
+### String - Repeat - Using Variables
+
+<cb>repeat_string() {
+	local <v>text<>="$1"
+	local <v>count<>="$2"
+	local <v>repeat<>=''
+	for <v>i<> in $(seq 1 $<v>count<>); do
+		<v>repeat<>+=$<v>text<>
+	done
+	echo "$<v>repeat<>"
+}<>
+
+Usage:
+
+<cb>repeat_string "$<v>string_1<>" $<v>count<><>
+
+<cb><v>repeated<>="$(repeat_string "$<v>string_1<>" $<v>count<>)"<>
+
+
+Repeats a string a specific number of times as defined in a variable.
+
+Note: <c>repeat<> is a standard Bash command. This function must be named someting different (repeat_string in this case).
+
+
+Example:
+
+<cb>repeat_string() {
+	local <v>text<>="$1"
+	local <v>count<>="$2"
+	local <v>repeat<>=''
+	for <v>i<> in $(seq 1 $<v>count<>); do
+		<v>repeat<>+=$<v>text<>
+	done
+	echo "$<v>repeat<>"
+}
+
+<v>string_1<>='a-'
+<v>count<>=3
+
+<v>repeated<>="$(repeat_string $<v>string_1<> $<v>count<>)"
+
+echo "$<v>repeated<>"
+
+<#># Prints: a-a-a-<><>
+@
+@ with
 
 
 
@@ -3174,6 +3741,40 @@ echo "$<v>substring<>"
 
 
 
+### String - To Hash Code
+
+Using OpenSSL:
+
+<cb>echo "$string_1" | openssl dgst -sha256<>
+
+Using sha256sum:
+
+<cb>echo "$string_1" | sha256sum<>
+
+
+Converts a string into a hash code.
+
+
+Requirses that openssl or sha256sum be installed.
+@
+@ show, view, get, display
+@ digest, hashing, openssl
+@ convert, conversion, string-to, compute
+
+
+
+### String - To Hex
+
+<cb>echo "$string_1" | hexdump<>
+
+Prints the string in hex values.
+@
+@ see, all, entire
+@ show, view, get, display
+@ hexdump, hex dump
+
+
+
 ### String - To Lower Case
 
 <cb>=${<v>string_1<>,,}<>
@@ -3258,7 +3859,8 @@ Do not use commas!
 
 ### Array - Append
 
-<cb><v>array_1<>+=(<v>item_1<> <v>item_2<>)<>
+<cb><v>array_1<>+=(<v>item<>)
+<v>array_1<>+=(<v>item_1<> <v>item_2<> <v>item_3<>)<>
 
 
 Appends items to the end of the array.
@@ -3276,14 +3878,14 @@ echo "${<v>array_1<>[@]}"
 
 
 
-### Array - Concatenate
+### Array - Concatenate Arrays
 
 <cb>=(${<v>array_1<>[@]} ${<v>array_2<>[@]})<>
 
 
 Joins two or more arrays together.
 @
-@ join, concatenate, combine, arrays, lists
+@ join, concatenate, combine, arrays, lists, append
 
 
 
@@ -3293,16 +3895,19 @@ There is no built in way to do this. Create a function instead:
 
 <cb>array_contains() {
 
-	local <v>values<>=("${@:1:$#-1}")
-	local <v>match<>=${!#}
+	local <v>match<>="$1"
+	shift
+	local <v>items<>=("$@")
 
-	for <v>value<> in "${<v>values<>[@]}"; do [[ $<v>value<> == $<v>match<> ]] && return; done
+	for <v>item<> in "${<v>items<>[@]}"; do
+		[[ $<v>item<> == $<v>match<> ]] && return
+	done
 	false
 }<>
 
 Call:
 
-<cb>if array_contains "${<v>array_1<>[@]}" "$<v>value<>"; then <v>...<><>
+<cb>if array_contains "$<v>match<>" "${<v>array_1<>[@]}"; then <v>...<><>
 
 
 Returns true when the value is found in the array.
@@ -3313,9 +3918,9 @@ Works with items containing spaces.
 Example:
 
 <cb>array_contains() {
-	local <v>values<>=("${@:1:$#-1}")
-	local <v>match<>=${!#}
-	for <v>value<> in "${<v>values<>[@]}"; do [[ $<v>value<> == $<v>match<> ]] && return; done
+	local <v>match<>="$1"; shift
+	local <v>items<>=("$@")
+	for <v>item<> in "${<v>items<>[@]}"; do [[ $<v>item<> == $<v>match<> ]] && return; done
 	false
 }
 
@@ -3506,6 +4111,7 @@ echo "${<v>all<>[@]}"
 
 <#># Prints: one two three<><>
 @
+@ expand
 @ ${}, ${[@]}, [@]
 
 
@@ -3532,7 +4138,7 @@ echo "${<v>remainder<>[@]}"
 
 <#># Prints: two three<><>
 @
-@ item,  value, remainder, to end, to last, 1st, but
+@ item,  value, remainder, to end, to last, 1st, but, expand
 @ ${}, ${[@]}, [@]
 
 
@@ -3559,8 +4165,40 @@ echo "${<v>subarray<>[@]}"
 
 <#># Prints: one two<><>
 @
-@ item,  value, former, 1st, but
+@ item,  value, former, 1st, but, expand
 @ ${}, ${[@]}, [@]
+
+
+
+### Array - Is Empty?
+
+<cb>${#<v>array_1<>[@]} -eq 0<>
+
+Usage:
+
+<cb>if [[ ${#<v>array_1<>[@]} -eq 0 ]]; then <v>...<><>
+
+
+Returns true if the array is empty.
+@
+@ no size, size zero
+@ ${#}, [@]
+
+
+
+### Array - Not Empty?
+
+<cb>${#<v>array_1<>[@]} -ne 0<>
+
+Usage:
+
+<cb>if [[ ${#<v>array_1<>[@]} -ne 0 ]]; then <v>...<><>
+
+
+Returns true if the array is not empty.
+@
+@ size zero,
+@ ${#}, [@]
 
 
 
@@ -3745,6 +4383,196 @@ echo "${<v>sorted<>[@]}"
 
 
 
+### Array - To String
+
+<cb>="${<v>array_1<>[@]}"<>
+
+
+Converts an array into a string.
+@
+@ from, convert, conversion, converting
+@ array-to, from-array, to-string
+
+
+
+# Associative Arrays
+
+A dictionary or map of name value pairs.
+
+Requires: Bash 4+
+@
+@ associative-array-only, associative-arrays-only, ass-only, associative-only
+
+
+## Associative Array - Define
+
+
+### Associative Array - Define Empty
+
+<cb>declare -A <v>dict_1<><>
+
+
+Defines an empty associative array.
+@
+@ new, create, instantiate
+@ declare, -A
+
+
+
+### Associative Array - Define with Values
+
+<cb>declare -A <v>dict_1<>
+
+<v>dict_1<> = (
+	[<v>name<>]=<v>value<>
+	[<v>name<>]=<v>value<>
+	[<v>name<>]=<v>value<>
+)<>
+
+
+Defines a new associative array with.
+
+
+Example:
+
+<cb>declare -A <v>dict_1<>
+
+<v>dict_1<>=(
+	[a]="a one"
+	[b]="b two"
+	[c]="c three"
+)<>
+@
+@ new, create, instantiate
+@ declare, -A, (), []
+
+
+
+## Associative Array - Operations
+
+
+### Associative Array - Add / Update
+
+<cb><v>dict_1<>[<v>name<>]=<v>value<><>
+
+
+Adds or updates an entry in the associate array.
+
+
+Example:
+
+<cb>declare -A <v>dict_1<>
+
+<v>dict_1<>[<v>a<>]="<v>a one<>"<>
+@
+@ set, put, insert, modify, change, item, element, value, append to
+
+
+
+### Associative Array - Delete
+
+<cb>unset <v>dict_1<>[<v>name<>]<>
+
+
+Deletes a name value pair from the array.
+
+
+Example:
+
+<cb>declare -A <v>dict_1<>
+
+<v>dict_1<>=(
+	[a]="a one"
+	[b]="b two"
+	[c]="c three"
+)
+
+unset <v>dict_1<>[<v>a<>]<>
+@
+@ remove, element, item, by name
+@ unset
+
+
+
+### Associative Array - Get Keys
+
+<cb>="${!<v>dict_1<>[@]}"<>
+
+Returns all the keys in the associative array.
+
+There is no order to the results.
+@
+@ retrieve, all, names
+@ [@], !, ${!}
+
+
+
+### Associative Array - Get Keys with IFS Character Separator
+
+<cb>="${!<v>dict_1<>[*]}"<>
+
+Returns all the keys in the associative array as a single word but each value separated by an <c>IFS<> character.
+
+Returned as a single value.
+All values are separated by an IFS character.
+The character used is the first character defined in <c>IFS<>.
+@
+@ retrieve, all, names
+@ [*], !, ${!}
+
+
+
+### Associative Array - Get Value
+
+<cb>="${<v>dict_1<>[<v>name<>]}"<>
+
+
+Returns a value from the array.
+@
+@ retrieve, item, element, value
+
+
+
+### Associative Array - Get Values
+
+<cb>="${<v>dict_1<>[@]}"<>
+
+
+Returns a value from the array.
+@
+@ retrieve, items, elements, values, all
+@ [@]
+
+
+
+### Associative Array - Get Values with IFS Character Separator
+
+<cb>="${<v>dict_1<>[*]}"<>
+
+
+Returns all values from the array as a single word but each value separated by an <c>IFS<> character.
+
+Returned as a single value.
+All values are separated by an IFS character.
+The character used is the first character defined in <c>IFS<>.
+@
+@ retrieve, items, elements, values
+@ [*]
+
+
+
+### Associative Array - Iterate
+
+<cb>for <v>key<> in "${!<v>dict_1<>[@]}"; do
+	echo "    ${<v>key<>} => ${<v>dict_1<>[${<v>key<>}]}"
+done<>
+
+
+Iterates over all key values in the array.
+
+
+
+
 # Files
 @
 @ file-only, files-only
@@ -3833,6 +4661,8 @@ Call, Get Return Output:
 Call with Arguments and Return Output:
 
 <cb><v>return<>="$(<v>function_1<> "$<v>argument_1<>" "$<v>argument_2<>")"<>
+@
+@ summary
 
 
 
@@ -3877,7 +4707,7 @@ Use '<c>:<>' (noop function) to allow you to create an empty function.
 
 
 
-### Function - Arguments
+### Function - Arguments - Define
 
 <cb><v>function_name<>() {
 	local <v>argument_1<>="$1"
@@ -3886,11 +4716,10 @@ Use '<c>:<>' (noop function) to allow you to create an empty function.
 }<>
 
 
-Read the arguments passed to the function.
+Get arguments passed to a function using $1, $2, $3 etc
 
-Function arguments are exactly like arguments passed to a script.
-Arguments are accessed using $1, $2, $3...
-You can pass in any number of arguments.
+Arguments passed to a function are handled exactly like arguments passed to a script.
+A function will accept any number of arguments
 
 
 Example:
@@ -3901,15 +4730,15 @@ Example:
 	echo "Value = $<v>value<>"
 }
 
-<v>print_value<> "<v>value one<>"<>
+<v>print_value<> "<v>abc<>"<>
 @
 @ local
-@ arg-only, args-only, arguments-only, param-only, params-only, parameters
+@ arg-only, args-only, arguments-only, param-only, params-only, parameters, params
 @ pass, passing
 
 
 
-### Function - Array Argument
+### Function - Arguments - Define Array Argument
 
 <cb><v>function_name<>() {
 	local <v>arguments<>=("$@")
@@ -3942,6 +4771,7 @@ Example:
 \#   two
 \#   three<><>
 @
+@ list
 @ ("$@")
 
 
@@ -3989,8 +4819,8 @@ Example:
 
 <v>print_value<> "<v>value one<>"<>
 @
-@ arguments, values
-@ arg-only, args-only, arguments-only, param-only, params-only, parameters
+@ arguments, values, list
+@ arg-only, args-only, arguments-only, param-only, params-only, parameters, params
 @ pass, passing, spaces
 
 
@@ -4006,7 +4836,7 @@ This correctly passes arguments containing spaces.
 Seriously, embed the quotes. This is some funky shit but it works.
 @
 @ Return value capture, get response, result, string, text, spaces, pass, passing
-@ arg-only, args-only, arguments-only, param-only, params-only, parameters
+@ arg-only, args-only, arguments-only, param-only, params-only, parameters, params
 
 
 
@@ -4041,7 +4871,7 @@ Example:
 \#   three<><>
 @
 @ pass, passing, an
-@ arg-only, args-only, arguments-only, param-only, params-only, parameters
+@ arg-only, args-only, arguments-only, param-only, params-only, parameters, params
 
 
 
@@ -4171,6 +5001,8 @@ fi
 
 <cb>if <v>function_1<>; then<>
 
+<cb>if ! <v>function_1<>; then<>
+
 <cb>if <v>function_1<> <v>arguments<>; then<>
 
 
@@ -4227,7 +5059,7 @@ Example:
 
 <v>function_1<>
 
-if [ $? -eq 1 ]; then
+if [[ $? -eq 1 ]]; then
 	echo "Returned 1"
 else
 	echo "Did not return 1"
@@ -4291,6 +5123,45 @@ echo "$<v>result<>"
 
 
 
+### Function - Test Function
+
+<cb><v>test_function_1<>() {
+	[[ <v>condition<> ]]
+}<>
+
+Usage:
+
+<cb><v>test_function_1<>() {
+	[[ <v>condition<> ]]
+}
+
+if <v>test_function_1<> $<v>param_1<> <v>...<> ; then
+	...
+fi<>
+
+
+Tests a condition and sets the exit code.
+
+Passes when the exit code = 0.
+Fails when the exit code is non 0.
+
+
+Example:
+
+<cb>not_empty() {
+	[[ ! -z $<v>1<> ]]
+}
+
+<v>value<>="a value"
+
+not_empty "$<v>value<>" && echo "Value is not empty."
+
+<#># Prints: Value is not empty.<><>
+@
+@ [[ ]], conditional
+
+
+
 # Exit Script
 @
 @ exit-only, exiting-only, terminate-only, end
@@ -4304,7 +5175,7 @@ echo "$<v>result<>"
 <cb>exit<>
 
 
-Terminates the script.
+Terminates the script and ends the current process.
 @
 @ end, script
 
@@ -4312,10 +5183,10 @@ Terminates the script.
 
 ### Exit - Terminate With Exit Code
 
-<cb>exit <v>return_code<><>
+<cb>exit <v>exit_code<><>
 
 
-Terminates the script and returns a value to the calling process.
+Terminates the script while returning an exit code.
 
 The return value can be retrievef with <c>$?<>.
 @
@@ -4332,9 +5203,11 @@ Return With Return Value:
 
 <cb>return <v>exit_value<><>
 
-Exits and but keeps the bash session.
 
-Use inside a function to return the code but not end execution.
+Returns control to the calling script.
+
+Does not end the current process.
+Can only be used inside a function or sourced script.
 @
 @ end, script
 @ return
@@ -4440,10 +5313,59 @@ It is recommended to not use this and leave it for the shell.
 
 
 
+## exit vs return
+
+Exit:
+
+<*>Exits the Script and Ends the Process
+Execute from Anywhere Within a Script
+May Return an <c>exit Code<>.<>
+
+Return:
+
+<*>Returns Control to the Caller
+Use From Inside Function or Sourced Script Only
+May Return an <c>exit Code<>.<>
+
+
+
 # Standard Environment Variables
+@
+@ standard-only, std-only
 
 
-### Home
+## Standard Variables - Summary
+
+<t><c>$BASH_VERSION<><|>Bash Version
+<c>$HOME<><|>User Home Directory
+<c>$HOSTNAME<><|>Computer Host Name
+<c>$IFS<><|>Internal Field Separator
+<c>$OLDPWD<><|>The Previous Working Directory
+<c>$PATH<><|>Command Search Path
+<c>$PS1<><|>Primary Prompt String
+<c>$PS2<><|>Secondary Prompt String
+<c>$PWD<><|>Current Directory
+<c>$RANDOM<><|>Random Number
+<c>$SHELL<><|>Default Shell Path
+<c>$UID<><|>User ID
+<c>$USER<><|>User Name<>
+
+
+
+## Standard Variables - Details
+
+
+### BASH_VERSION
+
+<cb>$BASH_VERSION<>
+
+
+Gives the version of Bash.
+@
+@ $bash_version, bash_version
+
+
+### HOME
 
 <cb>$HOME<>
 
@@ -4454,10 +5376,54 @@ Returns the user's home directory.
 
 
 e.g. <c>/home/user-1<>
+@
+@ $home
 
 
 
-### Path
+### HOSTNAME
+
+<cb>$HOSTNAME<>
+
+
+The host name for the computer you are on.
+@
+@ $hostname, host name, server, computer
+
+
+
+### IFS
+
+<cb>$IFS<>
+
+
+Returns the characters used to define the internal field separator.
+
+Used by Bash as the characters that delimit fields in a string.
+Can be changed if needed but should be reverted back.
+
+
+Bash default value (space, tab, newline):
+
+<cb><m> <>\\t\\n<>
+@
+@ delimiter, characters, \t, \n
+@ $ifs
+
+
+
+### OLDPWH
+
+<cb>$OLDPWH<>
+
+The previous directory you visited.
+@
+@ previous, old, present working directory
+@ $oldpwd, pwd
+
+
+
+### PATH
 
 <cb>$PATH<>
 
@@ -4465,6 +5431,89 @@ e.g. <c>/home/user-1<>
 
 
 This is the list of directories Bash searches when executing a command.
+@
+@ $path
+
+
+
+### PS1
+
+<cb>$PS1<>
+
+
+The primary prompt string.
+@
+@ $ps1, prompt string
+
+
+
+### PS2
+
+<cb>$PS2<>
+
+
+The secondary prompt string.
+
+Used for multiline commands.
+@
+@ $ps1, prompt string
+
+
+
+### PWD
+
+<cb>$PWH<>
+
+The current directory.
+@
+@ present working directory
+@ $PWD
+
+
+
+### RANDOM
+
+<cb>$RANDOM<>
+
+
+Returns a random positive integer.
+
+Range: 0 - 32,767
+@
+@ integer
+@ $random
+
+
+
+### SHELL
+
+<cb>$SHELL<>
+
+
+The path to the default shell.
+@
+@ $shell
+
+
+
+### UID
+
+<cb>$UID<>
+
+The user ID code.
+@
+@ $UID, user id
+
+
+
+### USER
+
+<cb>$USER<>
+
+
+The user name.
+@
+@ user name, $user
 
 
 
@@ -4477,7 +5526,7 @@ This is the list of directories Bash searches when executing a command.
 
 Operators:
 
-<in-2><table><col><c>-a <v>file_name<><><><col>Exists?<>
+<in 2><table><col><c>-a <v>file_name<><><><col>Exists?<>
 <col><c>-b <v>file_name<><><><col>Block special file?<>
 <col><c>-c <v>file_name<><><><col>Character special file?<>
 <col><c>-d <v>file_name<><><><col>Directory?<>
@@ -4504,7 +5553,7 @@ Operators:
 
 By Purpose:
 
-<in-2><table><col>Exists?<><col><c>-a <v>file_name<><>		<><col>(same as -e)<>
+<in 2><table><col>Exists?<><col><c>-a <v>file_name<><>		<><col>(same as -e)<>
 <col>Exists?<><col><c>-e <v>file_name<><><><col>(same as -a)<>
 <col>Been modified since last read?<><col><c>-N <v>file_name<><><>
 <col>Belongs to user's primary group?<><col><c>-G <v>file_name<><><>
@@ -4524,6 +5573,7 @@ By Purpose:
 <col>Symbolic link file?<><col><c>-L <v>file_name<><><><col>(same as -h)<><><>
 @
 @ ops-only, operators-only, operator-only
+@ summary
 
 
 
@@ -4547,7 +5597,7 @@ Returns true if the file exists (any kind of file or directory).
 
 -e and -a are equivalent.
 @
-@ path, directory, folder
+@ path, directory, folder, has, op-only
 @ -e, -a
 
 
@@ -4567,7 +5617,7 @@ Returns true if the file does not exist (no file of any kind).
 
 -e and -a are equivalent.
 @
-@ path
+@ path, op-only
 @ -e, !
 
 
@@ -4583,6 +5633,7 @@ Usage:
 
 Returns true if the file exists and is a normal file (not a directory, link or other file type).
 @
+@ has, path, op-only
 @ -f
 
 
@@ -4598,7 +5649,7 @@ Usage:
 
 Returns true if the file does not exist or is not a file (eg maybe a directory or link).
 @
-@ !, -f
+@ !, -f, op-only
 
 
 
@@ -4613,6 +5664,7 @@ Usage:
 
 Returns true if the file is executable.
 @
+@ op-only
 @ -x
 
 
@@ -4628,7 +5680,7 @@ Usage:
 
 Returns true when exists and named pipe.
 @
-@ path, is a
+@ path, is a, has, op-only
 @ -p
 
 
@@ -4644,7 +5696,7 @@ Usage:
 
 Returns true when either does not exist or is empty.
 @
-@ path, is a, not empty
+@ path, is a, not empty, op-only
 @ -s
 
 
@@ -4660,7 +5712,7 @@ Usage:
 
 Returns true when exists and is non-empty.
 @
-@ path, is a, not empty
+@ path, is a, not empty, has contents, op-only
 @ -s
 
 
@@ -4712,7 +5764,7 @@ Usage:
 
 Returns true when either does not exist or is read only.
 @
-@ path, is a, read only?, read-only?
+@ path, is a, read only?, read-only?, has readonly flag, op-only
 @ -w, !
 
 
@@ -4728,6 +5780,7 @@ Usage:
 
 Returns true if the file exists and is readable.
 @
+@ has readonly flag, op-only
 @ -r
 
 
@@ -4763,7 +5816,7 @@ Returns true when file_1 is the same device and iNode number as file_2.
 
 -ef		Equal Files
 @
-@ path, is a, same as, 1st, first, 2nd, second, compare, comparison
+@ path, is a, same as, 1st, first, 2nd, second, compare, comparison, different
 @ -ef, !
 
 
@@ -4799,7 +5852,7 @@ Returns true when exists and is a symbolic link.
 
 -h and -L are equivalent.
 @
-@ path, is a
+@ path, is a, op-only
 @ -h, -L
 
 
@@ -4815,9 +5868,8 @@ Usage:
 
 Returns true when exists and writable?
 @
-@ path, is a, read only?
+@ path, is a, read only?, op-only
 @ -w
-
 
 
 
@@ -4832,7 +5884,7 @@ Usage:
 
 Returns true when exists and belongs to user's primary group.
 @
-@ path, is a, gid
+@ path, is a, gid, op-only
 @ -G
 
 
@@ -4848,7 +5900,7 @@ Usage:
 
 Returns true when exists and belongs to user's user id.
 @
-@ path, is a, uid
+@ path, is a, uid, op-only
 @ -O
 
 
@@ -4864,7 +5916,7 @@ Usage:
 
 Returns true when exists and is a block special file.
 @
-@ path, is a
+@ path, is a, op-only
 @ -b
 
 
@@ -4880,7 +5932,7 @@ Usage:
 
 Returns true when exists and is a character special file.
 @
-@ path, is a
+@ path, is a, op-only
 @ -c
 
 
@@ -4896,7 +5948,7 @@ Usage:
 
 Returns true when exists and has the set-group-id set.
 @
-@ path, is a
+@ path, is a, op-only
 @ -g
 
 
@@ -4912,7 +5964,7 @@ Usage:
 
 Returns true when exists and has the set-user-id set.
 @
-@ path, is a
+@ path, is a, op-only
 @ -u
 
 
@@ -4928,7 +5980,7 @@ Usage:
 
 Returns true when exists and has the sticky bit set.
 @
-@ path, is a
+@ path, is a, op-only
 @ -k
 
 
@@ -4945,7 +5997,7 @@ Usage:
 
 Returns true when exists and has been modified since the last read.
 @
-@ path, is a
+@ path, is a, has, op-only
 @ -N
 
 
@@ -5064,19 +6116,34 @@ Use <c>while read<> to iterate over a file's lines.
 
 View the contents of a file.
 @
-@ see contents
+@ see contents, all, entire
 @ show, view, display
 @ cat
+
+
+
+### File - View, Show Line Numbers
+
+<cb>nl <v>file_name<><>
+
+
+View the contents of a file but also shows line numbers.
+@
+@ see contents, all, entire
+@ show, view, display
+@ nl
 
 
 
 ### File - View - As Hex
 
 <cb>hexdump <v>file_name<><>
+
+Prints out the contents of the file as hex values.
 @
-@ see contents
+@ see contents, all, entire
 @ show, view, get, display
-@ hexdump
+@ hexdump, hex dump
 
 
 
@@ -5090,7 +6157,7 @@ View the contents of a file a page at a time.
 
 Keys:
 
-<in-2><table><col><b>Action<>			<><col><b>Key<><>
+<in 2><table><col><b>Action<>			<><col><b>Key<><>
 <col> <>
 <col>Page Down<><col>Space<>
 <col>Page Up<><col>B<>
@@ -5125,7 +6192,37 @@ Displays if it is text and what is the encoding.
 
 
 
+### File Name - Directory
+
+<cb>dirname $<v>file_path<><>
+
+Usage:
+
+<cb><v>directory<>="$(dirname "$<v>file_path<>")"<>
+
+
+Returns the directory portion of the file path.
+
+Returns "." if no directory.
+
+
+Example:
+
+<cb><v>file_name<>="/usr/test/the_file.txt"
+
+<v>directory<>="$(dirname "$<v>file_name<>")"
+
+<#># Returns '/usr/test'<><>
+@
+@ get, show, view, extract, path, parts
+
+
+
 ### File Name - Extension
+
+<cb>${<v>file_name<>##*.}<>
+
+Usage:
 
 <cb><v>extension<>="${<v>file_name<>##*.}"<>
 
@@ -5151,14 +6248,18 @@ From Path:
 
 <#># Returns 'txt'<><>
 @
-@ get, show, view, extract
+@ get, show, view, extract, parts
 @ extract
 
 
 
 ### File Name - Name No Directory/Path
 
-<cb><v>file_name<>=$(basename -- "$<v>full_path<>")<>
+<cb>basename "$<v>full_path<>"<>
+
+Usage:
+
+<cb><v>file_name<>=$(basename "$<v>full_path<>")<>
 
 
 Returns the file name part of the path.
@@ -5168,27 +6269,34 @@ Example:
 
 <cb><v>full_path<>="/tmp/the_file.txt"
 
-<v>file_name<>="$(basename -- <v>full_path<>)"
+<v>file_name<>="$(basename $<v>full_path<>)"
 
 <#># Returns 'the_file.txt'<><>
 
 <cb><v>full_path<>="the_file.txt"
 
-<v>file_name<>="$(basename -- <v>full_path<>)"
+<v>file_name<>="$(basename $<v>full_path<>)"
 
 <#># Returns 'the_file.txt'<><>
 @
 @ get, show, extract, path, base name
-@ extract, remove, no, without
+@ extract, remove, no, without, parts
 
 
 
-### File Name - Name No Extension
+### File Name - File No Extension
+
+<cb>${<v>file_name<>%.*}<>
+
+Usage:
 
 <cb><v>base_name<>="${<v>file_name<>%.*}"<>
 
 
-Returns the base file name from a file name or file path.
+Returns the file name without the extension.
+
+Returns the path/directory if included.
+Works even when there is no extension.
 
 
 Examples:
@@ -5207,10 +6315,55 @@ From Path:
 
 <v>base_name<>="${<v>file_name<>%.*}"
 
-<#># Returns 'the_file'<><>
+<#># Returns '/usr/test/the_file'<><>
 @
 @ get, show, view, base name
-@ extract, remove, no, without
+@ extract, remove, no, without, parts
+
+
+
+### File Name - File No Extension, No Directory
+
+<cb><v>base_name<>="$(basename "${<v>file_name<>%.*}")"<>
+
+
+Returns the file name without the extension.
+
+Works even if there is no path or extension.
+
+
+Examples:
+
+From File Name:
+
+<cb><v>file_name<>="the_file.txt"
+
+<v>base_name<>="$(basename "${<v>file_name<>%.*}")"
+
+<#># Returns 'the_file'<><>
+
+From Path:
+
+<cb><v>file_name<>="/usr/test/the_file.txt"
+
+<v>base_name<>="$(basename "${<v>file_name<>%.*}")"
+
+<#># Returns 'the_file'<><>
+@
+@ get, show, view, base name, stem only
+@ extract, remove, no, without, parts
+
+
+
+### File Name - To Full Path
+
+<cb>realpath <v>file_name<>
+
+
+Returns the full path of the file.
+@
+@ expand
+@ realpath
 
 
 
@@ -5232,7 +6385,7 @@ Changes the timestamp of a file.
 
 Options:
 
-<in-2><table><col><c>-a<><><col>Accessed Date<>
+<in 2><table><col><c>-a<><><col>Accessed Date<>
 <col><c>-m<><><col>Modified Date<>
 <col><c>-d<><><col>Date<>
 <col><c>-t <v>format<><><><col>Timestamp<><><>
@@ -5240,12 +6393,12 @@ Options:
 
 -d Format:
 
-<in-2><table><col><c><v>YYYY<>-<v>MM<>-<v>DD<>T<v>hh<>-<v>mm<>-<v>ss<>	<><><col><c><v>2001<>-<v>02<>-<v>03<>T<v>12<>-<v>01<>-<v>60<><><><><><>
+<in 2><t><c><v>YYYY<>-<v>MM<>-<v>DD<>T<v>hh<>-<v>mm<>-<v>ss<>	<><|><c><v>2001<>-<v>02<>-<v>03<>T<v>12<>-<v>01<>-<v>60<><><><>
 
 
 -t Formats:
 
-<in-2><table><col><c><v>YYYYMMDDhhmm.ss<>		<><><col><c><v>200102031201.60<><><>
+<in 2><table><col><c><v>YYYYMMDDhhmm.ss<>		<><><col><c><v>200102031201.60<><><>
 <col><c><v>YYMMDDhhmm<><><><col><c><v>0102031201<><><>
 <col><c><v>MMDDhhmm<><><><col><c><v>02031201<><><><><>
 @
@@ -5336,7 +6489,7 @@ ugo - user, group, other (all)
 
 Defining Permissions:
 
-<in-2>For Each Type (user, group, other/all):
+<in 2>For Each Type (user, group, other/all):
 Add Read + Write + Execute Permissions (0 = no permission.)
 
 Place in Order:
@@ -5344,7 +6497,7 @@ User Group, Other (ugo)<>
 
 Permission Numbers:
 
-<in-2><table><col><c>0-7<><><col>Permission Numbers Range From 0 to 7<>
+<in 2><table><col><c>0-7<><><col>Permission Numbers Range From 0 to 7<>
 <col> <>
 <col><c>0<><><col>No Permissions<>
 <col><c>1<><><col>Execute<>
@@ -5353,7 +6506,7 @@ Permission Numbers:
 
 ugo:
 
-<in-2><table><col><c>ugo<><><col><><col>3 Digit Permission (000 - 777)
+<in 2><table><col><c>ugo<><><col><><col>3 Digit Permission (000 - 777)
 Digit Position Determines Who's Permission<>
 <col> <> 
 <col><c>u<><><col>Digit 1<><col>User (owner) Permission<>
@@ -5362,7 +6515,7 @@ Digit Position Determines Who's Permission<>
 
 Examples:
 
-<in-2><table><col><c>000<><><col>No Permissions / No Access<><col><c>chmod 000 <v>file_name<><><>
+<in 2><table><col><c>000<><><col>No Permissions / No Access<><col><c>chmod 000 <v>file_name<><><>
 <col><c>444<><><col>Read Only for Everyone<><col><c>chmod 444 <v>file_name<><><>
 <col><c>600<><><col>Read and Write for User Only (owner)<><col><c>chmod 600 <v>file_name<><><>
 <col><c>660<><><col>Read and Write for User and Group Only<><col><c>chmod 660 <v>file_name<><><>
@@ -5395,29 +6548,29 @@ Set permission using permission codes.
 
 Who:
 
-<in-2><table><col><c>u<><><col>User<>
+<in 2><table><col><c>u<><><col>User<>
 <col><c>g<><><col>Group<>
 <col><c>o<><><col>Other / All<><><>
 
 Permissions:
 
-<in-2><table><col><c>r<><><col>Read<>
+<in 2><table><col><c>r<><><col>Read<>
 <col><c>w<><><col>Write<>
 <col><c>x<><><col>Execute<><><>
 
 Deny / Grant:
 
-<in-2><table><col><c>-<><><col>Deny Permissions<>
+<in 2><table><col><c>-<><><col>Deny Permissions<>
 <col><c>+<><><col>Grant Permissions<><><>
 
 Examples:
 
-<in-2><table><col><c>u+x<><><col>Execute for User Only<><col><c>chmod u+x <v>file_name<><><>
+<in 2><table><col><c>u+x<><><col>Execute for User Only<><col><c>chmod u+x <v>file_name<><><>
 <col><c>ug+x<><><col>Execute for User, Group<><col><c>chmod ug+x <v>file_name<><><>
 <col><c>ug+rw <><><col>Read Write for User, Group<><col><c>chmod ug+rw <v>file_name<><><>
 <col><c>ug+rw,o-w <><><col>Read Write for User, Group; No Write for Others<><col><c>chmod ug+rw,o-w <v>file_name<><><><><>
 @
-@ with, using, letters, symbols
+@ with, using, letters
 @ chmod u+, g+, o+ u-, g-, o-, ug+, ug-, +r, +w, +x, -r, -w, -x
 
 
@@ -5509,7 +6662,7 @@ Copies a file.
 
 Options:
 
-<in-2><table><col><c>-a<><><col>Preserve all possible attributes (timestamp, permissions, etc.)<>
+<in 2><table><col><c>-a<><><col>Preserve all possible attributes (timestamp, permissions, etc.)<>
 <col><c>-v<><><col>Verbose mode.<><><>
 @
 @ duplicate, clone
@@ -5529,6 +6682,7 @@ or
 Creates an empty file.
 @
 @ new, to file, write, blank
+@ touch
 
 
 
@@ -5559,7 +6713,7 @@ Redirects the output of the command to a file.
 
 ### File - Create - From Script
 
-<cb>cat > <v>file_name<> << END_LABEL
+<cb>cat > <v>file_name<> \<\< END_LABEL
 <v>...content...<>
 <v>...content...<>
 <v>...content...<>
@@ -5568,7 +6722,7 @@ END_LABEL<>
 
 Use stream literals inside your script to create a file.
 @
-@ to file, new, write, cat, <<, >, label
+@ to file, new, write, cat, \<\<, >, label
 @ stream literal
 
 
@@ -5595,7 +6749,7 @@ Will search the current directory or given path for files matching the file name
 
 Matches files only (no directories).
 @
-@ search for
+@ search for, locate path
 @ -type, -name
 
 
@@ -5641,7 +6795,7 @@ Example:
 
 
 
-### File - Find Path
+### File - Find in Path
 
 <cb>which <v>file_name<><>
 
@@ -5668,7 +6822,7 @@ If you copy without the <c>-p<> option, cp will make a copy of the link's target
 
 Options:
 
-<in-2><table><col><c>-a<><><col>Preserve all possible attributes (timestamp, permissions, etc.)<>
+<in 2><table><col><c>-a<><><col>Preserve all possible attributes (timestamp, permissions, etc.)<>
 <col><c>-v<><><col>Verbose mode.<><><>
 @
 @ duplicate, clone
@@ -5686,7 +6840,7 @@ Creates a symbolic link to a source file or directory.
 
 Options:
 
-<in-2><table><col><c>-s<><><col>Creates a symbol link. Can link across devices.<><><>
+<in 2><table><col><c>-s<><><col>Creates a symbol link. Can link across devices.<><><>
 @
 @ directory, folder, new, set destination
 @ symbolic, symlink
@@ -5762,6 +6916,17 @@ Shows the end of the file and any additions as they come in.
 
 
 
+### Files - Execute Command Recursively
+
+<cb>find <v>path<> -type f -exec <v>command<> {} \;<>
+
+
+Executes a command on all files in the current directory and it's subdirectories.
+@
+@ on subdirectories
+
+
+
 ### Files - Iterate Over
 
 <cb>for <v>file_name<> in * ; do <v>...<> ; done<>
@@ -5813,7 +6978,7 @@ Usage:
 
 Returns true if the directory exists and is a directory.
 @
-@ path, is a
+@ path, is a, has, op-only
 @ -d
 
 
@@ -5829,7 +6994,7 @@ Usage:
 
 Returns true if the directory does not exist.
 @
-@ path, exists
+@ path, exists, op-only
 @ !, -e
 
 
@@ -5845,7 +7010,7 @@ Usage:
 
 Returns true if the directory does not exist or is not a directory.
 @
-@ path, not a
+@ path, not a, is not, op-only
 @ -d, !
 
 
@@ -5898,7 +7063,7 @@ If target directory exists, cp will create a new directory under it.
 
 Options:
 
-<in-2><table><col><c>-a<><><col>Preserve all possible attributes (timestamp, permissions, etc.)<>
+<in 2><table><col><c>-a<><><col>Preserve all possible attributes (timestamp, permissions, etc.)<>
 <col><c>-r<><><col>Copy a directory recursively<>
 <col><c>-v<><><col>Verbose mode.<><><>
 @
@@ -5965,7 +7130,7 @@ Deletes the directory even if there are files or subdirectories present
 
 Options:
 
-<in-2><table><col><c>-f<><><col>Don't Prompt<>
+<in 2><table><col><c>-f<><><col>Don't Prompt<>
 <col><c>-r<><><col>Recursive<><><>
 @
 @ with files, containing
@@ -6044,7 +7209,7 @@ Include All:
 
 <cb>ls -1a<>
 @
-@ show, view, files
+@ show, view, files, simple
 @ ls
 
 
@@ -6058,11 +7223,11 @@ Include All:
 <cb>ls -1a | sort -f<>
 
 
-Long Format, Include All:
+Sort Long Format Directory Listing?:
 
-<!>Nope. Doesn't work using <c>sort<> because fire permissions are displayed first.<>
+<!>Nope<>. Doesn't work using <c>sort<> because <b>file permissions<> are <b>displayed before names<>.
 @
-@ show, view, files
+@ show, view, files, alphabetically
 @ ls, -1, -f, sort
 
 
@@ -6175,14 +7340,41 @@ Requires: rsync
 
 
 
-### Directory - Show Current Directory
+### Directory - Rename
+
+<cb>mv <v>directory_name<> <v>new_name<><>
+@
+@ mv
+
+
+
+### Directory - Show Current Directory - Path
 
 <cb>pwd<>
 
-Print Working Directory.
+
+Returns the full path of the current directory.
+
+
+pwd = Print Working Directory.
 @
 @ get, view, path, working
 @ pwd
+
+
+
+### Directory - Show Current Directory - Name Only
+
+<cb>basename "$(pwd)"<>
+
+
+Returns the directory name for the current directory.
+
+
+pwd = Print Working Directory.
+@
+@ get, view, path, working
+@ pwd, basename
 
 
 
@@ -6267,6 +7459,8 @@ For Current Directory:
 <cb>du -sh .<>
 
 Returns the size of the directory.
+
+Includes all files and subdirectories.
 @
 @ get, view
 @ du, -s, -h
@@ -6326,12 +7520,12 @@ Add a forward slash '<c>/<>' to the match '<c>*<>' to retrieve the directory nam
 <cb>du -h <v>directory_path<><>
 
 
-Lists the size of all directories in the given directory.
+Lists all directories and their sizes.
 
 
 Options:
 
-<in-2><table><col><c>-h<><><col>Lists summary info.<>
+<in 2><table><col><c>-h<><><col>Lists summary info.<>
 <col><c>-k<><><col>List sizes in Kilobytes.<>
 <col><c>-ks<><><col>List using the size for each file.<><><>
 
@@ -6368,7 +7562,7 @@ Example:
 
 Format Codes:
 
-<in-2><table><col><c>%a<><><col>Day Name, 3 Char<>
+<in 2><table><col><c>%a<><><col>Day Name, 3 Char<>
 <col><c>%A<><><col>Day Name, Full<>
 <col><c>%b<><><col>Month Name, 3 Char<>
 <col><c>%B<><><col>Month Name, Full<>
@@ -6391,7 +7585,7 @@ Format Codes:
 
 Format Options:
 
-<in-2><table><col>Date of Month, 2 Digit<><col><c>%d<><>
+<in 2><table><col>Date of Month, 2 Digit<><col><c>%d<><>
 <col>Day Name, 3 Char<><col><c>%a<><>
 <col>Day Name, Full<><col><c>%A<><>
 <col>Day of Year, 3 Digit<><col><c>%j<><>
@@ -6419,9 +7613,9 @@ Format Options:
 
 ### Date - Show YYYY-MM-DD
 
-<cd>date +"%F"
+<cb>date +"%F"<>
 
-<cd>date +"%Y-%m-%d"<>
+<cb>date +"%Y-%m-%d"<>
 
 
 Displays the date in YYYY-MM-DD format.
@@ -6473,7 +7667,7 @@ Example:
 
 <cb>time ls<>
 @
-@ cpu, run
+@ cpu, run, command, script, record
 @ time-only
 
 
@@ -6675,6 +7869,17 @@ Clears the current line.
 
 
 
+### Echo - Beep
+
+<cb>echo -e "\\a"<>
+
+
+Makes an audible beep.
+@
+@ play sound, audio
+
+
+
 ### Echo - Print On Same Line
 
 <cb>echo -n <v>text<><>
@@ -6703,6 +7908,21 @@ echo 'Done.'<>
 
 
 
+### Echo - Print to StdErr
+
+<cb>echo <v>...<> >&2<>
+
+
+Prints to the standard error.
+
+
+<t><c>>&<><|>Redirect to a File Descriptor
+<c>2<><|>StdErr Descriptor<>
+@
+@ standard error, >&2 2
+
+
+
 ### Print - Formatted
 
 <cb>printf '<v>line to be printed<> %s %-20s <v>... \n<>' <v>string1<> <v>string2<><v>...<><>
@@ -6718,68 +7938,140 @@ Formats and prints a line.
 
 
 
+### Print - Nothing
+
+<cb><v>command<> > /dev/null<>
+
+
+Prints nothing by redirecting output to null.
+@
+@ to null, don't print, echo, output
+@ /dev/null
+
+
+
 # Printing In Color
 @
-@ color-only, colors-only, colour-only, colours-only
+@ color-only, colors-only, colour-only, colours-only, echo
 
 
 ### Color - ANSI Color - Set Color
 
-<cb>echo "\\e[<v>color_code<>m"<><>
+<cb>echo -e "\\e[<v>color<>m"<>
 
 Or
 
-<cb>echo "\\033[<v>color_code<>m"<><>
+<cb>echo -e "\\033[<v>color<>m"<>
 
 Or
 
-<cb>echo "\\x1B[<v>color_code<>m"<><>
+<cb>echo -e "\\x1B[<v>color<>m"<>
+
+
+Prints the text in the given colors.
+
+Uses ANSI color escape values.
+Colors range in value from 0 to 107
 
 
 Examples:
 
 Red:
 
-<cb>echo "\\e[<v>031<>m Prints In Red"<>
+<cb>echo -e "\\e[<v>031<>m Prints In Red\\e[<v>0<>m"<>
 
 Red on Dark Gray:
 
-<cb>echo "\\e[<v>031<>m\\e[<v>100<>m Prints Red on Dark Gray"<>
-
-Restore Original:
-
-<cb>echo "\\e[<v>031<>m Red \\e[<v>0<>m Normal"<>
+<cb>echo -e "\\e[<v>031<>m\\e[<v>100<>m Prints Red on Dark Gray\\e[<v>0<>m"<>
 @
-@ colors, colours
+@ colors, colours, escapes, echo -e
 
 
+### Color - ANSI Color - Set Color Without Printing
 
-### Color - ANSI Color - Set Color / Enable Escape
-
-Use <c>-e<> if ANSI color escapes don't work..
-
-<cb>echo -e "\\e[<v>color_code<>m"<><>
+<cb>echo -en "\\e[<v>color<>m"<>
 
 Or
 
-<cb>echo -e "\\033[<v>color_code<>m"<><>
+<cb>echo -en "\\033[<v>color<>m"<>
 
 Or
 
-<cb>echo -e "\\x1B[<v>color_code<>m"<><>
+<cb>echo -en "\\x1B[<v>color<>m"<>
 
 
-Examples:
+Prints the text in the given colors.
 
-Red:
+Does not print any text.
+Everything printed after this will be in the set color.
 
-<cb>echo -e "\\e[<v>031<>m Prints In Red"<>
 
-Red on Dark Grey:
+Example:
 
-<cb>echo -e "\\e[<v>031<>m\\e[<v>100<>m Prints Red on Dark Gray"<>
+<cb>echo -en "\\e[<v>031<>m"
+echo "Prints In Red"
+echo -en "\\e[<v>0<>m"<>
 @
-@ colors, colours, escapes, troubleshoot
+@ colors, colours, escapes, echo -e -n, -en
+
+
+
+### Color - ANSI Color - Reset Color
+
+<cb>echo -e "\\e[<v>0<>m\\e[<v>49<>m"<>
+
+Or
+
+<cb>echo -e "\\033[<v>0<>m\\033[<v>49<>m"<>
+
+Or
+
+<cb>echo -e "\\x1B[<v>0<>m\\x1B[<v>49<>m"<>
+
+
+Resets the foreground and background to the default colors.
+
+Default Foreground Color = 0
+Default Background Color = 49
+
+
+Example:
+
+<cb>echo -e "\\e[<v>031<>m Red \\e[<v>0<>m Back to Normal"<>
+@
+@ colors, colours, echo -e
+
+
+
+### Color - ANSI Color - Reset Color Without Printing
+
+<cb>echo -en "\\e[<v>0<>m\\e[<v>49<>m"<>
+
+Or
+
+<cb>echo -en "\\033[<v>0<>m\\033[<v>49<>m"<>
+
+Or
+
+<cb>echo -en "\\x1B[<v>0<>m\\x1B[<v>49<>m"<>
+
+
+Resets the foreground and background to the default colors.
+
+Does not print text or even a newline.
+Everything after this will be printed in the default colors.
+
+Default Foreground Color = 0
+Default Background Color = 49
+
+
+Example:
+
+<cb>echo -en "\\e[<v>031<>m"
+echo "Prints In Red"
+echo -en "\\e[<v>0<>m"<>
+@
+@ colors, colours, echo -e -n, -en
 
 
 
@@ -6789,12 +8081,12 @@ Red on Dark Grey:
 
 Special Codes:
 
-<in-2><table><col>Default Color<><col>0<>
+<in 2><table><col>Default Color<><col>0<>
 <col>Default Background<><col>49<><><>
 
 Foreground:
 
-<in-2><table><col>Black			<><col>30<>
+<in 2><table><col>Black			<><col>30<>
 <col>Dark Gray<><col>90<>
 <col>Light Gray<><col>37<>
 <col>White<><col>97<>
@@ -6815,7 +8107,7 @@ Foreground:
 
 Background:
 
-<in-2><table><col>Black			<><col>40<>
+<in 2><table><col>Black			<><col>40<>
 <col>Dark Gray<><col>100<>
 <col>Light Gray<><col>47<>
 <col>White<><col>107<>
@@ -6837,7 +8129,7 @@ Background:
 
 Style:
 
-<in-2><table><col>Bold				<><col>1<>
+<in 2><table><col>Bold				<><col>1<>
 <col>Blink<><col>5<>
 <col>Dimmed<><col>2<>
 <col>Italic<><col>3<>
@@ -6858,13 +8150,13 @@ Style:
 
 Special:
 
-<in-2><table><col>0				<><col>Default Foreground<>
+<in 2><table><col>0				<><col>Default Foreground<>
 <col>4<><col>Underline<>
 <col>49<><col>Default Background<><><>
 
 Foreground:
 
-<in-2><table><col>30				<><col>Black<>
+<in 2><table><col>30				<><col>Black<>
 <col>31<><col>Red<>
 <col>32<><col>Green<>
 <col>33<><col>Yellow<>
@@ -6883,7 +8175,7 @@ Foreground:
 
 Background:
 
-<in-2><table><col>40				<><col>Black<>
+<in 2><table><col>40				<><col>Black<>
 <col>41<><col>Red<>
 <col>42<><col>Green<>
 <col>43<><col>Yellow<>
@@ -6902,6 +8194,74 @@ Background:
 @
 @ colors, colours, name, chart
 @ print, show, reference, foreground, background
+
+
+
+### Color - Color Codes as Variables
+
+<cb><#># Special Colors ───────────────────── #<>
+
+<v>DEFAULT_COLOR<>='\\e[0m'
+<v>DEFAULT_BACKGROUND<>='\\e[49m'
+<v>RESET_COLOR<>='${DEFAULT_COLOR}${DEFAULT_BACKGROUND}'
+<v>RESET<>=$<v>RESET_COLOR<>
+
+<#># Foreground ───────────────────────── #<>
+
+<v>BLACK<>='\\e[30m'
+<v>DARK_GRAY<>='\\e[90m'
+<v>DARK_GREY<>='\\e[90m'
+<v>LIGHT_GRAY<>='\\e[37m'
+<v>LIGHT_GREY<>='\\e[37m'
+<v>WHITE<>='\\e[97m'
+<v>BLUE<>='\\e[34m'
+<v>CYAN<>='\\e[36m'
+<v>GREEN<>='\\e[32m'
+<v>PURPLE<>='\\e[35m'
+<v>MAGENTA<>='\\e[35m'
+<v>RED<>='\\e[31m'
+<v>YELLOW<>='\\e[33m'
+<v>LIGHT_BLUE<>='\\e[94m'
+<v>LIGHT_CYAN<>='\\e[96m'
+<v>LIGHT_GREEN<>='\\e[92m'
+<v>LIGHT_PURPLE<>='\\e[95m'
+<v>LIGHT_MAGENTA<>='\\e[95m'
+<v>LIGHT_RED<>='\\e[91m'
+<v>LIGHT_YELLOW<>='\\e[93m'
+
+<#># Background ───────────────────────── #<>
+
+<v>ON_BLACK<>='\\e[40m'
+<v>ON_DARK_GRAY<>='\\e[100m'
+<v>ON_DARK_GREY<>='\\e[100m'
+<v>ON_LIGHT_GRAY<>='\\e[47m'
+<v>ON_LIGHT_GREY<>='\\e[47m'
+<v>ON_WHITE<>='\\e[107m'
+<v>ON_BLUE<>='\\e[44m'
+<v>ON_CYAN<>='\\e[46m'
+<v>ON_GREEN<>='\\e[42m'
+<v>ON_PURPLE<>='\\e[45m'
+<v>ON_MAGENTA<>='\\e[45m'
+<v>ON_RED<>='\\e[41m'
+<v>ON_YELLOW<>='\\e[43m'
+<v>ON_LIGHT_BLUE<>='\\e[104m'
+<v>ON_LIGHT_CYAN<>='\\e[106m'
+<v>ON_LIGHT_GREEN<>='\\e[102m'
+<v>ON_LIGHT_YELLOW<>='\\e[103m'
+<v>ON_LIGHT_PURPLE<>='\\e[105m'
+<v>ON_LIGHT_MAGENTA<>='\\e[105m'
+<v>ON_LIGHT_RED<>='\\e[101m'
+<v>ON_LIGHT_YELLOW<>='\\e[103m'
+
+<#># Styles ───────────────────────────── #<>
+
+<v>BOLD<>='\\e[1m'
+<v>BLINK<>='\\e[5m'
+<v>DIMMED<>='\\e[2m'
+<v>ITALIC<>='\\e[3m'
+<v>REVERSED<>='\\e[7m'
+<v>STRIKETHROUGH<>='\\e[9m'
+<v>UNDERLINE<>='\\e[4m'<>
 
 
 
@@ -6925,7 +8285,7 @@ Background:
 
 ### Color - XTerm Colors - See All
 
-<cb>for((i=16; i<256; i++)); do
+<cb>for((i=16; i\<256; i++)); do
     printf "\\e[48;5;${i}m%03d" $i;
     printf '\\e[0m';
     [ ! $((($i - 15) % 6)) -eq 0 ] && printf ' ' || printf '\n'
@@ -6948,6 +8308,30 @@ Full Chart:
 
 
 ## Process - Commands
+
+
+### Process Commands - Basics
+
+<table><col>Kill<><col><c>kill <v>process_id<><><>
+<col>Kill - Force<><col><c>kill -9 <v>process_id<><><>
+<col>Kill by Name<><col><c>pkill <v>app_name<><><>
+<col>Kill by Regex<><col><c>pkill -f '<v>regex expression<>'<><>
+<col> <>
+<col>List<><col><c>ps<><>
+<col>List with Full Name<><col><c>ps -ef<><>
+<col>List by Name<><col><c>pgrep <v>app_name<><><>
+<col>List by Regex<><col><c>pgrep -lf '<v>name<>'<><>
+<col> <>
+<col>List by Top CPU<><col><c>top<><>
+<col>List by Top Memory<><col><c>top -a<><>
+<col> <>
+<col>Run in Background<><col><c><v>command<> &<><>
+<col>Run / No Hangup<><col><c>nohup <v>command<> &<><>
+<col> <>
+<col>Suspend<><col><c>kill -STOP <v>process_id<><><>
+<col>Restart / Continue<><col><c>kill -CONT <v>process_id<><><><>
+@
+@ summary
 
 
 
@@ -6993,9 +8377,10 @@ Kills a process by the process name or command.
 
 Options:
 
-<in-2><table><col><c>-f<><><col>Match against full argument list, instead of just name.<>
+<in 2><table><col><c>-f<><><col>Match against full argument list, instead of just name.<>
 <col><c>-i<><><col>Ignore Case<><><>
 @
+@ grep, regular expression
 @ pkill, -f, -i
 
 
@@ -7147,6 +8532,8 @@ Match ID, Show User Id, PID, State Command, etc.:
 Show all processes. Show user, process id, process state, start time, execute time, command:
 
 <cb>ps -e -o ruser,pid,s,vsz,stime,time,comm<>
+@
+@ get, view, show, display
 
 
 
@@ -7167,8 +8554,10 @@ Example:
 
 <cb>pgrep -lf '<v>java .*Cassandra<>'<>
 @
-@ show, view, get, display
+@ show, view, get, display, grep, regular expression
 @ pgrep
+@
+@ get, view, show, display
 
 
 
@@ -7196,7 +8585,7 @@ Lists the top apps by memory usage.
 
 ## Process - Find
 @
-@ search, get, show
+@ search, get, show, view, display
 
 
 ### Process - Find
@@ -7214,7 +8603,7 @@ pgrep uses full regular expressions.
 
 Options:
 
-<in-2><table><col>-a<><col>List Full Command-line (Linux)<>
+<in 2><table><col>-a<><col>List Full Command-line (Linux)<>
 <col><><col>Include Process Ancestors (Mac)<>
 <col>-f<><col>Match Against Full Argument List (defaults to process name only)<>
 <col>-i<><col>Ignore Case<super><#>1<><><>
@@ -7247,14 +8636,14 @@ Does a partial match when matching process command-lines.
 
 Options:
 
-<in-2><table><col>-a<><col>Show Full Command-line (not always supported)<>
+<in 2><table><col>-a<><col>Show Full Command-line (not always supported)<>
 <col>-f<><col>Match Against Full Argument List (defaults to process name only)<>
 <col>-l<><col>Long Output (lists name)<><><>
 
 
 Notes:
 
-<in-2><#>#1<>	- <c>-a<> ... See Next:
+<in 2><#>#1<>	- <c>-a<> ... See Next:
 -a	- Not supported on all versions of Linux.
 -lf	- Use this if -a is not supported. Why does this work? No idea.<>
 @
@@ -7302,7 +8691,7 @@ Shows all matching processes with the matching regex in their command-line comma
 
 Options:
 
-<in-2><table><col>-f<><col>Match Against Full Argument List (defaults to process name only)<>
+<in 2><table><col>-f<><col>Match Against Full Argument List (defaults to process name only)<>
 <col>-l<><col>Long Output (lists name)<><><>
 
 
@@ -7433,7 +8822,7 @@ Create a new user.
 
 Options:
 
-<in-2><table><col><c>-g <v>group_name<><><><col>Add to group<>
+<in 2><table><col><c>-g <v>group_name<><><><col>Add to group<>
 <col><c>-s <v>shell_name<><><><col>Set user shell '/usr/bash' | '/usr/false'<><><>
 @
 @ add, new
@@ -7451,7 +8840,7 @@ Deletes a user.
 
 Options:
 
-<in-2><table><col><c>-f<><><col>Force even if the user is logged in.<>
+<in 2><table><col><c>-f<><><col>Force even if the user is logged in.<>
 <col><c>-r<><><col>Remove user's home directory.<><><>
 @
 @ remove
@@ -7471,7 +8860,7 @@ Shows the current user id (a number).
 
 
 
-### User - Get Current Id, Name, and Groups
+### User - Get Current Id, Name, Groups
 
 <cb>id<>
 
@@ -7682,7 +9071,7 @@ With Identity File:
 
 Options:
 
-<in-2><table><col><c>-a<><><col>archive (same as -rlptgoD)<>
+<in 2><table><col><c>-a<><><col>archive (same as -rlptgoD)<>
 <col><c>-D<><><col>Same as --devices --specials<>
 <col><c>-E<><><col>copy extended attributes<>
 <col><c>-g<><><col>preserve groups<>
@@ -7824,40 +9213,40 @@ Usage:
 <cb>sed 's/<v>match<>/<v>replacement<>/' <v>source_file<> > <v>target_file<><>
 
 
-Replaces matching text with the replacement value.
+Reads the contents of a file and replaces matching text with the replacement text.
 
 
 Options:
 
-<in-2><table><col><c>s/<><><col>Substitute (replace) (required)<>
-<col><c>/g<><><col>Update All Matches, Not Just First<><><>
+<in 2><t><c>s/<><|>Substitute (replace) (required)
+<c>/g<><|>Update All Matches, Not Just First<><>
 @
 @ substitute, file, contents
 @ s/
 
 
 
-### sed - File - Replace In Place
+### sed - File - Replace Text In Place
 
 <cb>sed -i 's/<v>match<>/<v>replacement<>/' <v>file_name<><>
 
 
-Replaces matching text with the replacement value inside the original file.
+Replaces matching text of a file with the replacement text inside that file.
 
 
 Options:
 
-<in-2><table><col><c>-i<><><col>Inline Replace (update the original file)<>
-<col> <>
-<col><c>s/<><><col>Substitute (replace) (required)<>
-<col><c>/g<><><col>Update All Matches, Not Just First<><><><>
+<in 2><t><c>-i<><|>Inline Replace (update the original file)
+
+<c>s/<><|>Substitute (replace) (required)
+<c>/g<><|>Update All Matches, Not Just First<><>
 @
 @ substitute, file, text, contents
 @ s/
 
 
 
-### sed - Output - Replace Text
+### sed - Replace Text
 
 <cb>| sed 's/<v>match<>/<v>replacement<>/'<>
 
@@ -7866,7 +9255,7 @@ Usage:
 <cb><v>...<> | sed 's/<v>match<>/<v>replacement<>/'<>
 
 
-Replaces matching text with the replacement value.
+Replaces matching text with the replacement Text.
 
 
 Example:
@@ -7890,7 +9279,7 @@ Replaces matching text with the replacement value.
 
 Options:
 
-<in-2><table><col><c>-e<><><col>Use Regular Expression<>
+<in 2><table><col><c>-e<><><col>Use Regular Expression<>
 <col> <><col><c>s/<><><col>Substitute (replace)<>
 <col><c>/g<><><col>Update All Matches, Not Just First<><><>
 
@@ -7903,6 +9292,7 @@ Example:
 @
 @ substitute, file, regular expression, output
 @ s/, -e
+
 
 
 # SSH
@@ -7922,7 +9312,7 @@ Creates a secure terminal connection to a server.
 
 Options:
 
-<in-2><table><col><c>-v<><><col>Verbose Mode<>
+<in 2><table><col><c>-v<><><col>Verbose Mode<>
 <col><c>-i <v>pem_file<><><><col>Use a pem (identity) file.<><><>
 
 
@@ -8013,7 +9403,7 @@ Creates a zip file for a directory or for multiple files.
 
 Options:
 
-<in-2><table><col><c>-r<><><col>Search recursively for files to include.<>
+<in 2><table><col><c>-r<><><col>Search recursively for files to include.<>
 <col><c>-P <v>password<><><><col>Sets a password.<>
 <col><c>-x <v>files<><><><col>Exclude files<><><>
 
@@ -8054,7 +9444,7 @@ The path to the zipped files is the same as the relative path from where the com
 
 <cb>zip <v>zip_file<> <v>...<> -x <v>file_name<><>
 
-<cb>zip <v>zip_file<> <v>...<> -x <v>file_1<> <v>file_2<> <v>...<.<>
+<cb>zip <v>zip_file<> <v>...<> -x <v>file_1<> <v>file_2<> <v>...<><>
 
 
 Creates a zip file for one or more files.
@@ -8068,7 +9458,7 @@ The path to the zipped files is the same as the relative path from where the com
 
 ### Zip - Compress - Add Password
 
-<cb>zip -P <v>password<> <v>...<><>
+<cb>zip -P <v>password<> <v>...<>
 
 zip -r <v>zip_file<> <v>file1<> <v>file2<> <v>...<>
 zip -r <v>zip_file<> <v>files<> -x <v>files_to_exclude<><>
@@ -8110,6 +9500,280 @@ Unzips the contents of a zip file to a directory
 
 
 Shows the contents of a zip file.
+
+
+
+# Command Prompt
+@
+@ prompt-only, terminal, ps1, ps1=
+
+
+### Command Prompt - Set
+
+<cb>PS1="<v>prompt text<>"<>
+
+
+Sets the terminal prompt.
+
+
+
+## Command Prompt - Code Basics
+
+<cb>PS1="<v>prompt text<>"<>
+
+
+Options:
+
+<in 2><table><col><c>\\\\<><><col>\\ (backslash)<>
+<col><c>\\@<><><col>Time HH:MM AM/PM<>
+<col><c>\\A<><><col>Time HH:MM<>
+<col><c>\\d<><><col>Date "Mon Jan 01"<>
+<col><c>\\e<v>...<><><><col>ASCII Escape Character<>
+<col><c>\\h<><><col>Host Name Up To '.'<>
+<col><c>\\H<><><col>Host Name<>
+<col><c>\\j<><><col>Number of Shell Jobs<>
+<col><c>\\n<><><col>Newline<>
+<col><c>\\s<><><col>Shell Name<>
+<col><c>\\t<><><col>Time H:MM:SS AM/PM<>
+<col><c>\\T<><><col>Time HH:MM:SS<>
+<col><c>\\u<><><col>User Name<>
+<col><c>\\V<><><col>Bash Version and Patch Level<>
+<col><c>\\v<><><col>Bash Version<>
+<col><c>\\w<><><col>Full Current Path<>
+<col><c>\\W<><><col>Current Directory Only (Not Full Path)<><><>
+
+Display:
+
+<in 2><table><col>\\ (backslash)<><col><c>\\\\<><>
+<col>Bash Version<><col><c>\\v<><>
+<col>Bash Version and Patch Level<><col><c>\\V<><>
+<col>Current Directory Only (Not Full Path)<><col><c>\\W<><>
+<col>Date "Mon Jan 01"<><col><c>\\d<><>
+<col>Escape ASCII Character<><col><c>\\e<v>...<><><>
+<col>Full Current Path<><col><c>\\w<><>
+<col>Host Name<><col><c>\\H<><>
+<col>Host Name Up To '.'<><col><c>\\h<><>
+<col>Newline<><col><c>\\n<><>
+<col>Number of Shell Jobs<><col><c>\\j<><>
+<col>Shell Name<><col><c>\\s<><>
+<col>Time H:MM:SS AM/PM<><col><c>\\t<><>
+<col>Time HH:MM<><col><c>\\A<><>
+<col>Time HH:MM AM/PM<><col><c>\\@<><>
+<col>Time HH:MM:SS<><col><c>\\T<><>
+<col>User Name<><col><c>\\u<><><><>
+@
+@ format, options, display, show, codes, special characters
+
+
+
+## Command Prompt - Code Details
+@
+@ set, add, codes, special characters
+
+
+### Prompt - Set \\ (backslash)
+<cb>\\\\<>
+
+<cb>PS1=\\\\<>
+
+Adds a \\ (backslash) to the command prompt.
+@
+@ \\\\
+
+
+
+### Prompt - Set Bash Version
+<cb>\\v<>
+
+<cb>PS1=\\v<>
+
+Sets the prompt to the Bash version.
+@
+@ \\v
+
+
+
+### Prompt - Set Bash Version and Patch Level
+<cb>\\V<>
+
+<cb>PS1=\\V<>
+
+Sets the prompt to the Bash version and patch level.
+@
+@ \\V
+
+
+
+### Prompt - Set Current Directory Only
+<cb>\\W<>
+
+<cb>PS1=\\W<>
+
+Sets the prompt to the current directory name only (not full path).
+@
+@ \\W
+
+
+
+### Prompt - Set Date "Mon Jan 01"
+<cb>\\d<>
+
+<cb>PS1=\\d<>
+
+Sets the prompt to the date format "Mon Jan 01".
+@
+@ \\d
+
+
+
+### Prompt - Set Escaped ASCII Character
+<cb>\\e<v>...<><>
+
+<cb>PS1=\\e<v>...<><>
+@
+@ \\e
+
+
+
+### Prompt - Set Full Current Path
+<cb>\\w<>
+
+<cb>PS1=\\w<>
+
+Sets the prompt to the full current path.
+@
+@ \\w, current path
+
+
+
+### Prompt - Set Host Name
+<cb>\\H<>
+
+<cb>PS1=\\H<>
+
+Sets the prompt to the server's host name.
+@
+@ \\H, server
+
+
+
+### Prompt - Set Host Name Up To '.'
+<cb>\\h<>
+
+<cb>PS1=\\h<>
+
+Sets the prompt to the host name up to the '.' in the name.
+@
+@ \\h
+
+
+
+### Prompt - Set Newline
+<cb>\\n<>
+
+<cb>PS1=\\n<>
+
+Adds a newline to the prompt.
+@
+@ \\n
+
+
+
+### Prompt - Set Number of Shell Jobs
+<cb>\\j<>
+
+<cb>PS1=\\j<>
+
+Shows the current number of shell jobs in the prompt.
+@
+@ \\j
+
+
+
+### Prompt - Set Shell Name
+<cb>\\s<>
+
+<cb>PS1=\\s<>
+
+Sets the prompt to the shell name.
+@
+@ \\s
+
+
+
+### Prompt - Set Time H:MM:SS AM/PM
+<cb>\\t<>
+
+<cb>PS1=\\t<>
+
+Sets the prompt to the time H:MM:SS AM/PM.
+@
+@ \\t
+
+
+
+### Prompt - Set Time HH:MM
+<cb>\\A<>
+
+<cb>PS1=\\A<>
+
+Sets the prompt to the time HH:MM.
+@
+@ \\A
+
+
+
+### Prompt - Set Time HH:MM AM/PM
+<cb>\\@<>
+
+<cb>PS1=\\@<>
+
+Sets the prompt to the time HH:MM AM/PM.
+@
+@ \\@
+
+
+
+### Prompt - Set Time HH:MM:SS
+<cb>\\T<>
+
+<cb>PS1=\\T<>
+
+Sets the prompt to the time HH:MM:SS.
+@
+@ \\T
+
+
+
+### Prompt - Set User Name
+<cb>\\u<>
+
+<cb>PS1=\\u<>
+
+Shows the user name in the command prompt
+@
+@ \\u
+
+
+## Command Prompt - Examples
+@
+@ set
+
+
+# Prompt - Set to Host Name, Current Path
+
+<cb>PS1="\\h:\\w>"<>
+
+
+Shows the host name, current path in the prompt.
+
+
+Example Output:
+
+<cb>Server-1:~/downloads><>
+@
+@ command, prompt-only, format, display, show
+@ ps1, \\h, \\w
 
 
 
@@ -8188,6 +9852,60 @@ Formatted like '4.2.8':
 
 
 
+### Calendar - View Current Month, Year
+
+<cb>cal<>
+
+Prints a mini calendar of the current month and year.
+
+Example:
+
+<cb>> cal
+<#>    January 2001
+Su Mo Tu We Th Fr Sa
+    1  2  3  4  5  6
+ 7  8  9 10 11 12 13
+14 15 16 17 18 19 20
+21 22 23 24 25 26 27
+28 29 30 31<><>
+@
+@ print, show, view
+
+
+### Calendar - View Month, Year
+
+<cb>cal <v>month<> <v>year<><>
+
+Prints a mini calendar of the given month and year.
+
+Month and year should be numbers.
+On some systems, the month can be text (eg: "feb").
+
+Example:
+
+<cb>> cal 1 2001
+<#>    January 2001
+Su Mo Tu We Th Fr Sa
+    1  2  3  4  5  6
+ 7  8  9 10 11 12 13
+14 15 16 17 18 19 20
+21 22 23 24 25 26 27
+28 29 30 31<><>
+@
+@ print, show, view
+
+
+
+### Calendar - View Year
+
+<cb>cal <v>year<><>
+
+Prints a mini calendar for the entire year.
+@
+@ print, show, view
+
+
+
 ### Command - Trace / Show Execution
 
 <cb>set -x<>
@@ -8219,6 +9937,18 @@ Press Q to exit.
 
 
 
+### Command - Redirect Output to Parameter
+
+<cb><v>command_2<> "$(<v>command_1<>)"<>
+
+
+Redirects the output of command 1 as a parameter into command 2.
+@
+@ get, pass from, as parameter
+@ "$()", $()
+
+
+
 ### Command - Trace / Show Execution - Disable
 
 <cb>set +x<>
@@ -8232,7 +9962,17 @@ Or
 
 
 
-### Conditionally Execute Command
+### Computer - Uptime
+
+<cb>uptime<>
+
+Shows how long the computer has been running.
+@
+@ show, view, see, lookup, get
+
+
+
+### Conditionally Execute Command - And
 
 <cb>[[ <v>expression<> ]] && <v>command<><>
 
@@ -8241,8 +9981,22 @@ Executes command when the expression is true.
 
 Uses Bash's short-circuiting to prevent running the command when the expression is false.
 @
-@ on condition, run
-@ [], [[]]
+@ on condition, run, true
+@ [], [[]], &&
+
+
+
+### Conditionally Execute Command - Or
+
+<cb>[[ <v>expression<> ]] || <v>command<><>
+
+
+Executes command when the expression is false.
+
+Uses Bash's short-circuiting to prevent running the command when the expression is false.
+@
+@ on condition, run, false
+@ [], [[]], ||
 
 
 
@@ -8254,18 +10008,20 @@ Returns the CPU type.
 
 Sample CPUs:
 
-<card>arm
-i386<>
+<card>arm			<#># Apple Silicon<>
+i386		<#># Intel Architecture on Mac<>
+x86_64		<#># Intel Architecture<><>
 
 
 Test For Architecture:
 
-<card>if [[ $(uname -p) == 'arm' ]]; then
+<card>if [[ $(uname -p) == '<v>arm<>' ]]; then
 	echo "Arm Based System
 fi<>
 @
-@ processor type, computer, server
+@ processor type, computer, server, intel, apple silicon
 @ uname -p
+@ arm, i386, x86_64
 
 
 
@@ -8279,18 +10035,21 @@ Returns the CPU type.
 
 Sample CPUs:
 
-<card>arm64
-x86_64<>
+<card>aarch64		<#># Arm V8 / Raspberry Pi<>
+arm64		<#># Apple Silicon<>
+arm6l		<#># Arm V6 / Raspberry Pi<>
+x86_64		<#># Intel x86 64<><>
 
 
 Test For CPU Type:
 
-<card>if [[ $(uname -m) == 'arm64' ]]; then
+<card>if [[ $(uname -m) == '<v>arm64<>' ]]; then
 	echo "M1 Mac"
 fi<>
 @
-@ processor name, computer, server
+@ processor name, computer, server, apple silicon, m1, m2, m3, intel, x86, raspberry pi
 @ uname -m
+@ aarch64, arm64, arm6l, x86_64
 
 
 
@@ -8381,29 +10140,17 @@ Not supported on all versions of Linux.
 
 
 
-### Drives - List All
-
-<cb>diskutil list<>
-
-
-Lists all drives.
-
-Not supported on all versions of Linux.
-@
-@ disk, disc
-@ diskutil list
-
-
-
 ### Drive - Size, Free Space
 
-<cb>df -h<>
+<cb>df -h <v>drive_path<><>
 
 
 Lists all drives and how much free space they have.
 
 
 <c>-h<>		Human Readable
+<c>-k<>		Space in Kilobytes
+<c>-g<>		Space in Gigabytes
 @
 @ disk, disc
 @ df -h
@@ -8442,6 +10189,45 @@ MacOS only?
 
 
 
+### Drives - All - Size, Free Space
+
+<cb>df -h<>
+
+
+Lists all drives and how much free space they have.
+
+
+<c>-h<>		Human Readable
+<c>-k<>		Space in Kilobytes
+<c>-g<>		Space in Gigabytes
+@
+@ disk, disc all
+@ df -h
+
+
+
+### Drives - All - List All
+
+<cb>diskutil list<>
+
+
+Lists all drives.
+
+Not supported on all versions of Linux.
+@
+@ disk, disc
+@ diskutil list
+
+
+
+### Evaluate Variable Containing Command Substitution
+
+<cb>eval echo "$<v>variable_1"<>
+
+
+
+
+
 ### Filter Results - Match Text
 
 <cb><v>...<> | grep "<v>match_expression<>"<>
@@ -8474,11 +10260,19 @@ Regular Expression Syntax: <l regular_expressions>Regular Expressions SpeedSheet
 
 ### If - Has Parameter
 
-<cb>if [[ ! -z "$1" ]]; then
+<cb>if [[ -n "$1" ]]; then
 	<v>...<>
 else
 	<v>...<>
 fi<>
+
+<cb>if [ ! -z "$1" ]; then
+	<v>...<>
+else
+	<v>...<>
+fi<>
+@
+@ a value, is set, is present
 
 
 
@@ -8490,7 +10284,7 @@ else
 	<v>...<>
 fi<>
 @
-@ empty, not present, no value, not set
+@ empty, not present, no value, not set, is missing
 
 
 
@@ -8531,6 +10325,29 @@ fi<>
 else
 	<v>...<>
 fi<>
+
+
+
+### IFS - Set
+
+<cb>IFS = '<v>new_characters<>'<>
+
+
+Changes the IFS delimiter characters.
+
+
+Example:
+
+<cb>IFS="\\n"<>
+
+<cb><v>old_ifs<>="$IFS"
+IFS=","
+
+echo "${<v>dict_1<>[*]}"
+
+IFS="$<v>old_ifs<>"<>
+@
+@ update, change, modify, delimiter
 
 
 
@@ -8617,7 +10434,7 @@ Command:
 
 <c>.hushlogin<> tells the shell to not display any standard text on login.
 @
-@ stop
+@ stop, touch
 
 
 
@@ -8627,7 +10444,7 @@ Command:
 	<v>...<>
 done<>
 @
-@ for each, arguments
+@ for each, arguments, params
 
 
 
@@ -8646,7 +10463,7 @@ vi ~/.dir_colors<>
 
 Set Directory Color:
 
-<in-2><table><col>Find<><col><c>DIR 01;34<><>
+<in 2><table><col>Find<><col><c>DIR 01;34<><>
 <col>Change To	<><col><c>DIR 01;33<><><>
 @
 @ .dir_colors
@@ -8718,7 +10535,7 @@ See script in help directory.
 
 Returns the public host name for the server.
 @
-@ system, device, internet, computer's, server's, my
+@ system, device, internet, computer's, server's, my, get, show, view
 
 
 
@@ -8747,7 +10564,7 @@ Lists the server's ip address.
 Lists the local ip address.
 One of these commands should work.
 @
-@ system, device, local, computer's, server's, my
+@ system, device, local, computer's, server's, my, get, show, view
 
 
 
@@ -8758,7 +10575,7 @@ One of these commands should work.
 
 Returns the public facing ip address for the server.
 @
-@ system, device, internet, computer's, server's, my
+@ system, device, internet, computer's, server's, my, show, view, get
 
 
 
@@ -8771,7 +10588,7 @@ Lists all local devices connected to the network.
 
 Shows the ip addresses.
 @
-@ ip addresses
+@ ip addresses, show, view, get
 @ arp -a
 
 
@@ -8785,7 +10602,39 @@ Shows the ip addresses.
 
 List all open ports on this computer.
 @
-@ netstat
+@ netstat, show, view, get
+
+
+
+### Network - Ping Server
+
+<cb>ping <v>ip_address<>
+ping <v>url<><>
+
+
+Pings a server.
+
+Displays the ping time.
+Requires the ping service to be running on the target service.
+@
+@ time server, latency
+@ tracert, traceroute, ip, address, url
+
+
+
+### Network - Ping Server - n Times
+
+<cb>ping -c <v>count<><v>ip_address<>
+ping -c <v>count<><v>url<><>
+
+
+Pings a server a set number of times.
+
+Displays the ping time.
+Requires the ping service to be running on the target service.
+@
+@ time server, latency -c, count, number
+@ tracert, traceroute, ip, address, url
 
 
 
@@ -8832,7 +10681,16 @@ Tests a port to see if it is reachable.
 
 ### Network - Trace Route
 
-<cb>traceroute <v>ip_address<>  | <v>url<><>
+<cb>traceroute <v>ip_address<>
+traceroute<v>url<><>
+
+
+Traces the route to a server.
+
+Maps each server on the way along with the journey time.
+@
+@ time server, latency
+@ tracert, traceroute, ip, address, url
 
 
 
@@ -8855,9 +10713,10 @@ Use in empty functions.
 
 Returns the Operating System
 
-Sample OS:
+Sample OSs:
 
-<card>Darwin<>
+<card>Darwin		<#>MacOs<>
+Linux<>
 @
 @ get, view, show, display, computer
 @ OS, uname
@@ -8913,6 +10772,18 @@ One of these will give you the OS version and details.
 
 
 
+### Parameters - Expand To Variable
+
+<cb>="$*"<>
+
+
+Expands all parameters into a single value.
+@
+@ all, array
+@ $*
+
+
+
 ### Pause - For Keypress
 
 <cb>read -p "<v>Press any key to continue...<> " -n1 -s<>
@@ -8936,78 +10807,18 @@ Prefer the first form.
 
 
 
-### Prompt - Set
+### Screen - Clear
 
-<cb>PS1="<v>prompt text<>"<>
-
-
-Sets the terminal prompt.
+<cb>clear<>
 
 
-Options:
-
-<in-2><table><col><c>\\\\<><><col>\\ (backslash)<>
-<col><c>\\@<><><col>Time HH:MM AM/PM<>
-<col><c>\\A<><><col>Time HH:MM<>
-<col><c>\\d<><><col>Date "Mon Jan 01"<>
-<col><c>\\e<v>...<><><><col>ASCII Escape Character<>
-<col><c>\\h<><><col>Host Name Up To '.'<>
-<col><c>\\H<><><col>Host Name<>
-<col><c>\\j<><><col>Number of Shell Jobs<>
-<col><c>\\n<><><col>Newline<>
-<col><c>\\s<><><col>Shell Name<>
-<col><c>\\t<><><col>Time H:MM:SS AM/PM<>
-<col><c>\\T<><><col>Time HH:MM:SS<>
-<col><c>\\u<><><col>User Name<>
-<col><c>\\V<><><col>Bash Version and Patch Level<>
-<col><c>\\v<><><col>Bash Version<>
-<col><c>\\w<><><col>Full Current Path<>
-<col><c>\\W<><><col>Current Directory Only (Not Full Path)<><><>
-
-Display:
-
-<in-2><table><col>\\ (backslash)<><col><c>\\\\<><>
-<col>Bash Version<><col><c>\\v<><>
-<col>Bash Version and Patch Level<><col><c>\\V<><>
-<col>Current Directory Only (Not Full Path)<><col><c>\\W<><>
-<col>Date "Mon Jan 01"<><col><c>\\d<><>
-<col>Escape ASCII Character<c>\\e<v>...<><><>
-<col>Full Current Path<><col><c>\\w<><>
-<col>Host Name<><col><c>\\H<><>
-<col>Host Name Up To '.'<><col><c>\\h<><>
-<col>Newline<><col><c>\\n<><>
-<col>Number of Shell Jobs<><col><c>\\j<><>
-<col>Shell Name<><col><c>\\s<><>
-<col>Time H:MM:SS AM/PM<><col><c>\\t<><>
-<col>Time HH:MM<><col><c>\\A<><>
-<col>Time HH:MM AM/PM<><col><c>\\@<><>
-<col>Time HH:MM:SS<><col><c>\\T<><>
-<col>User Name<><col><c>\\u<><><><>
+Clears the screen and puts the cursor at the top of the window.
 @
-@ command, prompt-only, format, options, display, show
-@ \\\\, \\@, \\a, \\d, \\e, \\h, \\j, \\n, \\s, \\t, \\u, \\v, \\w
-@ ps1
+@ clean, wipe, reset
 
 
 
-### Prompt - Set to Host Name, Current Path
-
-<cb>PS1="\\h:\\w>"<>
-
-
-Shows the host name, current path in the prompt.
-
-
-Example Output:
-
-<cb>Server-1:~/downloads><>
-@
-@ command, prompt-only, format, display, show
-@ ps1, \\h, \\w
-
-
-
-# Script - Get Run Command
+### Script - Get Run Command
 
 <cb>=$0<>
 
@@ -9018,6 +10829,14 @@ Includes the path to the script if included in calling the script.
 @
 @ command line, command-line, run
 @ $0
+
+
+
+### Script - Get Output
+
+<cb><v>result<>="$(<v>script_file<>)"<>
+@
+@ capture, result, to variable, save, store
 
 
 
@@ -9294,20 +11113,13 @@ Add to .bash_profile:
 
 ### Variable - Set From File
 
-<cb><v>variable_1<>=$(\< <v>file_name<>)<>
+<cb><v>variable_1<>="$(\< <v>file_name<>)<>""
 
 
 Copies the contents of a file into a variable.
-
-Don't add any spaces in '<c><v>variable_1<>=$(<>'
 @
 @ read file to
-
-
-
-### Variable - Set From Output
-
-<cb><v>variable_1<>="$(<v>commands<>)"<>
+@ $(), $(\<), "$()", "(\<)"
 
 
 
@@ -9323,9 +11135,9 @@ Downloads the web page or web file to the current directory.
 
 Options:
 
-<in-2><table><col><c>-O<><><col>Set File Name (Defaults to the page name)<><><>
+<in 2><table><col><c>-O<><><col>Set File Name (Defaults to the page name)<><><>
 @
-@ url, link, web page, file
+@ url, link, web page, file, to
 @ online
 
 
@@ -9342,7 +11154,7 @@ Downloads the web page or web file to the current directory.
 
 Options:
 
-<in-2><table><col><c>-O<><><col>Set File Name (Defaults to the page name)<>
+<in 2><table><col><c>-O<><><col>Set File Name (Defaults to the page name)<>
 <col><c>-q<><><col>Quiet Mode<><><>
 @
 @ wget, url, link, web page, file
@@ -9355,17 +11167,27 @@ Options:
 @ short cut, shortcuts-only, terminal, keyboard
 
 
+### Shortcut - File - End of File
+
+<cb>Ctrl + D<>
+@
+@ Control, Ctrl, d, close, end, complete
+
+
+
 ### Shortcut - Line - Start Of Line
 
 <cb>Ctrl + A<>
 @
-@ Control, Ctrl, a, left
+@ Control, Ctrl, a, left, move cursor
 
 
 
 ### Shortcut - Line - End of File
 
 <cb>Ctrl + D<>
+
+(D for down)
 @
 @ Control, Ctrl, d, ^d, control, close, complete
 
@@ -9374,24 +11196,46 @@ Options:
 ### Shortcut - Line - End of Line
 
 <cb>Ctrl + E<>
+
+(E for end)
 @
-@ Control, Ctrl, control, ^e, e, right
+@ Control, Ctrl, control, ^e, e, right, move cursor
 
 
 
-### Shortcut - Word - Left (Back) 1 Word
+### Shortcut - Word - Left 1 Word (Back)
 
 <cb>Alt + B<>
+
+(B for back)
+
+Mac:
+
+<cb>Option ⌥ + Left Arrow<>
 @
-@ Alt, b
+@ Alt, b, previous, back, move cursor
 
 
 
-### Shortcut - Word - Right (Forward) 1 Word
+### Shortcut - Word - Right 1 Word (Forward)
 
 <cb>Alt + F<>
+
+(F for forward)
+
+Mac:
+
+<cb>Option ⌥ + Right Arrow<>
 @
-@ Alt, f
+@ Alt, f, next, forward, move cursor
+
+
+
+### Shortcut - Process - Stop
+
+<cb>Ctrl + C<>
+@
+@ Control, Ctrl, c, kill, end
 
 
 
@@ -9399,8 +11243,7 @@ Options:
 
 <cb>Ctrl + Z<>
 @
-@ Control, Ctrl, z
-
+@ Control, Ctrl, z, pause
 
 
 
@@ -9408,13 +11251,14 @@ Options:
 
 <cb>Ctrl + L<>
 @
+@ clean, wipe, reset
 @ Control, Ctrl, l
 
 
 
 # Symbol Reference
 @
-@ symbol-only, symbols-only
+@ symbol-only, symbols-only, sym-only
 
 
 
@@ -9430,7 +11274,7 @@ Run In Current Process
 
 Current Directory
 
-<cd>cd .<>
+<cb>cd .<>
 
 
 
@@ -9438,7 +11282,7 @@ Current Directory
 
 Parent Directory
 
-<cd>cd ..<>
+<cb>cd ..<>
 
 
 
@@ -9446,7 +11290,7 @@ Parent Directory
 
 Home Directory
 
-<cd>cd ~<>
+<cb>cd ~<>
 
 
 
@@ -9489,7 +11333,7 @@ Run Only After 1st Completes Successfully
 ### Symbol |
 
 Pipe Character.
-Chains 2 or more statements together forwarding the output from one to the next.
+Chains 2 or more statements together forwarding the standard output from one to the next.
 
 <cb><v>statement_1<> | <v>statement_2<><>
 
@@ -9497,9 +11341,18 @@ Chains 2 or more statements together forwarding the output from one to the next.
 
 ### Symbol ||
 
-Run Only After 1st Completes Without Error (Status = 0)
+Run command_2 Only If command_1 Returns an Error (Status > 0)
 
 <cb><v>command_1<> || <v>command_2<><>
+
+
+
+### Symbol |&
+
+Pipe Character.
+Chains 2 or more statements together forwarding the standard output and standard error from one to the next.
+
+<cb><v>statement_1<> | <v>statement_2<><>
 
 
 
@@ -9580,8 +11433,9 @@ fi<>
 
 Evaluate an expression to true false.
 
-<cb>if [[ <v>expression<> ]]
-then
+<cb>[[ <v>expression<> ]]<>
+
+<cb>if [[ <v>expression<> ]] ; then
 	<v>...<>
 fi<>
 @
@@ -9610,6 +11464,20 @@ Runs a script inside it's own subshell.
 @ (, )
 
 
+### Symbol ()
+
+Defines an associative array.
+
+<cb>items_1=(
+	[<v>name<>]="<v>value<>"}
+	[<v>name<>]="<v>value<>"}
+	[<v>name<>]="<v>value<>"}
+<>
+@
+@ {[]}
+
+
+
 
 ### Symbol (())
 
@@ -9620,6 +11488,72 @@ Evaluates an arithmetic expression.
 }<>
 @
 @ ((, ))
+
+
+
+### Symbol []
+
+Defines or returns an associative array item name.
+
+<cb>=<v>items_1<>[<v>name<>]<>
+
+
+
+### Symbol [@]
+
+Returns the elements from an array or associative array.
+Returned as separate words.
+
+<cb>=<v>items_1<>[@]<>
+
+
+
+### Symbol [*]
+
+Returns the elements from an array or associative array as a single word.
+In the string, values are separated by the first character defined in <c>IFS<>.
+
+<cb>=<v>items_1<>[*]<>
+
+
+
+### Symbol \\
+
+Escapes a character in a string.
+
+<cb>echo "\\<v>!<>"<>
+
+
+
+### Symbol \\0
+
+The octal code for a character.
+
+<cb>echo "\\0<v>141<>"<>
+
+
+
+### Symbol \\u
+
+The hex code of a unicode character (1-4 digits long).
+
+<cb>echo "\\u<v>61<>"<>
+
+
+
+### Symbol \\U
+
+The hex code of a unicode character (1-8 digits long).
+
+<cb>echo "\U<v>1F34C<>"<>
+
+
+
+### Symbol \\x
+
+The hex code for a character.
+
+<cb>echo "\\x<v>61<>"<>
 
 
 
@@ -9673,6 +11607,16 @@ Same As:
 
 ### Symbol $()
 
+Command Substitution (evaluate, then execute).
+
+<cb>$(<v>expression<>)<>
+@
+@ $(, )
+
+
+
+### Symbol $()
+
 Runs a command and returns it's output as a parameter.
 
 <cb><v>response<>=$(<v>command<>)<>
@@ -9694,6 +11638,74 @@ Same As:
 <cb><v>result<>=$[ <v>expression<> ]<>
 @
 @ $((, ))
+
+
+
+### Symbol $0
+
+The name of the script.
+
+Includes the path if used to call the command.
+
+<cb>echo "Script Name / Path $<v>1<>"<>
+
+
+
+### Symbol $1 $2 $3
+
+Command line parameter or function parameters.
+
+<cb>echo "First parameter $<v>1<>"<>
+
+
+
+### Symbol $*
+
+All command line parameters or all function parameters.
+
+Spaces are considered parameter separators.
+
+<cb>for <v>parameter<> in $*; do
+	echo "Parameter: $<v>parameter<>"
+done<>
+
+
+
+### Symbol $@
+
+All command line parameters or all function parameters.
+
+Individual parameters can have spaces as values.
+
+<cb>for <v>parameter<> in $@; do
+	echo "Parameter: $<v>parameter<>"
+done<>
+
+
+
+### Symbol "$@"
+
+All command line parameters or all function parameters.
+
+Used when passing to a function to preserve values with white spaces.
+
+<cb>count_values "$@"<>
+
+
+
+### Symbol $?
+
+The exit code returned from the last operation.
+
+<cb><v>exit_code<>=$?<>
+
+
+
+### Symbol $#
+
+Parameter count.
+
+<cb><v>number_of_parameters<>=$#<>
 
 
 
@@ -9760,6 +11772,26 @@ It will create it if it doesn't exist.
 
 
 
+### Symbol >&1
+
+Output Redirect Operator
+
+Redirects to the the standard output (stdout).
+
+<cb><v>command<> >&1<>
+
+
+
+### Symbol >&2
+
+Output Redirect Operator
+
+Redirects to the the standard error (stderr).
+
+<cb><v>command<> >&2<>
+
+
+
 ### Symbol \<
 
 Input Redirect Operator
@@ -9793,311 +11825,311 @@ Redirects a the value of a variable to the standard in.
 
 ### Symbol -a
 
-File Test Operator
-
-File exists?
+File exists? (file test operator)
 
 <cb>-a <v>file_name<><>
+@
+@ file test operator
 
 
 
 ### Symbol -b
 
-File Test Operator
-
-Is block special file?
+Is block special file? (file test operator)
 
 <cb>-b <v>file_name<><>
+@
+@ file test operator
 
 
 
 ### Symbol -c
 
-File Test Operator
-
-Is character special file?
+Is character special file? (file test operator)
 
 <cb>-c <v>file_name<><>
+@
+@ file test operator
 
 
 
 ### Symbol -d
 
-File Test Operator
-
-Is directory?
+Is directory? (file test operator)
 
 <cb>-d <v>file_name<><>
+@
+@ file test operator
 
 
 
 ### Symbol -e
 
-File Test Operator
-
-File exists?
+File exists? (file test operator)
 
 <cb>-e <v>file_name<><>
+@
+@ file test operator
 
 
 
 ### Symbol -ef
 
-File Operator
-
-Same device and iNode number?
+Same device and iNode number? (file comparison operator)
 
 <cb><v>file_1"<> -ef <v>file_2"<><>
+@
+@ file comparison operator, compare
 
 
 
 ### Symbol -eq
 
-Comparison Operator
-
-Is equal?
+Is equal? (comparison operator)
 
 <cb><v>a<> -eq <v>b<><>
+@
+@ comparison operator, compare
 
 
 
 ### Symbol -f
 
-File Test Operator
-
-Is regular file?
+Is regular file? (file test operator)
 
 <cb>-f <v>file_name<><>
+@
+@ file test operator
 
 
 
 ### Symbol -G
 
-File Test Operator
-
-Belongs to user's primary group?
+Belongs to user's primary group? (file test operator)
 
 <cb>-G <v>file_name<><>
+@
+@ file test operator
 
 
 
 ### Symbol -g
 
-File Test Operator
-
-Is set-group-id set?
+Is set-group-id set? (file test operator)
 
 <cb>-g <v>file_name<><>
+@
+@ file test operator
 
 
 
 ### Symbol -ge
 
-Comparison Operator
-
-Greater than or equal?
+Greater than or equal? (comparison operator)
 
 <cb><v>a<> -ge <v>b<><>
+@
+@ comparison operator, compare
 
 
 
 ### Symbol -gt
 
-Comparison Operator
-
-Is greater than?
+Is greater than? (comparison operator)
 
 <cb><v>a<> -gt <v>b<><>
+@
+@ comparison operator, compare
 
 
 
 ### Symbol -h
 
-File Test Operator
-
-Is symbolic link file?
+Is symbolic link file? (file test operator)
 
 <cb>-h <v>file_name<><>
+@
+@ file test operator
 
 
 
 ### Symbol -k
 
-File Test Operator
-
-Is sticky bit set?
+Is sticky bit set? (file test operator)
 
 <cb>-k <v>file_name<><>
+@
+@ file test operator
 
 
 
 ### Symbol -L
 
-File Test Operator
-
-Is symbolic link file?
+Is symbolic link file? (file test operator)
 
 <cb>-L <v>file_name<><>
+@
+@ file test operator
 
 
 
 ### Symbol -le
 
-Comparison Operator
-
-Less than or equal?
+Less than or equal? (comparison operator)
 
 <cb><v>a<> -le <v>b<><>
+@
+@ comparison operator, compare
 
 
 
 ### Symbol -lt
 
-Comparison Operator
-
-Is less Than?
+Is less Than? (comparison operator)
 
 <cb><v>a<> -lt <v>b<><>
+@
+@ comparison operator, compare
 
 
 
 ### Symbol -n
 
-Variable Test Operator
-
-Has length greater than zero?
+Has the value a length greater than zero? (value test operator)
 
 <cb>-n <v>a<><>
+@
+@ variable, value test operator
 
 
 
 ### Symbol -N
 
-File Test Operator
-
-Modified since last read?
+Modified since last read? (file test operator)
 
 <cb>-N <v>file_name<><>
+@
+@ file test operator
 
 
 
 ### Symbol -ne
 
-Comparison Operator
-
-Not equal?
+Not equal? (comparison operator)
 
 <cb><v>a<> -ne <v>b<><>
+@
+@ comparison operator, compare
 
 
 
 ### Symbol -nt
 
-File Operator
-
-Is file_1 newer than file_2?
+Is file_1 newer than file_2? (file comparison operator)
 
 <cb><v>file_1"<> -nt <v>file_2"<><>
+@
+@ file comparison operator, compare
 
 
 
 ### Symbol -O
 
-File Test Operator
-
-Belongs to user's user id?
+Belongs to user's user id? (file test operator)
 
 <cb>-O <v>file_name<><>
+@
+@ file test operator
 
 
 
 ### Symbol -ot
 
-File Operator
-
-Is older than file 2, or doesn't exist but file 2 does? 
+Is older than file 2, or doesn't exist but file 2 does? (file comparison operator)
 
 <cb><v>file_1"<> -ot <v>file_2"<><>
+@
+@ file comparison operator, compare
 
 
 
 ### Symbol -p
 
-File Test Operator
-
-Is named pipe?
+Is named pipe? (file test operator)
 
 <cb>-p <v>file_name<><>
+@
+@  file test operator
 
 
 
 ### Symbol -r
 
-File Test Operator
-
-Is readable?
+Is readable? (file test operator)
 
 <cb>-r <v>file_name<><>
+@
+@  file test operator
 
 
 
 ### Symbol -S
 
-File Test Operator
-
-Is inter-process socket?
+Is inter-process socket? (file test operator)
 
 <cb>-S <v>file_name<><>
+@
+@  file test operator
 
 
 
 ### Symbol -s
 
-File Test Operator
-
-Is non-empty?
+Is non-empty? (file test operator)
 
 <cb>-s <v>file_name<><>
+@
+@  file test operator
 
 
 
 ### Symbol -u
 
-File Test Operator
-
-Is set-user-id set?
+Is set-user-id set? (file test operator)
 
 <cb>-u <v>file_name<><>
+@
+@  file test operator
 
 
 
 ### Symbol -w
 
-File Test Operator
-
-Is writable?
+Is writable? (file test operator)
 
 <cb>-w <v>file_name<><>
+@
+@  file test operator
 
 
 
 ### Symbol -x
 
-File Test Operator
-
-Is executable?
+Is executable? (file test operator)
 
 <cb>-x <v>file_name<><>
+@
+@  file test operator
 
 
 
 ### Symbol -z
 
-Variable Test Operator
-
-Is unset or length 0.
+Is value unset or length 0? (value test operator)
 
 <cb>-z <v>a<><>
+@
+@ variable, value test operator
 
 
 
@@ -10259,7 +12291,7 @@ These are builtin words used by bash. You can use them for other purposes but pr
 <card><table><col><c>/dev<><><col>Devices<>
 <col><c>/etc<><><col>Configuration Files<>
 <col><c>/home<><><col>Users Directory<>
-<col><c>/opt<><><col>Server Application Directory<>
+<col><c>/opt<><><col>Optional Applications Directory<>
 <col><c>/proc<><><col>System Processes<>
 <col><c>/sys<><><col>Kernel Information<>
 <col><c>/usr<><><col>USR = Unix System Resource. Leave Alone<>
@@ -10271,6 +12303,8 @@ These are builtin words used by bash. You can use them for other purposes but pr
 <col><c>/home<><><col>Users Directory<>
 <col><c>/home/<v>user_name<><><><col>User Home Directory<>
 <col><c>~<><><col>Alias to User Home Directory<><><>
+@
+@ summary
 
 
 
@@ -10345,7 +12379,7 @@ Each user has a subdirectory dedicated to them under <c>/home<>.
 
 <cb>/opt<>
 
-Server application directory (web apps, etc.).
+For optional software applications which are not part of the standard Linux distribution (web apps, etc.).
 
 
 
@@ -10514,6 +12548,8 @@ Shows all memory information.
 <col><c>~/.bashrc<><><col>Bash User Per-interactive-shell Startup Script<><col>("interactive", "non-login" shells only)<>
 <col><c>~/.bash_logout<><><col>Bash User Logout Cleanup Script<>
 <col><c>~/.inputrc<><><col>Bash User Readline Initialization Script<><><>
+@
+@ summary
 
 
 
@@ -10675,6 +12711,31 @@ It can be found in embedded systems or minimal Linux distributions.
 
 
 
+# Reference - Coming From Other Languages
+
+
+### Dictionary, Map, Table
+
+Use: <l "?q=associative-array-only">Associative Arrays<>
+@
+@ dicts, dictionaries, hashmaps, maps, hash table
+
+
+
+### List
+
+Use: <l "?q=array-only">Arrays<>
+@
+@ lists
+
+
+
+### Switch, Match Statements
+
+Use: <l "?q=case-only">Case<>
+
+
+
 # Acronyms
 @
 @ Glossary, glossary-only
@@ -10705,8 +12766,16 @@ First In First Out (named pipes)
 Inter-process Communication (named pipes)
 
 
+### IFS
+Internal Field Separator
+
+
 ### NC
 Netcat
+
+
+### PS
+Prompt String
 
 
 ### PWD
@@ -10805,6 +12874,16 @@ Must take commands start, stop, restart, status.
 
 ### Inter-Process Communication (IPC)
 See: Named Pipes
+
+
+
+### Internal Field Separator (IFS)
+Environment variable that defines the characters that Bash sees as field delimiters.
+
+Any one of these characters will mark a separation in field values.
+Can be changed by updating the variable <c>IFS<>.
+
+Default values: <c>" \\t\\n"<> (space, tab, newline)
 
 
 
