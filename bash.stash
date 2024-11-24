@@ -16,6 +16,7 @@ This is an interactive <b>Bash<> cheat sheet. Covers the core Bash scripting lan
 <link "?q=control-only">Control Structures<>
 <link "?q=debug-only">Debugging<>
 <link "?q=exit-only">Exit<>
+<link "?q=exit-codes-only">Exit Codes<>
 <link "?q=files-only">Files<>
 <link "?q=functions-only">Functions<>
 <link "?q=operators-only">Operators<>
@@ -28,8 +29,6 @@ This is an interactive <b>Bash<> cheat sheet. Covers the core Bash scripting lan
 <b>Reference<>
 
 <*><link "?q=acronyms-only">Acronyms<>
-<link "?q=color+table">Colors<>
-<link "?q=exit-codes-only">Exit Codes<>
 <link "?q=symbols-only">Symbols<>
 <link "?q=terms-only">Terms<><><><col>	<><col><b>Data Types<>
 
@@ -48,7 +47,13 @@ This is an interactive <b>Bash<> cheat sheet. Covers the core Bash scripting lan
 <link "?q=case-only">Case<>
 <link "?q=for-only">For<>
 <link "?q=until-only">Until<>
-<link "?q=while-only">While<><><><>
+<link "?q=while-only">While<><>
+
+<b>Colors<>
+
+<link "?q=colors-only">Colors<>
+<link "?q=color+table">Color Table<>
+<link "?q=color+variables">Color Variables<><><>
 
 
 # Online Docs
@@ -74,7 +79,6 @@ Script:
 
 <cb>echo "Hello world!"<>
 
-
 Create The Script (from the command line):
 
 <cb>cat > hello_world
@@ -95,16 +99,15 @@ Create and run the hello_world script.
 
 Script:
 
-<cb>\#!/usr/bin/env bash
+<cb><#>#!/usr/bin/env bash<>
 
 read -p "Name: " <v>name<>
 echo "Hello $<v>name<>!"<>
 
-
 Create The Script (from the command line):
 
 <cb>cat > hello_world
-\#!/usr/bin/env bash
+<#>#!/usr/bin/env bash<>
 
 read -p "Name: " <v>name<>
 echo "Hello $<v>name<>!"<>
@@ -131,15 +134,16 @@ This will take the name from the script parameter or ask if none is present. Thi
 
 Script:
 
-<cb>#!/usr/bin/env bash
+<cb><#>#!/usr/bin/env bash<>
 
 get_name() {
+	<#># stores the input into the variable '<c>name<>':<>
 	read -p "Name: " <v>name<>
 }
 
 print_hello() {
 	local <v>name<>="$@"
-	echo "$<v>name<>"
+	echo "Hello $<v>name<>!"
 }
 
 if [[ -z "$1" ]]; then
@@ -168,18 +172,34 @@ Run:
 @ language-fundamentals-only, fundamentals-only, bash-fundamentals-only
 
 
+### Created / 1st Release
+
+<t>Created<|>Late 1980s
+1st Release<|>June 1989<>
+
+
+
+### Created By
+
+Brian Fox
+@
+@ creator
+
+
 ### Startup / Configuration Files
 
 When Logging in:
 
 <cb>.bash_profile<>
 
-Non Login Starts:
+Non Login Starts (new shells after logged in):
 
 <cb>.bashrc				<#>#1<><>
 
 
-\#1  <s>-<>  Called from <c>.bash_profile<>
+\#1  <s>-<>  Place your configurations and environment variables here.<>
+
+\#1  <s>-<>  Should call from <c>.bash_profile<>
 
 
 
@@ -238,6 +258,8 @@ Tells the shell to run this script using zsh.
 ### Comments
 
 <cb><#># Comments - Single Line<><>
+
+Start comment lines with a <#>#<>.
 @
 @ \#
 
@@ -251,7 +273,7 @@ Tells the shell to run this script using zsh.
 }<>
 
 <cb><#># This is a doc comment.
-\# Add context to the
+\# Adds context to the
 \# following function.<>
 <v>function_1<>() {
 	<v>...<>
@@ -266,7 +288,7 @@ Use regular comment syntax, a single hash <#><c>#<><> before the text.
 
 
 
-### Escape
+### Escaping Characters
 
 <c>\\<v>x<><>
 
@@ -304,19 +326,79 @@ Examples:
 
 
 
+### Operator Precedence
+
+Highest to Lowest:
+
+<t><c><v>a<>++  <v>a<>--<><|>Post-increment, Post-decrement
+
+<c>++<v>a<>  --<v>a<><><|>Pre-increment, Pre-decrement	 
+ 	 	 
+<c>!  ~<><|>Logical Not
+ 	 	 
+<c>**<><|>Exponent
+
+<c>*  /  %<><|>Multiply, Divide, Modulo
+
+<c>+  -<><|>Add, Subtract
+ 	 	 
+<c><<  >><><|>Shift Left, Shift Right
+ 	 	 
+<c>-z -n<><|>Unary Comparison, Unary Not Empty
+
+<c>-a  -b  -c  -d  -e  -f<><|>Unary File Operators
+<c>-g  -G  -h  -k  -L  -N<>
+<c>-O  -p  -l  -s  -S  -t<>
+<c>-u  -w  -x<>
+
+<c>\<  \<=  >  >= -lt  -gt  -le -ge<><|>Comparison Operators
+
+<c>-ef  -nt  -ot<><|>File Comparison Operators
+
+<c>==  !=  -eq  -ne<><|>Equas, Not Equals
+ 	 	 
+<c>&<><|>Bitwise AND
+
+<c>^<><|>Bitwise XOR (exclusive OR)
+
+<c>|<><|>OR	bitwise
+ 	 	 
+<c>&&  -a<><|>Logical AND
+
+<c>||  -o<><|>Logical OR
+ 	 	 
+<c>?:<><|>Ternary Expression
+
+<c>=<><|>Assignment
+
+<c>*=  /=  %=  +=  -=  \<\<=  >>=  &=<><|>Arithmetic Assignment Operator
+ 	 	 
+<c>,<><|>comma<>
+
+
+
 ### Scope
 
 <*>Global / Environment
 Local<>
 
 
-Local is local to a function.
+The default scope is global.
+
+Local variables are defined with the <c>local<> keyword and are local to that function.
 
 
 
 ### Separator - Directory
 
 <cb>/<>
+
+Usage:
+
+<cb>/<v>parent<>/<v>child<>/<v>file<><>
+
+
+Separates the directory parts that make up a file path.
 @
 @ File Separators
 
@@ -324,6 +406,13 @@ Local is local to a function.
 ### Separator - Path
 
 <cb>:<>
+
+Usage:
+
+<cb><v>path_1<>:<v>path_2<>:<v>path_3<><>
+
+
+Separates individual paths in a collection of paths.
 @
 @ File Separators
 
@@ -332,6 +421,15 @@ Local is local to a function.
 ### Separator - Script Command
 
 <cb>;<>
+
+Usage:
+
+<cb><v>command_1<>; <v>command_2<><>
+
+
+Separates multiple commands on the same line.
+
+Not required for commands separated by newline.
 @
 @ Terminator
 
@@ -347,8 +445,8 @@ The '\\' at the end of the line indicates the line continues on next line.
 
 Example:
 
-<cb>echo "<v>Part 1 and<>" \\
-	 "<v>part 2 and<>" \\
+<cb>echo "<v>Part 1 and<> " \\
+	 "<v>part 2 and<> " \\
 	 "<v>part 3.<>"
 
 <#># Prints: Part 1 and part 2 and part 3.<><>
@@ -362,7 +460,7 @@ Example:
 Ports \<= 1023
 
 
-Port numbers 1023 and below and trusted ports
+Port numbers 1023 and below and trusted ports.
 They are accessible by root processes only.
 Non-root processes must listen on ports greater than 1023.
 @
@@ -395,6 +493,7 @@ Don't use an extension (no .sh, no .bash)
 Use lower-hyphen-case.
 
 Hyphen-case is an alternative to snake_case but pick one and be consistent.
+
 Don't use an extension.
 
 
@@ -666,7 +765,7 @@ Example:
 
 <cb>ls | grep .log<>
 @
-@ |, together, piping, pipe, stdin, stdout, chain, sequentially
+@ |, together, piping, pipe, stdin, stdout, chain, sequentially, passing output
 
 
 
@@ -708,7 +807,7 @@ Example:
 
 <cb><v>command_1<> || <v>command_2<><>
 
-<cb><v>command_1<> || <v>command_2<> || <v>...<><>
+<cb><v>command_1<> || <v>command_2<> || <v>command-3<> || <v>...<><>
 
 
 Runs the next command only if the previous command returned an error.
@@ -721,6 +820,39 @@ Example:
 <cb>echo "Hello" || echo "There"<>
 @
 @ ||, together, exit code, chain, or, on error
+
+
+
+### Multiple Commands - Run Commands If Error
+
+<cb><v>command_1<> || { <v>command_2<>; <v>command-3<>; <v>...<>; }<>
+
+
+Runs all the next commands only if the previous command returned an error.
+
+A command returns an error when the exit code > 0.
+
+Need <c>{<> and <c>}<> to combine commands.
+If you used <c>&&<> after the <c>||<>, it has a higher precedence than <c>||<> and would always execute.
+
+
+Example:
+
+<cb><v>value<>="a"
+[[ -z $<v>value<> ]] || { echo "value is set"; echo "value = $<v>value<>" ;}<>
+@
+@ ||, {}, together, exit code, chain, or, on error, fallback
+
+
+
+### Multiple Commands - Run Command or Fallback
+
+<cb><v>command_1<> && <v>successful_command<> || <v>fallback_command<><>
+
+
+If the first command completes successfully, run the second. If not, run the fallback command.
+@
+@ ||, &&, fallback, exit code, chain if
 
 
 
@@ -976,7 +1108,7 @@ Operators:
 <col><c><v>a<> / <v>b<><><><col>Always Returns a Float<>
 <col> <>
 <col><c><v>a<> % <v>b<><><><col>Modulo ( 7 % 3 = 1)<>
-<col><c><v>a<> ** <v>b<><><><col>To The Power of<><><>
+<col><c><v>a<> ** <v>b<><><><col>Exponent (Power of)<><><>
 
 Note:
 
@@ -984,7 +1116,7 @@ Note:
 Always returns an integer value.<>
 @
 @ %, **, +, -, /, //, (()), $(())
-@ modulo, modulus, plus, minus, divide, multiply, power of
+@ modulo, modulus, plus, minus, divide, multiply, power of, exponent
 @ mathematics, maths, numbers, ints, integers
 @ int-only, integer-only, integers-only
 
@@ -3875,6 +4007,9 @@ Example:
 echo "${<v>array_1<>[@]}"
 
 <#># Prints: one two three four<><>
+@
+@ add, put, extend to, second, to end, merge, combine
+@ item, element, value
 
 
 
@@ -4579,7 +4714,7 @@ Iterates over all key values in the array.
 
 
 
-### File Permission - Notation
+### Files - Symbolic Permissions - Notation
 
 <cb>drwxrwxrwx+<>
 
@@ -6100,6 +6235,19 @@ Use <c>while read<> to iterate over a file's lines.
 
 
 
+### File - Lines - Starting With
+
+<cb>look <v>starting_with<> <v>file_1<><>
+
+<cb>look <v>starting_with<> <v>files<><>
+
+
+Returns the lines in the file that start with the given value.
+@
+@ filter, look, beginning, filter
+
+
+
 ### File - Word Count
 
 <cb>wc -l <v>file_name<><>
@@ -6402,7 +6550,7 @@ Options:
 <col><c><v>YYMMDDhhmm<><><><col><c><v>0102031201<><><>
 <col><c><v>MMDDhhmm<><><><col><c><v>02031201<><><><><>
 @
-@ timestamp, datetime, date time, update
+@ timestamp, datetime, date time, update, set, change, modify
 @ yyyy-mm-dd, hh-mm-ss, yyyymmdd, hhmmss
 @ touch, -a, -m, -d, -t
 
@@ -6414,7 +6562,7 @@ Options:
 
 <cb>chgrp <v>group_name<> <v>file_name<> <v>file_name<> <v>file_name<> <v>...<><>
 @
-@ set group
+@ set group, change, update, modify
 @ chgrp
 
 
@@ -6423,7 +6571,7 @@ Options:
 
 <cb>chgrp -R <v>group_name<> <v>file_name<><>
 @
-@ set group
+@ set group, change, update, modify
 @ chgrp
 
 
@@ -6434,7 +6582,7 @@ Options:
 
 <cb>chown <v>user<> <v>file_name<> <v>file_name<> <v>file_name<> <v>...<><>
 @
-@ set, user
+@ set, user, change, update, modify
 @ chown
 
 
@@ -6443,7 +6591,7 @@ Options:
 
 <cb>chown -R <v>user_name<> <v>file_name<><>
 @
-@ set, user
+@ set, user, change, update, modify
 @ chown
 
 
@@ -6455,7 +6603,7 @@ Options:
 
 Sets the read, write, execute permissions on a file.
 @
-@ read, write, execute
+@ read, write, execute, set, change, update, modify
 @ chmod
 
 
@@ -6467,7 +6615,7 @@ Sets the read, write, execute permissions on a file.
 
 Sets the read, write, execute permissions all files in a directory and it's subdirectories.
 @
-@ read, write, execute, directory, directories, subdirectories
+@ read, write, execute, directory, directories, subdirectories, update, modify
 @ chmod, -r
 
 
@@ -6522,7 +6670,7 @@ Examples:
 <col><c>660<><><col>Full Access for User and Group Only<><col><c>chmod 660 <v>file_name<><><>
 <col><c>777<><><col>Full Access for Everyone<><col><c>chmod 777 <v>file_name<><><><><>
 @
-@ with, using, digits
+@ with, using, digits, set, update, modify
 @ 000, 400, 440, 600, 660, 777
 @ chmod
 
@@ -6570,7 +6718,7 @@ Examples:
 <col><c>ug+rw <><><col>Read Write for User, Group<><col><c>chmod ug+rw <v>file_name<><><>
 <col><c>ug+rw,o-w <><><col>Read Write for User, Group; No Write for Others<><col><c>chmod ug+rw,o-w <v>file_name<><><><><>
 @
-@ with, using, letters
+@ with, using, letters, set, update, modify
 @ chmod u+, g+, o+ u-, g-, o-, ug+, ug-, +r, +w, +x, -r, -w, -x
 
 
@@ -7160,44 +7308,57 @@ Will search the current directory or given path for directories matching the dir
 
 Options:
 
-	<c>-1<>		1 Per Line (default is in columns)
-	<c>-a<>		Show All (includes ., hidden files)
-	<c>-l<>		Long format
-	<c>-r<>		Reverse
-	<c>-R<>		Include Subdirectories
-	<c>-s<>		Sort By Size
-	<c>-t<>		Sort By Time
+<in><t><c>-1<><|>1 Per Line (default is in columns)
+<c>-a<><|>Show All (includes ., hidden files)
+<c>-h<><|>Human Readable
+<c>-l<><|>Long format
+<c>-r<><|>Reverse
+<c>-R<><|>Include Subdirectories
+<c>-s<><|>Sort By Size
+<c>-t<><|>Sort By Time<><>
 
 
 Default:
 
-	List Names Only
-	In Columns
-	By Name (Case Sensitive)
-
+<in>List Names Only
+In Columns
+By Name (Case Sensitive)<>
 
 Include:
 
-	All, Hidden			<c>-a<>
-	Subdirectories			<c>-R<>
+<in><t>All, Hidden		<|><c>-a<>
+Subdirectories<|><c>-R<><><>
 
 Display:
 
-	1 Per Line			<c>-1<>
-	Long Format			<c>-l<>
+<in><t>1 Per Line		<|><c>-1<>
+Human Format<|><c>-h<>
+Long Format<|><c>-l<><><>
 
 Sort By:
 
-	Reverse				<c>-r<>
+<in><t>Name<|>(Default, Case Sensitive)
+Size<|><c>-s<>
+Time / Last Modified<|><c>-t<>
 
-	Name				(Default, Case Sensitive)
-	Size					<c>-s<>
-
-	Time / Last Modified	<c>-t<>
+Reverse<|><c>-r<><><>
 
 @
 @ show, view, files
 @ ls, -1, -a, -l, -r, -s, -t
+
+
+
+### Directory - List - Human Readable
+
+<cb>ls -h<>
+
+
+Lists the directory but displays information in human readable formats.
+
+Lists file sizes in human format.
+@
+@ ls, -h
 
 
 
@@ -8018,15 +8179,15 @@ echo -en "\\e[<v>0<>m"<>
 
 ### Color - ANSI Color - Reset Color
 
-<cb>echo -e "\\e[<v>0<>m\\e[<v>49<>m"<>
+<cb>echo -e "\\e[<b>0<>m\\e[<b>49<>m"<>
 
 Or
 
-<cb>echo -e "\\033[<v>0<>m\\033[<v>49<>m"<>
+<cb>echo -e "\\033[<b>0<>m\\033[<b>49<>m"<>
 
 Or
 
-<cb>echo -e "\\x1B[<v>0<>m\\x1B[<v>49<>m"<>
+<cb>echo -e "\\x1B[<b>0<>m\\x1B[<b>49<>m"<>
 
 
 Resets the foreground and background to the default colors.
@@ -8037,7 +8198,7 @@ Default Background Color = 49
 
 Example:
 
-<cb>echo -e "\\e[<v>031<>m Red \\e[<v>0<>m Back to Normal"<>
+<cb>echo -e "\\e[<v>031<>m Red \\e[<b>0<>m Back to Normal"<>
 @
 @ colors, colours, echo -e
 
@@ -8045,15 +8206,15 @@ Example:
 
 ### Color - ANSI Color - Reset Color Without Printing
 
-<cb>echo -en "\\e[<v>0<>m\\e[<v>49<>m"<>
+<cb>echo -en "\\e[<b>0<>m\\e[<b>49<>m"<>
 
 Or
 
-<cb>echo -en "\\033[<v>0<>m\\033[<v>49<>m"<>
+<cb>echo -en "\\033[<b>0<>m\\033[<b>49<>m"<>
 
 Or
 
-<cb>echo -en "\\x1B[<v>0<>m\\x1B[<v>49<>m"<>
+<cb>echo -en "\\x1B[<b>0<>m\\x1B[<b>49<>m"<>
 
 
 Resets the foreground and background to the default colors.
@@ -8069,199 +8230,9 @@ Example:
 
 <cb>echo -en "\\e[<v>031<>m"
 echo "Prints In Red"
-echo -en "\\e[<v>0<>m"<>
+echo -en "\\e[<b>0<>m"<>
 @
 @ colors, colours, echo -e -n, -en
-
-
-
-### Color - ANSI Color Code Table - Color To Code
-
-<cb>\\e[<v>color_code<>m<>
-
-Special Codes:
-
-<in 2><table><col>Default Color<><col>0<>
-<col>Default Background<><col>49<><><>
-
-Foreground:
-
-<in 2><table><col>Black			<><col>30<>
-<col>Dark Gray<><col>90<>
-<col>Light Gray<><col>37<>
-<col>White<><col>97<>
-<col> <>
-<col>Blue<><col>34<>
-<col>Cyan<><col>36<>
-<col>Green<><col>32<>
-<col>Purple<><col>35<>
-<col>Red<><col>31<>
-<col>Yellow<><col>33<>
-<col> <>
-<col>Light Blue<><col>94<>
-<col>Light Cyan<><col>96<>
-<col>Light Green<><col>92<>
-<col>Light Purple<><col>95<>
-<col>Light Red<><col>91<>
-<col>Light Yellow<><col>93<><><>
-
-Background:
-
-<in 2><table><col>Black			<><col>40<>
-<col>Dark Gray<><col>100<>
-<col>Light Gray<><col>47<>
-<col>White<><col>107<>
-<col> <>
-<col>Blue<><col>44<>
-<col>Cyan<><col>46<>
-<col>Green<><col>42<>
-<col>Purple<><col>45<>
-<col>Red<><col>41<>
-<col>Yellow<><col>43<>
-<col> <>
-<col>Light Blue<><col>104<>
-<col>Light Cyan<><col>106<>
-<col>Light Green<><col>102<>
-<col>Light Yellow<><col>103<>
-<col>Light Purple<><col>105<>
-<col>Light Red<><col>101<>
-<col>Light Yellow<><col>103<><><>
-
-Style:
-
-<in 2><table><col>Bold				<><col>1<>
-<col>Blink<><col>5<>
-<col>Dimmed<><col>2<>
-<col>Italic<><col>3<>
-<col>Reversed<><col>7<>
-<col>Strikethrough<><col>9<>
-<col>Underline<><col>4<><><>
-@
-@ colors, colours, name, chart
-@ print, show, reference, foreground, background
-@ Bold, Blink, Dimmed, Italic, Reversed, Strikethrough, Underline
-
-
-
-### Color - ANSI Color Code Table - Code to Color
-
-<cb>\\e[<v>color_code<>m<>
-
-
-Special:
-
-<in 2><table><col>0				<><col>Default Foreground<>
-<col>4<><col>Underline<>
-<col>49<><col>Default Background<><><>
-
-Foreground:
-
-<in 2><table><col>30				<><col>Black<>
-<col>31<><col>Red<>
-<col>32<><col>Green<>
-<col>33<><col>Yellow<>
-<col>34<><col>Blue<>
-<col>35<><col>Purple<>
-<col>36<><col>Cyan<>
-<col>37<><col>Light Gray<>
-<col>90<><col>Dark Gray<>
-<col>91<><col>Light Red<>
-<col>92<><col>Light Green<>
-<col>93<><col>Light Yellow<>
-<col>94<><col>Light Blue<>
-<col>95<><col>Light Purple<>
-<col>96<><col>Light Cyan<>
-<col>97<><col>White<><><>
-
-Background:
-
-<in 2><table><col>40				<><col>Black<>
-<col>41<><col>Red<>
-<col>42<><col>Green<>
-<col>43<><col>Yellow<>
-<col>44<><col>Blue<>
-<col>45<><col>Purple<>
-<col>46<><col>Cyan<>
-<col>47<><col>Light Gray<>
-<col>100<><col>Dark Gray<>
-<col>101<><col>Light Red<>
-<col>102<><col>Light Green<>
-<col>103<><col>Light Yellow<>
-<col>104<><col>Light Blue<>
-<col>105<><col>Light Purple<>
-<col>106<><col>Light Cyan<>
-<col>107<><col>White<><><>
-@
-@ colors, colours, name, chart
-@ print, show, reference, foreground, background
-
-
-
-### Color - Color Codes as Variables
-
-<cb><#># Special Colors ───────────────────── #<>
-
-<v>DEFAULT_COLOR<>='\\e[0m'
-<v>DEFAULT_BACKGROUND<>='\\e[49m'
-<v>RESET_COLOR<>='${DEFAULT_COLOR}${DEFAULT_BACKGROUND}'
-<v>RESET<>=$<v>RESET_COLOR<>
-
-<#># Foreground ───────────────────────── #<>
-
-<v>BLACK<>='\\e[30m'
-<v>DARK_GRAY<>='\\e[90m'
-<v>DARK_GREY<>='\\e[90m'
-<v>LIGHT_GRAY<>='\\e[37m'
-<v>LIGHT_GREY<>='\\e[37m'
-<v>WHITE<>='\\e[97m'
-<v>BLUE<>='\\e[34m'
-<v>CYAN<>='\\e[36m'
-<v>GREEN<>='\\e[32m'
-<v>PURPLE<>='\\e[35m'
-<v>MAGENTA<>='\\e[35m'
-<v>RED<>='\\e[31m'
-<v>YELLOW<>='\\e[33m'
-<v>LIGHT_BLUE<>='\\e[94m'
-<v>LIGHT_CYAN<>='\\e[96m'
-<v>LIGHT_GREEN<>='\\e[92m'
-<v>LIGHT_PURPLE<>='\\e[95m'
-<v>LIGHT_MAGENTA<>='\\e[95m'
-<v>LIGHT_RED<>='\\e[91m'
-<v>LIGHT_YELLOW<>='\\e[93m'
-
-<#># Background ───────────────────────── #<>
-
-<v>ON_BLACK<>='\\e[40m'
-<v>ON_DARK_GRAY<>='\\e[100m'
-<v>ON_DARK_GREY<>='\\e[100m'
-<v>ON_LIGHT_GRAY<>='\\e[47m'
-<v>ON_LIGHT_GREY<>='\\e[47m'
-<v>ON_WHITE<>='\\e[107m'
-<v>ON_BLUE<>='\\e[44m'
-<v>ON_CYAN<>='\\e[46m'
-<v>ON_GREEN<>='\\e[42m'
-<v>ON_PURPLE<>='\\e[45m'
-<v>ON_MAGENTA<>='\\e[45m'
-<v>ON_RED<>='\\e[41m'
-<v>ON_YELLOW<>='\\e[43m'
-<v>ON_LIGHT_BLUE<>='\\e[104m'
-<v>ON_LIGHT_CYAN<>='\\e[106m'
-<v>ON_LIGHT_GREEN<>='\\e[102m'
-<v>ON_LIGHT_YELLOW<>='\\e[103m'
-<v>ON_LIGHT_PURPLE<>='\\e[105m'
-<v>ON_LIGHT_MAGENTA<>='\\e[105m'
-<v>ON_LIGHT_RED<>='\\e[101m'
-<v>ON_LIGHT_YELLOW<>='\\e[103m'
-
-<#># Styles ───────────────────────────── #<>
-
-<v>BOLD<>='\\e[1m'
-<v>BLINK<>='\\e[5m'
-<v>DIMMED<>='\\e[2m'
-<v>ITALIC<>='\\e[3m'
-<v>REVERSED<>='\\e[7m'
-<v>STRIKETHROUGH<>='\\e[9m'
-<v>UNDERLINE<>='\\e[4m'<>
 
 
 
@@ -8299,6 +8270,41 @@ Full Chart:
 <l>https://www.ditig.com/256-colors-cheat-sheet<>
 @
 @ colors, colours
+
+
+
+# Printing Special
+@
+@ echo
+
+
+
+### Print - Hyperlink
+
+<cb>\\e]8;;<v>url<>\\e\\\\<v>label<>\\e]8;;\\e\\\\<>
+
+Displays a clickable link in the terminal.
+
+Not supported by all terminals.
+
+
+Escapes:
+
+<in><t>First <c>\\e]8;;<><|>Starts the hyperlink.
+First <c>\\e\\\\<><|>Starts the label.
+Final <c>\\e]8;;\\e\\\\<><|>Terminates the link.<><>
+
+
+Example:
+
+<cb>echo -e "\\e]8;;<v>https://speedsheet.io/s/bash<>\\e\\\\<v>Bash Speedsheet<>\\e]8;;\\e\\\\"<>
+
+
+<#>Personal Note:
+
+<in>Terminal escapes are crazy but... what the stupid *** insane escape sequence is this?? Who came up with this B.S.! I can not fathom that someone thought this was a good idea!<><>
+@
+@ url, web link, anchor, embed, http://, https://, \e]8;;, \\e\\\\, \\e]8;;\\e\\\\
 
 
 
@@ -8719,7 +8725,7 @@ Example - Find Java Processes:
 
 Regular Expression Syntax: <l regular_expressions>Regular Expressions SpeedSheet<>
 @
-@ get, grep, ps, awk, -e, -f
+@ get, grep, ps, awk, -e, -f, -ef, -fe
 @ regex, pid
 
 
@@ -8874,13 +8880,17 @@ Shows information about the current user including user id, name, associated gro
 
 ### User - Get Current Name
 
+<cb>whoami<>
+
 <cb>logname<>
 
 
 Shows the current user name.
+
+These two commands are equivalent.
 @
 @ get, show, view, my
-@ logname
+@ logname, whoami
 
 
 
@@ -8898,6 +8908,17 @@ Example:
 @
 @ get, show, view, environment variable, my
 @ $USER
+
+
+
+### User - Get Current User Privileges
+
+<cb>sudo -l<>
+
+
+Shows the user privilege attributes.
+@
+@ get, check, view, print
 
 
 
@@ -9521,8 +9542,27 @@ Sets the terminal prompt.
 
 <cb>PS1="<v>prompt text<>"<>
 
+Prompt Options:
 
-Options:
+<in 2><table><col>\\ (print backslash)<><col><c>\\\\<><>
+<col>Bash Version<><col><c>\\v<><>
+<col>Bash Version and Patch Level<><col><c>\\V<><>
+<col>Current Directory Only (Not Full Path)<><col><c>\\W<><>
+<col>Date "Mon Jan 01"<><col><c>\\d<><>
+<col>Escape ASCII Character<><col><c>\\e<v>...<><><>
+<col>Full Current Path<><col><c>\\w<><>
+<col>Host Name<><col><c>\\H<><>
+<col>Host Name Up To '.'<><col><c>\\h<><>
+<col>Newline<><col><c>\\n<><>
+<col>Number of Shell Jobs<><col><c>\\j<><>
+<col>Shell Name<><col><c>\\s<><>
+<col>Time H:MM:SS AM/PM<><col><c>\\t<><>
+<col>Time HH:MM<><col><c>\\A<><>
+<col>Time HH:MM AM/PM<><col><c>\\@<><>
+<col>Time HH:MM:SS<><col><c>\\T<><>
+<col>User Name<><col><c>\\u<><><><>
+
+Prompt Codes:
 
 <in 2><table><col><c>\\\\<><><col>\\ (backslash)<>
 <col><c>\\@<><><col>Time HH:MM AM/PM<>
@@ -9542,25 +9582,9 @@ Options:
 <col><c>\\w<><><col>Full Current Path<>
 <col><c>\\W<><><col>Current Directory Only (Not Full Path)<><><>
 
-Display:
+Example:
 
-<in 2><table><col>\\ (backslash)<><col><c>\\\\<><>
-<col>Bash Version<><col><c>\\v<><>
-<col>Bash Version and Patch Level<><col><c>\\V<><>
-<col>Current Directory Only (Not Full Path)<><col><c>\\W<><>
-<col>Date "Mon Jan 01"<><col><c>\\d<><>
-<col>Escape ASCII Character<><col><c>\\e<v>...<><><>
-<col>Full Current Path<><col><c>\\w<><>
-<col>Host Name<><col><c>\\H<><>
-<col>Host Name Up To '.'<><col><c>\\h<><>
-<col>Newline<><col><c>\\n<><>
-<col>Number of Shell Jobs<><col><c>\\j<><>
-<col>Shell Name<><col><c>\\s<><>
-<col>Time H:MM:SS AM/PM<><col><c>\\t<><>
-<col>Time HH:MM<><col><c>\\A<><>
-<col>Time HH:MM AM/PM<><col><c>\\@<><>
-<col>Time HH:MM:SS<><col><c>\\T<><>
-<col>User Name<><col><c>\\u<><><><>
+<in><t><c>PS1="\\h:\\w>"<><|><v>host<>:<v>path<><><><>
 @
 @ format, options, display, show, codes, special characters
 
@@ -9572,6 +9596,7 @@ Display:
 
 
 ### Prompt - Set \\ (backslash)
+
 <cb>\\\\<>
 
 <cb>PS1=\\\\<>
@@ -9583,6 +9608,7 @@ Adds a \\ (backslash) to the command prompt.
 
 
 ### Prompt - Set Bash Version
+
 <cb>\\v<>
 
 <cb>PS1=\\v<>
@@ -9594,6 +9620,7 @@ Sets the prompt to the Bash version.
 
 
 ### Prompt - Set Bash Version and Patch Level
+
 <cb>\\V<>
 
 <cb>PS1=\\V<>
@@ -9605,6 +9632,7 @@ Sets the prompt to the Bash version and patch level.
 
 
 ### Prompt - Set Current Directory Only
+
 <cb>\\W<>
 
 <cb>PS1=\\W<>
@@ -9616,6 +9644,7 @@ Sets the prompt to the current directory name only (not full path).
 
 
 ### Prompt - Set Date "Mon Jan 01"
+
 <cb>\\d<>
 
 <cb>PS1=\\d<>
@@ -9627,6 +9656,7 @@ Sets the prompt to the date format "Mon Jan 01".
 
 
 ### Prompt - Set Escaped ASCII Character
+
 <cb>\\e<v>...<><>
 
 <cb>PS1=\\e<v>...<><>
@@ -9636,6 +9666,7 @@ Sets the prompt to the date format "Mon Jan 01".
 
 
 ### Prompt - Set Full Current Path
+
 <cb>\\w<>
 
 <cb>PS1=\\w<>
@@ -9647,6 +9678,7 @@ Sets the prompt to the full current path.
 
 
 ### Prompt - Set Host Name
+
 <cb>\\H<>
 
 <cb>PS1=\\H<>
@@ -9658,6 +9690,7 @@ Sets the prompt to the server's host name.
 
 
 ### Prompt - Set Host Name Up To '.'
+
 <cb>\\h<>
 
 <cb>PS1=\\h<>
@@ -9669,6 +9702,7 @@ Sets the prompt to the host name up to the '.' in the name.
 
 
 ### Prompt - Set Newline
+
 <cb>\\n<>
 
 <cb>PS1=\\n<>
@@ -9680,6 +9714,7 @@ Adds a newline to the prompt.
 
 
 ### Prompt - Set Number of Shell Jobs
+
 <cb>\\j<>
 
 <cb>PS1=\\j<>
@@ -9691,6 +9726,7 @@ Shows the current number of shell jobs in the prompt.
 
 
 ### Prompt - Set Shell Name
+
 <cb>\\s<>
 
 <cb>PS1=\\s<>
@@ -9702,6 +9738,7 @@ Sets the prompt to the shell name.
 
 
 ### Prompt - Set Time H:MM:SS AM/PM
+
 <cb>\\t<>
 
 <cb>PS1=\\t<>
@@ -9713,6 +9750,7 @@ Sets the prompt to the time H:MM:SS AM/PM.
 
 
 ### Prompt - Set Time HH:MM
+
 <cb>\\A<>
 
 <cb>PS1=\\A<>
@@ -9724,6 +9762,7 @@ Sets the prompt to the time HH:MM.
 
 
 ### Prompt - Set Time HH:MM AM/PM
+
 <cb>\\@<>
 
 <cb>PS1=\\@<>
@@ -9735,6 +9774,7 @@ Sets the prompt to the time HH:MM AM/PM.
 
 
 ### Prompt - Set Time HH:MM:SS
+
 <cb>\\T<>
 
 <cb>PS1=\\T<>
@@ -9746,6 +9786,7 @@ Sets the prompt to the time HH:MM:SS.
 
 
 ### Prompt - Set User Name
+
 <cb>\\u<>
 
 <cb>PS1=\\u<>
@@ -9755,12 +9796,14 @@ Shows the user name in the command prompt
 @ \\u
 
 
+
 ## Command Prompt - Examples
 @
 @ set
 
 
-# Prompt - Set to Host Name, Current Path
+
+### Prompt - Set to Host Name, Current Path
 
 <cb>PS1="\\h:\\w>"<>
 
@@ -9770,7 +9813,7 @@ Shows the host name, current path in the prompt.
 
 Example Output:
 
-<cb>Server-1:~/downloads><>
+<cb><v>host-1<>:<v>~/downloads<>><>
 @
 @ command, prompt-only, format, display, show
 @ ps1, \\h, \\w
@@ -9968,7 +10011,7 @@ Or
 
 Shows how long the computer has been running.
 @
-@ show, view, see, lookup, get
+@ show, view, see, get
 
 
 
@@ -10707,6 +10750,54 @@ Use in empty functions.
 
 
 
+### Output - Lines - Reverse
+
+<cb><v>...<> | tail -f<>
+
+
+Reverse the output lines.
+@
+@ tail
+
+
+
+### Output - Lines - Show Unique Only
+
+<cb><v>...<> | uniq -u<>
+
+Shows only the lines that are unique.
+
+<c>-u<> Show only unique lines.
+@
+@ uniq-only
+
+
+
+### Output - Lines - Filter To Unique Only
+
+<cb><v>...<> | uniq<>
+
+
+Removes out duplicates leaving only unique values.
+
+<c>-u<> Show only unique lines.
+@
+@ remove duplicates, delete
+@ uniq-only
+
+
+
+### Output - Lines - Sort
+
+<cb><v>...<> | sort<>
+
+
+Sorts the output alphabetically
+@
+@ sort-only, alphabetically
+
+
+
 ### Operating System - Name
 
 <cb>uname<>
@@ -10953,7 +11044,7 @@ Sleep 2 Minutes:
 
 <cb>sleep 2m<>
 @
-@ pause
+@ pause, sleep-only
 
 
 
@@ -10967,6 +11058,7 @@ Switches to a different user's identity.
 SU = Substitute User.
 @
 @ change, switch to, use, different, user identity
+@ su-only
 
 
 
@@ -10980,6 +11072,7 @@ Switch to the root user.
 Use <c>su<> with no options to switch to root.
 @
 @ change, switch to, use
+@ su-only
 
 
 
@@ -10993,6 +11086,7 @@ Executes a command as another user.
 SUDo = Substitute Do.
 @
 @ execute, as user
+@ sudo-only
 
 
 
@@ -11004,6 +11098,7 @@ SUDo = Substitute Do.
 Runs a command as the root user.
 @
 @ execute, as user
+@ sudo-only
 
 
 
@@ -11020,6 +11115,7 @@ Executes the previous a command as the root user.
 @
 @ execute, as user
 @ !!
+@ sudo-only
 
 
 
@@ -11028,6 +11124,8 @@ Executes the previous a command as the root user.
 <cb>vmstat <v>length<> <v>count<><>
 
 System information, free memory, cpu usage for a given length of time.
+@
+@ vmstat-only
 
 
 
@@ -11091,6 +11189,29 @@ Sets the terminal backspace key.
 @
 @ erase, delete
 @ stty erase, ^H
+
+
+
+### Terminal - Set Heading
+
+<cb>echo -ne "\\033]0;<v>Your Heading Here\\007"<><>
+
+
+Sets the terminal window heading.
+@
+@ title, session name
+@ echo -ne \\033]0; \\007, 033, 007
+
+
+
+### Terminal - Set Heading (Non Standard)
+
+<cb>title "<v>Your Heading Here<>"<>
+
+
+On some systems you can set the terimnal window heading using <c>title<> (e.g. MacOS).
+@
+@ title, session name
 
 
 
@@ -12288,27 +12409,67 @@ These are builtin words used by bash. You can use them for other purposes but pr
 
 ## System Directories - Basics
 
-<card><table><col><c>/dev<><><col>Devices<>
-<col><c>/etc<><><col>Configuration Files<>
-<col><c>/home<><><col>Users Directory<>
-<col><c>/opt<><><col>Optional Applications Directory<>
-<col><c>/proc<><><col>System Processes<>
-<col><c>/sys<><><col>Kernel Information<>
-<col><c>/usr<><><col>USR = Unix System Resource. Leave Alone<>
-<col><c>/usr/local<><><col>Shared Applications, 3rd Party Apps<>
-<col><c>/usr/share/zoneinfo<><><col>Server Supported Time Zones.<>
-<col><c>/var<><><col>System & System Apps Changeable Data<>
-<col><c>/var/run<><><col>Runtime Variable Data, PID files<>
-<col> <>
-<col><c>/home<><><col>Users Directory<>
-<col><c>/home/<v>user_name<><><><col>User Home Directory<>
-<col><c>~<><><col>Alias to User Home Directory<><><>
+<card><t><c>/bin<><|>System Binaries
+<c>/boot<><|>Linux Kernel
+<c>/dev<><|>Devices
+<c>/etc<><|>Configuration Files
+<c>/home<><|>Users Directory
+<c>/opt<><|>Optional Applications Directory
+<c>/proc<><|>System Processes
+<c>/sbin<><|>System Binaries
+<c>/sys<><|>Kernel Information
+<c>/usr<><|>USR = Unix System Resource. Leave Alone
+<c>/usr/local<><|>Shared Applications, 3rd Party Apps
+<c>/usr/share/zoneinfo<><|>Server Supported Time Zones.
+<c>/var<><|>System & System Apps Changeable Data
+<c>/var/run<><|>Runtime Variable Data, PID files
+
+<c>/home<><|>Users Directory
+<c>/home/<v>user_name<><><|>User Home Directory
+<c>~<><|>Alias to User Home Directory<><>
+
+
+<cb>/
+├── <go "?system directories#System Directory - /bin">bin<>
+├── <go "?system directories#System Directory - /boot">boot<>
+├── <go "?system directories#System Directory - /dev">dev<>
+├── <go "?system directories#System Directory - /etc">etc<>
+│   ├── <go "?system directories#System Directory - /opt/init.d">init.d<>
+│   ├── <go "?system directories#System Directory - /opt/profile.d">profile.d<>
+│   └── <go "?system directories#System Directory - /opt/ssh">ssh<>
+├── lib
+├── <go "?system directories#System Directory - /opt">opt<>
+├── <go "?system directories#System Directory - /proc">proc<>
+├── <go "?system directories#System Directory - /sbin">sbin<>
+├── <go "?system directories#System Directory - /sys">sys<>
+├── tmp
+├── <go "?system directories#System Directory - /usr">usr<>
+│   ├── bin
+│   └── <go "?system directories#System Directory - /usr/local">local<>
+│       └── bin
+├── <go "?system directories#System Directory - /var">var<>
+│   ├── <go "?system directories#System Directory - /var/apt">apt<>
+│   └── <go "?system directories#System Directory - /var/run">run<>
+│
+└── <go "?system directories#System Directory - /home">home<>
+    ├── <v>user_1<>
+    └── <v>user_2<><>
 @
 @ summary
 
 
 
 ## System Directories - Details
+
+
+
+### System Directory - /boot
+
+<cb>/boot<>
+
+Stores the Linux kernel.
+@
+@ linux kernel
 
 
 
@@ -12391,6 +12552,14 @@ Provides information on running processes.
 
 
 
+### System Directory - /sbin
+
+<cb>/sbin<>
+
+Stores system binaries.
+
+
+
 ### System Directory - /sys
 
 <cb>/sys<>
@@ -12429,7 +12598,10 @@ Server supported time zones.
 
 Variable Data
 
-Directory where the system & system installed apps stores changeable data (web servers, etc).
+Stores cghangeable data for system & system installed apps (web servers, etc).
+Stores logs.
+@
+@ logs
 
 
 
@@ -12574,8 +12746,9 @@ Executed at login time. Bash will read this if found.
 <cb>~/.bash_profile<>
 
 Bash user initialization script file.
-Executed at login time.
-Calls <c>.bashrc<>
+Executes when the user logs into the system.
+
+Should call <c>.bashrc<>.
 @
 @ .bash_profile
 
@@ -12587,6 +12760,9 @@ Calls <c>.bashrc<>
 
 Bash user per-interactive-shell startup file.
 Executed by "interactive" and "non-login" shells only.
+
+Executes when new shells are started after the user is logged in.
+Put your standard configuration and environment variables here.
 @
 @ .bashrc
 
@@ -12653,7 +12829,10 @@ Executed by shells connected to terminals or pseudo-terminals.
 
 ### User Directory - Home
 
-<cb>/home/<v>user_home<>
+<cb>/home/<v>user_home<><>
+
+
+The home directory for a user.
 
 
 
@@ -12675,6 +12854,1174 @@ Executed by shells connected to terminals or pseudo-terminals.
 
 <card><table><col><c>/home/<v>user_name<>/.config/<><>
 <col><c>/home/<v>user_name<>/.config/<v>app_name<><><><><>
+
+
+
+# Reference - ANSI Color Codes
+@
+@ escape, colors, colours
+
+
+## ANSI Colors - Basics
+
+
+### ANSI Colors - Color to Codes
+
+<cb>\\e[<v>color_code<>m<>
+
+Special Codes:
+
+<in 2><table><col>Default Color<><col>0<>
+<col>Default Background<><col>49<><><>
+
+Foreground:
+
+<in 2><t>Black			<|>30
+Dark Gray<|>90
+Light Gray<|>37
+White<|>97
+
+Blue<|>34
+Cyan<|>36
+Green<|>32
+Purple<|>35
+Red<|>31
+Yellow<|>33
+
+Light Blue<|>94
+Light Cyan<|>96
+Light Green<|>92
+Light Purple<|>95
+Light Red<|>91
+Light Yellow<|>93<><>
+
+Background:
+
+<in 2><t>Black			<|>40
+Dark Gray<|>100
+Light Gray<|>47
+White<|>107
+
+Blue<|>44
+Cyan<|>46
+Green<|>42
+Purple<|>45
+Red<|>41
+Yellow<|>43
+
+Light Blue<|>104
+Light Cyan<|>106
+Light Green<|>102
+Light Yellow<|>103
+Light Purple<|>105
+Light Red<|>101
+Light Yellow<|>103<><>
+
+Style:
+
+<in 2><t>Bold			<|>1
+Blink<|>5
+Dimmed<|>2
+Italic<|>3
+Reversed<|>7
+Strikethrough<|>9
+Underline<|>4<><>
+@
+@ colors, colours, name, chart
+@ print, show, reference, foreground, background
+@ Bold, Blink, Dimmed, Italic, Reversed, Strikethrough, Underline
+
+
+
+### ANSI Colors - Codes to Color
+
+<cb>\\e[<v>color_code<>m<>
+
+
+Special:
+
+<in 2><t>0				<|>Default Foreground
+4<|>Underline
+49<|>Default Background<><>
+
+Foreground:
+
+<in 2><t>30				<|>Black
+31<|>Red
+32<|>Green
+33<|>Yellow
+34<|>Blue
+35<|>Purple
+36<|>Cyan
+37<|>Light Gray
+90<|>Dark Gray
+91<|>Light Red
+92<|>Light Green
+93<|>Light Yellow
+94<|>Light Blue
+95<|>Light Purple
+96<|>Light Cyan
+97<|>White<><>
+
+Background:
+
+<in 2><t>40				<|>Black
+41<|>Red
+42<|>Green
+43<|>Yellow
+44<|>Blue
+45<|>Purple
+46<|>Cyan
+47<|>Light Gray
+100<|>Dark Gray
+101<|>Light Red
+102<|>Light Green
+103<|>Light Yellow
+104<|>Light Blue
+105<|>Light Purple
+106<|>Light Cyan
+107<|>White<><>
+@
+@ colors, colours, name, chart, table, summary, basics
+@ print, show, reference, foreground, background
+
+
+
+### ANSI Colors - Color Variables
+
+Defines variables so you can easily add colors to your echo statements:
+
+Add this to your bash script:
+
+<cb><#># Special Colors ───────────────────── #<>
+
+DEFAULT_COLOR='\\e[0m'
+DEFAULT_BACKGROUND='\\e[49m'
+RESET_COLOR='${DEFAULT_COLOR}${DEFAULT_BACKGROUND}'
+RESET=$RESET_COLOR
+
+<#># Foreground ───────────────────────── #<>
+
+BLACK='\\e[30m'
+DARK_GRAY='\\e[90m'
+DARK_GREY='\\e[90m'
+LIGHT_GRAY='\\e[37m'
+LIGHT_GREY='\\e[37m'
+WHITE='\\e[97m'
+BLUE='\\e[34m'
+CYAN='\\e[36m'
+GREEN='\\e[32m'
+PURPLE='\\e[35m'
+MAGENTA='\\e[35m'
+RED='\\e[31m'
+YELLOW='\\e[33m'
+LIGHT_BLUE='\\e[94m'
+LIGHT_CYAN='\\e[96m'
+LIGHT_GREEN='\\e[92m'
+LIGHT_PURPLE='\\e[95m'
+LIGHT_MAGENTA='\\e[95m'
+LIGHT_RED='\\e[91m'
+LIGHT_YELLOW='\\e[93m'
+
+<#># Background ───────────────────────── #<>
+
+ON_BLACK='\\e[40m'
+ON_DARK_GRAY='\\e[100m'
+ON_DARK_GREY='\\e[100m'
+ON_LIGHT_GRAY='\\e[47m'
+ON_LIGHT_GREY='\\e[47m'
+ON_WHITE='\\e[107m'
+ON_BLUE='\\e[44m'
+ON_CYAN='\\e[46m'
+ON_GREEN='\\e[42m'
+ON_PURPLE='\\e[45m'
+ON_MAGENTA='\\e[45m'
+ON_RED='\\e[41m'
+ON_YELLOW='\\e[43m'
+ON_LIGHT_BLUE='\\e[104m'
+ON_LIGHT_CYAN='\\e[106m'
+ON_LIGHT_GREEN='\\e[102m'
+ON_LIGHT_YELLOW='\\e[103m'
+ON_LIGHT_PURPLE='\\e[105m'
+ON_LIGHT_MAGENTA='\\e[105m'
+ON_LIGHT_RED='\\e[101m'
+ON_LIGHT_YELLOW='\\e[103m'
+
+<#># Styles ───────────────────────────── #<>
+
+BOLD='\\e[1m'
+BLINK='\\e[5m'
+DIMMED='\\e[2m'
+ITALIC='\\e[3m'
+REVERSED='\\e[7m'
+STRIKETHROUGH='\\e[9m'
+UNDERLINE='\\e[4m'<>
+
+
+Example:
+
+<cb>echo "${<v>LIGHT_GREEN<>}${<v>ON_DARK_GRAY<>} Prints Light Green on Dark Gray ${<v>RESET_COLOR<>}"<>
+
+
+
+## ANSI Colors - Special
+
+
+### Color - Reset Color
+
+Code:
+
+<cb>0<>
+
+Escape
+
+<cb>"\\e[0m"
+\\033[0m
+\\x1B[0m<>
+
+
+Sets the foreground color to the default.
+
+
+Example:
+
+<cb>echo "\\e[<v>93<>m Green \\e[0m Reset"<>
+@
+@ 0, \\e[0m, \\033[0m, \\x1B[0m, special, control, default, foreground
+
+
+
+### Color - Reset Background
+
+Code:
+
+<cb>49<>
+
+Escape
+
+<cb>"\\e[49m"
+\\033[49m
+\\x1B[49m<>
+
+
+Sets the background color to the default.
+
+
+Example:
+
+<cb>echo "\\e[<v>104<>m Light Blue Background \\e[49m Reset"<>
+@
+@ 49, \\e49m,, \\033[49m, \\x1B[49m special, control, default
+
+
+
+## ANSI Colors - Foreground
+
+
+### Color - Black
+
+Color Code:
+
+<cb>30<>
+
+Escapes:
+
+<cb>\\e[<v>30<>m
+\\033[<v>30<>m
+\\x1B[<v>30<>m<>
+
+
+Sets the color to black.
+
+
+Example:
+
+<cb>echo "\\e[<v>30<>m Black \\e[0m"<>
+@
+@ 30, \\e[30m, \\033[30m, \\x1B[30m
+
+
+
+### Color - Dark Gray
+
+Color Code:
+
+<cb>90<>
+
+Escapes:
+
+<cb>\\e[<v>90<>m
+\\033[<v>90<>m
+\\x1B[<v>90<>m<>
+
+
+Sets the color to dark gray.
+
+
+Example:
+
+<cb>echo "\\e[<v>90<>m Dark Gray \\e[0m"<>
+@
+@ 90, \\e[90m, \\033[90m, \\x1B[90m, grey
+
+
+
+### Color - Light Gray
+
+Color Code:
+
+<cb>37<>
+
+Escapes:
+
+<cb>\\e[<v>37<>m
+\\033[<v>37<>m
+\\x1B[<v>37<>m<>
+
+
+Sets the color to light gray.
+
+
+Example:
+
+<cb>echo "\\e[<v>37<>m Light Gray \\e[0m"<>
+@
+@ 37, \\e[37m, \\033[37m, \\x1B[37m, grey
+
+
+
+### Color - White
+
+Color Code:
+
+<cb>97<>
+
+Escapes:
+
+<cb>\\e[<v>97<>m
+\\033[<v>97<>m
+\\x1B[<v>97<>m<>
+
+
+Sets the color to white.
+
+
+Example:
+
+<cb>echo "\\e[<v>97<>m White \\e[0m"<>
+@
+@ 97, \\e[97m, \\033[97m, \\x1B[97m
+
+
+
+### Color - Blue
+
+Color Code:
+
+<cb>34<>
+
+Escapes:
+
+<cb>\\e[<v>34<>m
+\\033[<v>34<>m
+\\x1B[<v>34<>m<>
+
+
+Sets the color to blue.
+
+
+Example:
+
+<cb>echo "\\e[<v>34<>m Blue \\e[0m"<>
+@
+@ 34, \\e[34m, \\033[34m, \\x1B[34m
+
+
+
+### Color - Cyan
+
+Color Code:
+
+<cb>36<>
+
+Escapes:
+
+<cb>\\e[<v>36<>m
+\\033[<v>36<>m
+\\x1B[<v>36<>m<>
+
+
+Sets the color to cyan.
+
+
+Example:
+
+<cb>echo "\\e[<v>36<>m Cyan \\e[0m"<>
+@
+@ 36, \\e[36m, \\033[36m, \\x1B[36m
+
+
+
+### Color - Green
+
+Color Code:
+
+<cb>32<>
+
+Escapes:
+
+<cb>\\e[<v>32<>m
+\\033[<v>32<>m
+\\x1B[<v>32<>m<>
+
+
+Sets the color to green.
+
+
+Example:
+
+<cb>echo "\\e[<v>32<>m Green \\e[0m"<>
+@
+@ 32, \\e[32m, \\033[32m, \\x1B[32m
+
+
+
+### Color - Purple
+
+Color Code:
+
+<cb>35<>
+
+Escapes:
+
+<cb>\\e[<v>35<>m
+\\033[<v>35<>m
+\\x1B[<v>35<>m<>
+
+
+Sets the color to purple.
+
+
+Example:
+
+<cb>echo "\\e[<v>35<>m Purple \\e[0m"<>
+@
+@ 35, \\e[35m, \\033[35m, \\x1B[35m
+
+
+
+### Color - Red
+
+Color Code:
+
+<cb>31<>
+
+Escapes:
+
+<cb>\\e[<v>31<>m
+\\033[<v>31<>m
+\\x1B[<v>31<>m<>
+
+
+Sets the color to red.
+
+
+Example:
+
+<cb>echo "\\e[<v>31<>m Red \\e[0m"<>
+@
+@ 31, \\e[31m, \\033[31m, \\x1B[31m
+
+
+
+### Color - Yellow
+
+Color Code:
+
+<cb>33<>
+
+Escapes:
+
+<cb>\\e[<v>33<>m
+\\033[<v>33<>m
+\\x1B[<v>33<>m<>
+
+
+Sets the color to yellow.
+
+
+Example:
+
+<cb>echo "\\e[<v>33<>m Yellow \\e[0m"<>
+@
+@ 33, \\e[33m, \\033[33m, \\x1B[33m
+
+
+
+### Color - Light Blue
+
+Color Code:
+
+<cb>94<>
+
+Escapes:
+
+<cb>\\e[<v>94<>m
+\\033[<v>94<>m
+\\x1B[<v>94<>m<>
+
+
+Sets the color to light blue.
+
+
+Example:
+
+<cb>echo "\\e[<v>94<>m Light Blue \\e[0m"<>
+@
+@ 94, \\e[94m, \\033[94m, \\x1B[94m
+
+
+
+### Color - Light Cyan
+
+Color Code:
+
+<cb>96<>
+
+Escapes:
+
+<cb>\\e[<v>96<>m
+\\033[<v>96<>m
+\\x1B[<v>96<>m<>
+
+
+Sets the color to light cyan.
+
+
+Example:
+
+<cb>echo "\\e[<v>96<>m Light Cyan \\e[0m"<>
+@
+@ 96, \\e[96m, \\033[96m, \\x1B[96m
+
+
+
+### Color - Light Green
+
+Color Code:
+
+<cb>92<>
+
+Escapes:
+
+<cb>\\e[<v>92<>m
+\\033[<v>92<>m
+\\x1B[<v>92<>m<>
+
+
+Sets the color to light green.
+
+
+Example:
+
+<cb>echo "\\e[<v>92<>m Light Green \\e[0m"<>
+@
+@ 92, \\e[92m, \\033[92m, \\x1B[92m
+
+
+
+### Color - Light Purple
+
+Color Code:
+
+<cb>95<>
+
+Escapes:
+
+<cb>\\e[<v>95<>m
+\\033[<v>95<>m
+\\x1B[<v>95<>m<>
+
+
+Sets the color to light purple.
+
+
+Example:
+
+<cb>echo "\\e[<v>95<>m Light Purple \\e[0m"<>
+@
+@ 95, \\e[95m, \\033[95m, \\x1B[95m
+
+
+
+### Color - Light Red
+
+Color Code:
+
+<cb>91<>
+
+Escapes:
+
+<cb>\\e[<v>91<>m
+\\033[<v>91<>m
+\\x1B[<v>91<>m<>
+
+
+Sets the color to light red.
+
+
+Example:
+
+<cb>echo "\\e[<v>91<>m Light Red \\e[0m"<>
+@
+@ 91, \\e[91m, \\033[91m, \\x1B[91m
+
+
+
+### Color - Light Yellow
+
+Color Code:
+
+<cb>93<>
+
+Escapes:
+
+<cb>\\e[<v>93<>m
+\\033[<v>93<>m
+\\x1B[<v>93<>m<>
+
+
+Sets the color to light yellow.
+
+
+Example:
+
+<cb>echo "\\e[<v>93<>m Light Yellow \\e[0m"<>
+@
+@ 93, \\e[93m, \\033[93m, \\x1B[93m
+
+
+
+## ANSI Colors - Background
+
+
+### Color - Background - Black
+
+Code Code:
+
+<cb>40<>
+
+Escapes:
+
+<cb>\\e[<v>40<>m
+\\033[<v>40<>m
+\\x1B[<v>40<>m<>
+
+
+Sets the background color to black.
+
+
+Example:
+
+<cb>echo "\\e[<v>40<>m Black Background \\e[49m"<>
+@
+@ 40, \\e[40m, \\033[40m, \\x1B[40m, on
+
+
+
+### Color - Background - Dark Gray
+
+Code Code:
+
+<cb>100<>
+
+Escapes:
+
+<cb>\\e[<v>100<>m
+\\033[<v>100<>m
+\\x1B[<v>100<>m<>
+
+
+Sets the background color to dark gray.
+
+
+Example:
+
+<cb>echo "\\e[<v>100<>m Dark Gray Background \\e[49m"<>
+@
+@ 100, \\e[100m, \\033[100m, \\x1B[100m, on, grey
+
+
+
+### Color - Background - Light Gray
+
+Code Code:
+
+<cb>47<>
+
+Escapes:
+
+<cb>\\e[<v>47<>m
+\\033[<v>47<>m
+\\x1B[<v>47<>m<>
+
+
+Sets the background color to light gray.
+
+
+Example:
+
+<cb>echo "\\e[<v>47<>m Light Gray Background \\e[49m"<>
+@
+@ 47, \\e[47m, \\033[47m, \\x1B[47m, on, grey
+
+
+
+### Color - Background - White
+
+Code Code:
+
+<cb>107<>
+
+Escapes:
+
+<cb>\\e[<v>107<>m
+\\033[<v>107<>m
+\\x1B[<v>107<>m<>
+
+
+Sets the background color to white.
+
+
+Example:
+
+<cb>echo "\\e[<v>107<>m White Background \\e[49m"<>
+@
+@ 107, \\e[107m, \\033[107m, \\x1B[107m, on
+
+
+
+### Color - Background - Blue
+
+Code Code:
+
+<cb>44<>
+
+Escapes:
+
+<cb>\\e[<v>44<>m
+\\033[<v>44<>m
+\\x1B[<v>44<>m<>
+
+
+Sets the background color to blue.
+
+
+Example:
+
+<cb>echo "\\e[<v>44<>m Blue Background \\e[49m"<>
+@
+@ 44, \\e[44m, \\033[44m, \\x1B[44m, on
+
+
+
+### Color - Background - Cyan
+
+Code Code:
+
+<cb>46<>
+
+Escapes:
+
+<cb>\\e[<v>46<>m
+\\033[<v>46<>m
+\\x1B[<v>46<>m<>
+
+
+Sets the background color to cyan.
+
+
+Example:
+
+<cb>echo "\\e[<v>46<>m Cyan Background \\e[49m"<>
+@
+@ 46, \\e[46m, \\033[46m, \\x1B[46m, on
+
+
+
+### Color - Background - Green
+
+Code Code:
+
+<cb>42<>
+
+Escapes:
+
+<cb>\\e[<v>42<>m
+\\033[<v>42<>m
+\\x1B[<v>42<>m<>
+
+
+Sets the background color to green.
+
+
+Example:
+
+<cb>echo "\\e[<v>42<>m Green Background \\e[49m"<>
+@
+@ 42, \\e[42m, \\033[42m, \\x1B[42m, on
+
+
+
+### Color - Background - Purple
+
+Code Code:
+
+<cb>45<>
+
+Escapes:
+
+<cb>\\e[<v>45<>m
+\\033[<v>45<>m
+\\x1B[<v>45<>m<>
+
+
+Sets the background color to purple.
+
+
+Example:
+
+<cb>echo "\\e[<v>45<>m Purple Background \\e[49m"<>
+@
+@ 45, \\e[45m, \\033[45m, \\x1B[45m, on
+
+
+
+### Color - Background - Red
+
+Code Code:
+
+<cb>41<>
+
+Escapes:
+
+<cb>\\e[<v>41<>m
+\\033[<v>41<>m
+\\x1B[<v>41<>m<>
+
+
+Sets the background color to red.
+
+
+Example:
+
+<cb>echo "\\e[<v>41<>m Red Background \\e[49m"<>
+@
+@ 41, \\e[41m, \\033[41m, \\x1B[41m, on
+
+
+
+### Color - Background - Yellow
+
+Code Code:
+
+<cb>43<>
+
+Escapes:
+
+<cb>\\e[<v>43<>m
+\\033[<v>43<>m
+\\x1B[<v>43<>m<>
+
+
+Sets the background color to yellow.
+
+
+Example:
+
+<cb>echo "\\e[<v>43<>m Yellow Background \\e[49m"<>
+@
+@ 43, \\e[43m, \\033[43m, \\x1B[43m, on
+
+
+
+### Color - Background - Light Blue
+
+Code Code:
+
+<cb>104<>
+
+Escapes:
+
+<cb>\\e[<v>104<>m
+\\033[<v>104<>m
+\\x1B[<v>104<>m<>
+
+
+Sets the background color to light blue.
+
+
+Example:
+
+<cb>echo "\\e[<v>104<>m Light Blue Background \\e[49m"<>
+@
+@ 104, \\e[104m, \\033[104m, \\x1B[104m, on
+
+
+
+### Color - Background - Light Cyan
+
+Code Code:
+
+<cb>106<>
+
+Escapes:
+
+<cb>\\e[<v>106<>m
+\\033[<v>106<>m
+\\x1B[<v>106<>m<>
+
+
+Sets the background color to light cyan.
+
+
+Example:
+
+<cb>echo "\\e[<v>106<>m Light Cyan Background \\e[49m"<>
+@
+@ 106, \\e[106m, \\033[106m, \\x1B[106m, on
+
+
+
+### Color - Background - Light Green
+
+Code Code:
+
+<cb>102<>
+
+Escapes:
+
+<cb>\\e[<v>102<>m
+\\033[<v>102<>m
+\\x1B[<v>102<>m<>
+
+
+Sets the background color to light green.
+
+
+Example:
+
+<cb>echo "\\e[<v>102<>m Light Green Background \\e[49m"<>
+@
+@ 102, \\e[102m, \\033[102m, \\x1B[102m, on
+
+
+
+### Color - Background - Light Purple
+
+Code Code:
+
+<cb>105<>
+
+Escapes:
+
+<cb>\\e[<v>105<>m
+\\033[<v>105<>m
+\\x1B[<v>105<>m<>
+
+
+Sets the background color to light purple.
+
+
+Example:
+
+<cb>echo "\\e[<v>105<>m Light Purple Background \\e[49m"<>
+@
+@ 105, \\e[105m, \\033[105m, \\x1B[105m, on
+
+
+
+### Color - Background - Light Red
+
+Code Code:
+
+<cb>101<>
+
+Escapes:
+
+<cb>\\e[<v>101<>m
+\\033[<v>101<>m
+\\x1B[<v>101<>m<>
+
+
+Sets the background color to light red.
+
+
+Example:
+
+<cb>echo "\\e[<v>101<>m Light Red Background \\e[49m"<>
+@
+@ 101, \\e[101m, \\033[101m, \\x1B[101m, on
+
+
+
+### Color - Background - Light Yellow
+
+Code Code:
+
+<cb>103<>
+
+Escapes:
+
+<cb>\\e[<v>103<>m
+\\033[<v>103<>m
+\\x1B[<v>103<>m<>
+
+
+Sets the background color to light yellow.
+
+
+Example:
+
+<cb>echo "\\e[<v>103<>m Light Yellow Background \\e[49m"<>
+@
+@ 103, \\e[103m, \\033[103m, \\x1B[103m, on
+
+
+
+## ANSI Text Styles
+
+
+### Text Style - Bold
+
+Code:
+
+<cb>1<>
+
+Escapes:
+
+<cb>\\e[<v>1<>m
+\\033[<v>1<>m
+\\x1b[<v>1<>m<>
+
+
+Sets the text style to bold.
+@
+@ 1, \\e[1m, \\033[m, \\x1b[1m, formatting
+
+
+
+### Text Style - Blink
+
+Code:
+
+<cb>5<>
+
+Escapes:
+
+<cb>\\e[<v>5<>m
+\\033[<v>1<>m
+\\x1b[<v>1<>m<>
+
+
+Sets the text style to blink.
+@
+@ 5, \\e[5m, \\033[m, \\x1b[5m, formatting
+
+
+
+### Text Style - Dimmed
+
+Code:
+
+<cb>2<>
+
+Escapes:
+
+<cb>\\e[<v>2<>m
+\\033[<v>1<>m
+\\x1b[<v>1<>m<>
+
+
+Sets the text style to dimmed.
+@
+@ 2, \\e[2m, \\033[m, \\x1b[2m, formatting
+
+
+
+### Text Style - Italic
+
+Code:
+
+<cb>3<>
+
+Escapes:
+
+<cb>\\e[<v>3<>m
+\\033[<v>1<>m
+\\x1b[<v>1<>m<>
+
+
+Sets the text style to italic.
+@
+@ 3, \\e[3m, \\033[m, \\x1b[3m, formatting
+
+
+
+### Text Style - Reversed
+
+Code:
+
+<cb>7<>
+
+Escapes:
+
+<cb>\\e[<v>7<>m
+\\033[<v>1<>m
+\\x1b[<v>1<>m<>
+
+
+Sets the text style to reversed.
+@
+@ 7, \\e[7m, \\033[m, \\x1b[7m, formatting
+
+
+
+### Text Style - Strikethrough
+
+Code:
+
+<cb>9<>
+
+Escapes:
+
+<cb>\\e[<v>9<>m
+\\033[<v>1<>m
+\\x1b[<v>1<>m<>
+
+
+Sets the text style to strikethrough.
+@
+@ 9, \\e[9m, \\033[m, \\x1b[9m, formatting
+
+
+
+### Text Style - Underline
+
+Code:
+
+<cb>4<>
+
+Escapes:
+
+<cb>\\e[<v>4<>m
+\\033[<v>1<>m
+\\x1b[<v>1<>m<>
+
+
+Sets the text style to underline.
+@
+@ 4, \\e[4m, \\033[m, \\x1b[4m, formatting
 
 
 
@@ -12836,6 +14183,15 @@ Must be the first line of the file.
 
 
 
+### Brian Fox
+The creator of Bash.
+
+Brian created Bash in 1988.
+@
+@ bash creator, history
+
+
+
 ### Daemon
 A program that runs in the background.
 
@@ -12900,8 +14256,56 @@ Also Called: FIFO (first in first out)
 
 
 
+### Root User
+This is a special user that has the highest privileges on the system. It is created by default when the system is installed
+
+<card>User Id = 0<>
+
+
+
 ### Service
 An application that runs in the background waiting to be used or carries out essential tasks.
+
+
+
+### sigkill
+Kill Signal
+
+Tells the OS to force terminate an app.
+
+<cb>kill -9 <v>process_id<><>
+@
+@ kill signal
+
+
+
+### sigterm
+Termination Signal
+
+Tells an app to terminate itself.
+
+<cb>kill <v>process_id<><>
+@
+@ terminate signal
+
+
+
+### Substitute Do (sudo)
+Allows a command to run with elevated privileges.
+
+Use when OS security prevents a command from running.
+
+Use with caution.
+
+
+
+
+### Symbolic Permissions
+The rwx permissions that define the permissions for a file.
+
+rwx = Read Write Execute
+
+Permissions are define as read, write and execute and are define by owner, by owner group, and then by all users.
 
 
 
